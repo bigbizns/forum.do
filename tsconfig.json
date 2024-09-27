@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "compilerOptions": {
+            "types": ["vite/client"]
+        },
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "strict": true,
+        "jsx": "preserve",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["resources/js/*"]
+        }
+    },
+    "include": ["resources/js/**/*", "resources/js/**/*.vue"],
+    "exclude": ["node_modules"]
+}
