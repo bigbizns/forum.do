@@ -1,6 +1,11 @@
 <script lang="ts" setup>
-import Aside from "@/Layouts/Aside.vue";
+import Aside from "../../Layouts/Aside.vue";
 import user from '@/Images/user.png';
+import type {UserInterface} from "@/Types/UserInterface";
+
+const props = defineProps<{
+    userData: UserInterface
+}>();
 </script>
 
 <template>
@@ -11,22 +16,22 @@ import user from '@/Images/user.png';
 
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <div class="flex gap-6">
-                    <!-- Avatar Placeholder -->
+
                     <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
-                        <img :src="user" alt="User Avatar" class="w-full h-full rounded-full object-cover" />
+                        <img :src="user" alt="User Avatar" class="w-full h-full rounded-full object-cover"/>
                     </div>
 
                     <div class="flex-1">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-1">John Doe</h2>
-                        <p class="text-gray-500 text-sm mb-4">john.doe@example.com</p>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-1">{{ props.userData.username }}</h2>
+                        <p class="text-gray-500 text-sm mb-4">{{ props.userData.email }}</p>
 
                         <p class="text-gray-600 mb-4">
-                        Description
+                            Description
                         </p>
 
                         <div class="flex flex-col gap-4 text-gray-600">
                             <div class="flex items-center">
-                                <p>Joined: <span class="font-semibold">Jan 1, 2022</span></p>
+                                <p>Joined: <span class="font-semibold">{{ props.userData.created_at }}</span></p>
                             </div>
                             <div class="flex items-center">
                                 <p>Points: <span class="font-semibold">53</span></p>
