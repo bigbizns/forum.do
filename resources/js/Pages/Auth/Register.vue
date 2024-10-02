@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {Link, useForm} from "@inertiajs/vue3";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import openEye from '@/images/open-eye.png';
 import closeEye from '@/images/close-eye.png';
 
@@ -10,6 +10,7 @@ const confirmPasswordToText = ref<boolean>(false);
 const togglePasswordToText = () => {
     passwordToText.value = !passwordToText.value;
 }
+
 const toggleConfirmPasswordToText = () => {
     confirmPasswordToText.value = !confirmPasswordToText.value
 };
@@ -22,8 +23,16 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('registerStore'),{onError: () => form.reset('password','password_confirmation')})
+    form.post(route('registerStore'), {onError: () => form.reset('password', 'password_confirmation')})
 };
+
+const passwordEyeIcon = computed(() => {
+    return passwordToText.value ? closeEye : openEye;
+});
+
+const confirmPasswordEyeIcon = computed(() => {
+    return confirmPasswordToText.value ? closeEye : openEye;
+});
 
 </script>
 
@@ -64,7 +73,7 @@ const submit = () => {
                             class="w-full px-4 py-2 rounded-l-lg"
                             :type="passwordToText ? 'text': 'password'"
                         />
-                        <img :src="passwordToText ? closeEye : openEye" alt="" class="w-4 mx-4 cursor-pointer" @click="togglePasswordToText">
+                        <img :src="passwordEyeIcon" alt="" class="w-4 mx-4 cursor-pointer" @click="togglePasswordToText">
                     </div>
                     <small class="text-red-600 font-semibold">{{ form.errors.password }}</small>
                 </div>
@@ -78,7 +87,7 @@ const submit = () => {
                             class="w-full px-4 py-2 rounded-l-lg"
                             :type="confirmPasswordToText ? 'text': 'password'"
                         />
-                        <img :src="confirmPasswordToText ? closeEye : openEye" alt="" class="w-4 mx-4 cursor-pointer" @click="toggleConfirmPasswordToText">
+                        <img :src="confirmPasswordEyeIcon" alt="" class="w-4 mx-4 cursor-pointer" @click="toggleConfirmPasswordToText">
                     </div>
                     <small class="text-red-600 font-semibold">{{ form.errors.confirmPassword }}</small>
                 </div>

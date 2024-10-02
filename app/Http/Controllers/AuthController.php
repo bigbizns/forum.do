@@ -20,6 +20,7 @@ class AuthController extends Controller
     {
         return Inertia::render('Auth/Register');
     }
+
     public function registerStore(StoreRegisterUser $request): RedirectResponse
     {
         $user = $request->validated();
@@ -40,7 +41,6 @@ class AuthController extends Controller
 
         if (Auth::attempt($user, $request->remember)) {
             $request->session()->regenerate();
-            //@TODO: When Home route is set up update route
             return to_route('home');
         }
 

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import {Link, useForm} from "@inertiajs/vue3";
 import openEye from '@/images/open-eye.png';
 import closeEye from '@/images/close-eye.png';
 
 const passwordToText = ref<boolean>(false);
+
 const togglePasswordToText = () => {
     passwordToText.value = !passwordToText.value;
 }
@@ -16,8 +17,12 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('loginStore'), {onError: () => form.reset('password','remember')});
+    form.post(route('loginStore'), {onError: () => form.reset('password', 'remember')});
 };
+
+const passwordEyeIcon = computed(() => {
+    return passwordToText.value ? closeEye : openEye;
+});
 </script>
 
 <template>
@@ -46,7 +51,7 @@ const submit = () => {
                             class="w-full px-4 py-2 rounded-l-lg"
                             :type="passwordToText ? 'text': 'password'"
                         />
-                        <img :src="passwordToText ? closeEye : openEye" alt="" class="w-4 mx-4 cursor-pointer" @click="togglePasswordToText">
+                        <img :src="passwordEyeIcon" alt="" class="w-4 mx-4 cursor-pointer" @click="togglePasswordToText">
                     </div>
                     <small class="text-red-600 font-semibold">{{ form.errors.password }}</small>
                     <small class="text-red-600 font-semibold">{{ form.errors.message }}</small>
