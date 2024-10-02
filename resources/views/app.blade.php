@@ -6,7 +6,7 @@
     @vite('resources/js/app.ts')
     @inertiaHead
 </head>
-<body>
+<body class="bg-gray-700">
 @inertia
 @routes
 </body>
