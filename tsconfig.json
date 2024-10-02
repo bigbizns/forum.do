@@ -14,9 +14,9 @@
         "forceConsistentCasingInFileNames": true,
         "baseUrl": ".",
         "paths": {
-            "@/*": ["resources/js/*"]
+            "@/*": ["*resources/js/"]
         }
     },
-    "include": ["resources/js/**/*", "resources/js/**/*.vue"],
+    "include": ["resources/js/**/*", "resources/js/**/*.vue","types/**/*.d.ts"],
     "exclude": ["node_modules"]
 }

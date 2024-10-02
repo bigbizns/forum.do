@@ -1,6 +1,6 @@
-<script lang="ts" setup>
+<script setup lang="ts">
+import Footer from "@/Layouts/Footer.vue";
 </script>
-
 <template>
     <div class="container mx-auto mt-8 h-screen">
         <!-- TODO: Finish the header section -->
@@ -22,4 +22,5 @@
             </div>
         </div>
     </div>
+        <Footer/>
 </template>
