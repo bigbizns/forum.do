@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-    console.log("Search bar loaded");
 </script>
 
 <template>
     <div class="container mx-auto mt-8 h-screen">
+        <!-- TODO: Finish the header section -->
         <div class="search bg-gray-800 rounded-lg p-4 text-blue-700 shadow-lg">
             <div class="search-title mb-4">
                 <h2 class="text-15 font-bold">🔍 Search Forum</h2>
@@ -23,4 +23,3 @@
         </div>
     </div>
 </template>
-
