@@ -5,7 +5,7 @@
 <template>
     <section class="bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-xl font-semibold mb-4">Change Password</h2>
-        <form action="#" method="POST" class="space-y-4">
+        <form class="space-y-4">
             <div>
                 <label for="current-password" class="block text-gray-700 font-medium mb-1">Current Password</label>
                 <input type="password" id="current-password" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200" placeholder="Enter current password">

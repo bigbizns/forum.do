@@ -6,7 +6,7 @@
         <h2 class="text-xl font-semibold mb-4">Profile Settings</h2>
 
         <div class="flex items-start gap-6">
-            <form action="#" method="POST" class="flex-1 space-y-4">
+            <form class="flex-1 space-y-4">
                 <div class="flex gap-6">
                     <div class="w-1/2">
                         <label for="name" class="block text-gray-700 font-medium mb-1">Name</label>

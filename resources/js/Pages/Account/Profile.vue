@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import Aside from "@/Layouts/Aside.vue";
 import user from '@/Images/user.png';
-
 </script>
 
 <template>
