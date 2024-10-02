@@ -1,7 +1,9 @@
 {
     "compilerOptions": {
         "compilerOptions": {
-            "types": ["vite/client"]
+            "types": [
+                "vite/client"
+            ]
         },
         "target": "ESNext",
         "module": "ESNext",
@@ -14,7 +16,9 @@
         "forceConsistentCasingInFileNames": true,
         "baseUrl": ".",
         "paths": {
-            "@/*": ["*resources/js/"]
+            "@/*": [
+                "resources/js/*"
+            ]
         }
     },
     "include": ["resources/js/**/*", "resources/js/**/*.vue","types/**/*.d.ts"],
