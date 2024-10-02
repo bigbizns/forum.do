@@ -55,6 +55,7 @@ const passwordEyeIcon = computed(() => {
                     </div>
                     <small class="text-red-600 font-semibold">{{ form.errors.password }}</small>
                     <small class="text-red-600 font-semibold">{{ form.errors.message }}</small>
+                    <small class="text-green-500 font-semibold">{{ $page.props.flash.message }}</small>
                 </div>
                 <div class="flex items-center gap-2 mb-4">
 
@@ -67,7 +68,7 @@ const passwordEyeIcon = computed(() => {
 
                     <div class="flex gap-2">
                         <p class="text-gray-600">Forgot password?</p>
-                        <Link href="{{ route('login') }}" class="text-blue-500 hover:text-blue-700 font-medium transition-colors duration-300 ease-in-out">Reset</Link>
+                        <Link :href="route('recover')" class="text-blue-500 hover:text-blue-700 font-medium transition-colors duration-300 ease-in-out">Reset</Link>
                     </div>
                 </div>
 
