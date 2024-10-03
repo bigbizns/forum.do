@@ -16,5 +16,7 @@ Route::post('/login',[AuthController::class,'loginStore'])->name('loginStore');
 Route::prefix('account')->name('account.')->group(function () {
 
 Route::get('/profile', AccountController::class)->name('profile');
+
 Route::get('/settings', [AccountController::class, 'settings'])->name('settings');
+Route::post('/settings',[AccountController::class, 'settingsStore'])->name('settingsStore');
 });

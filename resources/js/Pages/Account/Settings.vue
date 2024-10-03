@@ -2,6 +2,11 @@
 import Aside from "@/Layouts/Aside.vue";
 import ProfileSettings from "@/Pages/Account/SettingsComponents/ProfileSettings.vue";
 import ChangePassword from "@/Pages/Account/SettingsComponents/ChangePassword.vue";
+import type {UserInterface} from "@/Types/UserInterface";
+
+const props = defineProps<{
+    userData: UserInterface
+}>();
 </script>
 
 <template>
@@ -10,8 +15,7 @@ import ChangePassword from "@/Pages/Account/SettingsComponents/ChangePassword.vu
         <Aside/>
 
         <main class="flex-1 p-6">
-            <h1 class="text-2xl font-semibold mb-6">Account Settings</h1>
-            <ProfileSettings/>
+            <ProfileSettings :user-data="props.userData"/>
             <ChangePassword/>
         </main>
     </div>
