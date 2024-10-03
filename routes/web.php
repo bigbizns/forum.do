@@ -2,12 +2,10 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home/Home');
-});
+Route::get('/', HomeController::class)->name('home');
 
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register',[AuthController::class,'registerStore'])->name('registerStore');

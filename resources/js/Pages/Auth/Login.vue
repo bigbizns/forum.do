@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import {computed, ref} from "vue";
 import {Link, useForm} from "@inertiajs/vue3";
-import openEye from '@/images/open-eye.png';
-import closeEye from '@/images/close-eye.png';
-
-const passwordToText = ref<boolean>(false);
-
-const togglePasswordToText = () => {
-    passwordToText.value = !passwordToText.value;
-}
+import FormInput from "@/Components/FormInput.vue";
+import FormInputPassword from "@/Components/FormInputPassword.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const form = useForm({
     username: null,
@@ -19,10 +13,6 @@ const form = useForm({
 const submit = () => {
     form.post(route('loginStore'), {onError: () => form.reset('password', 'remember')});
 };
-
-const passwordEyeIcon = computed(() => {
-    return passwordToText.value ? closeEye : openEye;
-});
 </script>
 
 <template>
@@ -32,34 +22,10 @@ const passwordEyeIcon = computed(() => {
                 Login
             </h1>
             <form @submit.prevent="submit">
-                <div class="mb-4">
-                    <label for="username" class="block text-gray-700 text-sm font-medium mb-1">Username</label>
-                    <input
-                        v-model="form.username"
-                        id="username"
-                        type="text"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <small class="text-red-600 font-semibold">{{ form.errors.username }}</small>
-                </div>
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700 text-sm font-medium mb-1">Password</label>
-                    <div class="flex items-center border border-gray-300 rounded-lg">
-                        <input
-                            v-model="form.password"
-                            id="password"
-                            class="w-full px-4 py-2 rounded-l-lg"
-                            :type="passwordToText ? 'text': 'password'"
-                        />
-                        <img :src="passwordEyeIcon" alt="" class="w-4 mx-4 cursor-pointer" @click="togglePasswordToText">
-                    </div>
-                    <small class="text-red-600 font-semibold">{{ form.errors.password }}</small>
-                    <small class="text-red-600 font-semibold">{{ form.errors.message }}</small>
-                    <small class="text-green-500 font-semibold">{{ $page.props.flash.message }}</small>
-                </div>
-                <div class="flex items-center gap-2 mb-4">
+                <FormInput v-model="form.username" label="username" label-name="Username" type="text" :error="form.errors.username"/>
+                <FormInputPassword v-model="form.password" label="password" label-name="Password" :error="form.errors.password"/>
+                <small class="text-red-600 font-semibold">{{ form.errors.message }}</small>
 
-                </div>
                 <div class="flex justify-between items-center mb-5">
                     <div class="flex items-center gap-2">
                         <input v-model="form.remember" type="checkbox" id="rememberMe" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
@@ -73,11 +39,7 @@ const passwordEyeIcon = computed(() => {
                 </div>
 
                 <div class="flex justify-center">
-                    <button
-                        type="submit"
-                        class="bg-blue-500 text-white font-semibold py-2 px-8 rounded-lg hover:bg-blue-600 transition duration-300">
-                        Log in
-                    </button>
+                   <PrimaryButton text="Log in" type="submit"/>
                 </div>
             </form>
             <div class="mt-4 text-center">
