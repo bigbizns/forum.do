@@ -2,6 +2,7 @@
 import Aside from "../../Layouts/Aside.vue";
 import user from '@/Images/user.png';
 import type {UserInterface} from "@/Types/UserInterface";
+import {computed} from "vue";
 
 const props = defineProps<{
     userData: UserInterface
@@ -18,7 +19,10 @@ const props = defineProps<{
                 <div class="flex gap-6">
 
                     <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
-                        <img :src="user" alt="User Avatar" class="w-full h-full rounded-full object-cover"/>
+                        <img
+                            :src="$page.props.auth.user.avatar ? `/storage/${$page.props.auth.user.avatar}` : user"
+                            alt="User Avatar"
+                            class="w-full h-full rounded-full object-cover"/>
                     </div>
 
                     <div class="flex-1">
