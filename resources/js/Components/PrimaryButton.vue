@@ -2,7 +2,7 @@
 defineProps<{
     type: string
     text: string
-}>()
+}>();
 </script>
 
 <template>

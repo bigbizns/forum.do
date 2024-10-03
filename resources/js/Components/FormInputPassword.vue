@@ -8,7 +8,8 @@ defineProps<{
     label: string,
     labelName: string,
     error: string,
-}>()
+}>();
+
 const emit = defineEmits(['update:modelValue']);
 const passwordToText = ref<boolean>(false);
 
@@ -19,7 +20,6 @@ const togglePasswordToText = () => {
 const passwordEyeIcon = computed(() => {
     return passwordToText.value ? closeEye : openEye;
 });
-
 </script>
 
 <template>
