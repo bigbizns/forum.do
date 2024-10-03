@@ -12,7 +12,6 @@ const props = defineProps<{
     <div class="flex min-h-screen">
         <Aside/>
         <main class="flex-1 p-6">
-            <h1 class="text-2xl font-semibold mb-6">Your Profile</h1>
 
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <div class="flex gap-6">
