@@ -2,7 +2,6 @@
 import Aside from "../../Layouts/Aside.vue";
 import user from '@/Images/user.png';
 import type {UserInterface} from "@/Types/UserInterface";
-import {computed} from "vue";
 
 const props = defineProps<{
     userData: UserInterface
