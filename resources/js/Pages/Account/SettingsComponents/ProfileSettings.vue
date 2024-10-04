@@ -1,28 +1,50 @@
 <script lang="ts" setup>
+import type {UserInterface} from "@/Types/UserInterface";
+import {useForm} from "@inertiajs/vue3";
+import FormInput from "@/Components/FormInput.vue";
 
+const props = defineProps<{
+    userData: UserInterface
+}>();
+
+const form = useForm({
+    username: props.userData.username ?? null,
+    email: props.userData.email ?? null,
+    description: props.userData.description ?? null,
+});
+
+const submit = () => {
+    form.post(route('account.settingsStore'));
+};
 </script>
+
 <template>
     <section class="bg-white p-6 rounded-lg shadow-md mb-8">
         <h2 class="text-xl font-semibold mb-4">Profile Settings</h2>
 
         <div class="flex items-start gap-6">
-            <form class="flex-1 space-y-4">
+            <form @submit.prevent="submit" class="flex-1 space-y-4">
                 <div class="flex gap-6">
                     <div class="w-1/2">
-                        <label for="name" class="block text-gray-700 font-medium mb-1">Name</label>
-                        <input type="text" id="name" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200" placeholder="Enter your name">
+                    <FormInput v-model="form.username" label="name" label-name="Name" type="text" :error="form.errors.username"/>
                     </div>
                     <div class="w-1/2">
-                        <label for="email" class="block text-gray-700 font-medium mb-1">Email</label>
-                        <input type="email" id="email" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200" placeholder="Enter your email">
+                        <FormInput v-model="form.email" label="email" label-name="Email" type="email" :error="form.errors.email"/>
                     </div>
                 </div>
 
                 <div>
-                    <label for="bio" class="block text-gray-700 font-medium mb-1">Bio</label>
-                    <textarea id="bio" rows="3" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200" placeholder="Tell us a little about yourself"></textarea>
+                    <label for="description" class="block text-gray-700 font-medium mb-1">Description</label>
+                    <textarea
+                        v-model="form.description"
+                        id="description"
+                        rows="3"
+                        class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                        :class="{'border-red-500':form.errors.description}" placeholder="Tell us a little about yourself">
+                    </textarea>
+                    <small class="text-red-600 font-semibold">{{ form.errors.description }}</small>
                 </div>
-
+                <small class="text-green-500 font-semibold">{{ $page.props.flash.message }}</small>
                 <div class="mt-6">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Save Changes</button>
                 </div>
