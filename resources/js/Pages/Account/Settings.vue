@@ -12,9 +12,7 @@ const props = defineProps<{
 
 <template>
     <div class="flex min-h-screen">
-
         <Aside/>
-
         <main class="flex-1 p-6">
             <ProfileSettings :user-data="props.userData"/>
             <UpdateAvatar/>

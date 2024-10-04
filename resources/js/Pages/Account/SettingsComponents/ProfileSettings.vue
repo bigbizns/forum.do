@@ -19,8 +19,8 @@ const submit = () => {
 </script>
 
 <template>
-    <section class="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 class="text-xl font-semibold mb-4">Profile Settings</h2>
+    <section class="bg-black/40 p-6 rounded-lg shadow-md mb-8">
+        <h2 class="text-xl text-gray-300 font-semibold mb-4">Profile Settings</h2>
 
         <div class="flex items-start gap-6">
             <form @submit.prevent="submit" class="flex-1 space-y-4">
@@ -34,7 +34,7 @@ const submit = () => {
                 </div>
 
                 <div>
-                    <label for="description" class="block text-gray-700 font-medium mb-1">Description</label>
+                    <label for="description" class="block text-gray-300 font-medium mb-1">Description</label>
                     <textarea
                         v-model="form.description"
                         id="description"
@@ -44,7 +44,7 @@ const submit = () => {
                     </textarea>
                     <small class="text-red-600 font-semibold">{{ form.errors.description }}</small>
                 </div>
-                <small class="text-green-500 font-semibold">{{ $page.props.flash.message }}</small>
+                <small class="text-green-500 font-semibold">{{$page.props.flash.message }}</small>
                 <div class="mt-6">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Save Changes</button>
                 </div>
