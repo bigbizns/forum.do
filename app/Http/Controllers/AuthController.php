@@ -98,7 +98,7 @@ class AuthController extends Controller
         return Inertia::render('Auth/RecoverySend');
     }
 
-    public function updatePassword(): Response|RedirectResponse
+    public function updatePassword(): Response
     {
         return Inertia::render('Auth/UpdatePassword');
     }
