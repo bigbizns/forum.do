@@ -17,8 +17,8 @@ const submit = () => {
 
 <template>
     <div class="h-screen w-full flex items-center justify-center">
-        <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-lg">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+        <div class="bg-black/40 p-10 rounded-lg shadow-lg w-full max-w-lg">
+            <h1 class="text-3xl font-bold text-center text-white mb-6">
                 Login
             </h1>
             <form @submit.prevent="submit">

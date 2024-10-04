@@ -35,14 +35,14 @@ const submit = () => {
 
 <template>
     <div class="h-screen w-full flex items-center justify-center">
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-lg">
+        <div class="bg-black/40 rounded-lg shadow-lg w-full max-w-lg">
             <form @submit.prevent="submit" class="p-10">
-                <h1 class="text-3xl font-bold text-gray-800 mb-6">
+                <h1 class="text-3xl font-bold text-white mb-6">
                     Update your password
                 </h1>
                 <div class="mb-4">
-                    <label for="password" class="block text-gray-700 text-sm font-medium mb-1">New Password</label>
-                    <div class="flex items-center border border-gray-300 rounded-lg">
+                    <label for="password" class="block text-white text-sm font-medium mb-1">New Password</label>
+                    <div class="flex items-center border border-gray-300 bg-white rounded-lg">
                         <input
                             v-model="form.password"
                             id="password"
@@ -52,12 +52,12 @@ const submit = () => {
                         <img :src="passwordEyeIcon" alt="" class="w-4 mx-4 cursor-pointer"
                              @click="togglePasswordToText">
                     </div>
-                    <small class="text-red-600 font-semibold">{{ form.errors.password }}</small>
+                    <small class="text-red-500 font-semibold">{{ form.errors.password }}</small>
                 </div>
                 <div class="mb-4">
-                    <label for="password_confirmation" class="block text-gray-700 text-sm font-medium mb-1">Confirm New
+                    <label for="password_confirmation" class="block text-white text-sm font-medium mb-1">Confirm New
                         Password</label>
-                    <div class="flex items-center border border-gray-300 rounded-lg">
+                    <div class="flex items-center border border-gray-300 bg-white rounded-lg">
                         <input
                             v-model="form.password_confirmation"
                             id="password_confirmation"

@@ -24,9 +24,9 @@ const passwordEyeIcon = computed(() => {
 
 <template>
     <div class="mb-4">
-        <label :for="label" class="block text-gray-700 text-sm font-medium mb-1">{{ labelName }}</label>
+        <label :for="label" class="block text-white text-sm font-medium mb-1">{{ labelName }}</label>
         <div
-            class="flex items-center border border-gray-300 rounded-lg"
+            class="flex items-center border border-gray-300 bg-white rounded-lg"
             :class="{'border-red-600':error}"
         >
             <input
