@@ -13,7 +13,6 @@ const props = defineProps<{
     <div class="flex min-h-screen">
         <Aside/>
         <main class="flex-1 p-6">
-            <h1 class="text-2xl font-semibold mb-6">Your Profile</h1>
 
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <div class="flex gap-6">
@@ -30,7 +29,7 @@ const props = defineProps<{
                         <p class="text-gray-500 text-sm mb-4">{{ props.userData.email }}</p>
 
                         <p class="text-gray-600 mb-4">
-                            Description
+                            {{ props.userData.description }}
                         </p>
 
                         <div class="flex flex-col gap-4 text-gray-600">
