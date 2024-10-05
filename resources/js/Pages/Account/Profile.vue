@@ -2,7 +2,6 @@
 import Aside from "../../Layouts/Aside.vue";
 import user from '@/Images/user.png';
 import type {UserInterface} from "@/Types/UserInterface";
-import {computed} from "vue";
 
 const props = defineProps<{
     userData: UserInterface
@@ -14,7 +13,7 @@ const props = defineProps<{
         <Aside/>
         <main class="flex-1 p-6">
 
-            <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="bg-black/40 p-6 rounded-lg shadow-md">
                 <div class="flex gap-6">
 
                     <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
@@ -25,30 +24,30 @@ const props = defineProps<{
                     </div>
 
                     <div class="flex-1">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-1">{{ props.userData.username }}</h2>
-                        <p class="text-gray-500 text-sm mb-4">{{ props.userData.email }}</p>
+                        <h2 class="text-2xl font-bold text-gray-300 mb-1">{{ props.userData.username }}</h2>
+                        <p class="text-gray-300 text-sm mb-4">{{ props.userData.email }}</p>
 
-                        <p class="text-gray-600 mb-4">
+                        <p class="text-gray-300 mb-4">
                             {{ props.userData.description }}
                         </p>
 
-                        <div class="flex flex-col gap-4 text-gray-600">
+                        <div class="flex flex-col gap-4 text-gray-300">
                             <div class="flex items-center">
-                                <p>Joined: <span class="font-semibold">{{ props.userData.created_at }}</span></p>
+                                <p>Joined: <span class="font-semibold text-gray-100">{{ props.userData.created_at }}</span></p>
                             </div>
                             <div class="flex items-center">
-                                <p>Points: <span class="font-semibold">53</span></p>
+                                <p>Points: <span class="font-semibold text-gray-100">53</span></p>
                             </div>
                             <div class="flex items-center">
-                                <p>Posts: <span class="font-semibold">120</span></p>
+                                <p>Posts: <span class="font-semibold text-gray-100">120</span></p>
                             </div>
                             <div class="flex items-center">
-                                <p>Topics Started: <span class="font-semibold">15</span></p>
+                                <p>Topics Started: <span class="font-semibold text-gray-100">15</span></p>
                             </div>
                         </div>
 
                         <div class="mt-4">
-                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Social Links</h3>
+                            <h3 class="text-lg font-semibold text-gray-300 mb-2">Social Links</h3>
                             <div class="flex gap-4">
                                 <a href="#" target="_blank" class="text-blue-500 hover:underline">Twitter</a>
                                 <a href="#" target="_blank" class="text-blue-500 hover:underline">LinkedIn</a>

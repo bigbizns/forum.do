@@ -27,7 +27,7 @@ class AccountController extends Controller
         return Inertia::render('Account/Settings', ['userData' => $user]);
     }
 
-    public function settingsStore(StoreSettingsUpdate $request)
+    public function settingsStore(StoreSettingsUpdate $request): RedirectResponse
     {
         $updatedData = $request->validated();
 
