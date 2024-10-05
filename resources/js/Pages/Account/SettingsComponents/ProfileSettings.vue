@@ -26,10 +26,10 @@ const submit = () => {
             <form @submit.prevent="submit" class="flex-1 space-y-4">
                 <div class="flex gap-6">
                     <div class="w-1/2">
-                    <FormInput v-model="form.username" label="name" label-name="Name" type="text" :error="form.errors.username"/>
+                    <FormInput v-model="form.username" label="name" label-name="Name" type="text" :error="form.errors.username ?? ''"/>
                     </div>
                     <div class="w-1/2">
-                        <FormInput v-model="form.email" label="email" label-name="Email" type="email" :error="form.errors.email"/>
+                        <FormInput v-model="form.email" label="email" label-name="Email" type="email" :error="form.errors.email ?? ''"/>
                     </div>
                 </div>
 
@@ -44,7 +44,7 @@ const submit = () => {
                     </textarea>
                     <small class="text-red-600 font-semibold">{{ form.errors.description }}</small>
                 </div>
-                <small class="text-green-500 font-semibold">{{$page.props.flash.message }}</small>
+                <small class="text-green-500 font-semibold">{{ $page.props.flash.profile_message }}</small>
                 <div class="mt-6">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Save Changes</button>
                 </div>
