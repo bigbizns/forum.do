@@ -12,7 +12,7 @@ import accheaven from '@/Images/ads/accHeavenLogo.png';
                     <img
                         :src="accheaven"
                         alt="Account heaven"
-                        class="transition duration-300 ease-in-out transform group-hover:scale-105 group-hover:shadow-lg rounded-md cursor-pointer"
+                        class="transition duration-300 ease-in-out transform shadow-lg rounded-md cursor-pointer"
                     />
                 </a>
             </div>
