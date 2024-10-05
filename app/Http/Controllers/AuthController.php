@@ -14,6 +14,7 @@ use App\Models\RecoveryLink as recovery_links;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -103,7 +104,7 @@ class AuthController extends Controller
         return Inertia::render('Auth/UpdatePassword');
     }
 
-    public function updatePasswordStore(StoreUpdatedPassword $request)
+    public function updatePasswordStore(StoreUpdatedPassword $request): RedirectResponse
     {
         $url = $this->getRequestURL();
 
@@ -121,6 +122,16 @@ class AuthController extends Controller
         $data->delete();
 
         return to_route('login')->with('message', 'Password updated successfully');
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::route('login');
     }
 
     /**

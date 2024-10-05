@@ -34,6 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/settings', [AccountController::class, 'settingsStore'])->name('settingsStore');
         Route::post('/settings/upload-avatar', [AccountController::class, 'avatarStore'])->name('avatarStore');
     });
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 
