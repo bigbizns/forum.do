@@ -12,7 +12,7 @@ const emit = defineEmits(['update:modelValue']);
 
 <template>
     <div class="mb-4">
-        <label :for="label" class="block text-gray-300 text-sm font-medium mb-1">{{ labelName }}</label>
+        <label :for="label" class="block text-white text-sm font-medium mb-1">{{ labelName }}</label>
         <input
             :id="label"
             :type="type"

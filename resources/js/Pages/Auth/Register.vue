@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import {Link, useForm} from "@inertiajs/vue3";
-import {computed, ref} from "vue";
-import openEye from '@/images/open-eye.png';
-import closeEye from '@/images/close-eye.png';
 import FormInput from "@/Components/FormInput.vue";
 import FormInputPassword from "@/Components/FormInputPassword.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -21,8 +18,8 @@ const submit = () => {
 
 <template>
     <div class="h-screen w-full flex items-center justify-center">
-        <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-lg">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+        <div class="bg-black/40 p-10 rounded-lg shadow-lg w-full max-w-lg">
+            <h1 class="text-3xl font-bold text-center text-white mb-6">
                 Sign Up
             </h1>
             <form @submit.prevent="submit">
@@ -34,7 +31,7 @@ const submit = () => {
                   <PrimaryButton text="Sign up" type="submit"/>
                 </div>
                 <div class="mt-4 text-center">
-                    <p class="text-gray-600">
+                    <p class="text-white">
                         Already have an account?
                         <Link :href="route('login')" class="text-blue-500 hover:text-blue-700 font-medium transition duration-300">Login</Link>
                     </p>
