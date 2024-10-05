@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import {Link} from "@inertiajs/vue3";
 import Footer from "@/Layouts/Footer.vue";
 import Navigation from "@/Layouts/Navigation.vue";
 </script>
+
 <template>
     <Navigation/>
     <div class="container mx-auto w-[90%] mt-8 h-screen">
@@ -31,7 +33,9 @@ import Navigation from "@/Layouts/Navigation.vue";
             <div class="bg-gray-800 rounded-lg">
                 <div class="flex flex-row p-3">
                     <div>
+                        <Link :href="route('user.profile',{id:1})">
                         <img src="https://imageio.forbes.com/specials-images/imageserve/6170e01f8d7639b95a7f2eeb/Sotheby-s-NFT-Natively-Digital-1-2-sale-Bored-Ape-Yacht-Club--8817-by-Yuga-Labs/0x0.png?format=png&width=960" alt="" class="max-w-12">
+                        </Link>
                     </div>
                     <div class="mx-5">
                         <div class="text-white">
