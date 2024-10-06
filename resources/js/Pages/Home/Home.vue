@@ -6,10 +6,10 @@ import Navigation from "@/Layouts/Navigation.vue";
 
 <template>
     <Navigation/>
-    <div class="container mx-auto w-[90%] mt-8 h-screen">
+    <div class="container mx-auto w-[90%] mt-20 h-screen">
         <!-- TODO: Finish the header section -->
         <div class="bg-gray-800 rounded-lg p-4 text-white shadow-lg">
-            <div class=" mb-4">
+            <div class="mb-4">
                 <h2 class="text-15 font-bold">Search Forum</h2>
             </div>
             <div>
