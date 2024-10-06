@@ -37,7 +37,7 @@ class AccountController extends Controller
             'description' => $updatedData['description'],
         ]);
 
-        return to_route('account.settings')->with('message', 'Your account Profile settings have been updated.');
+        return to_route('account.settings')->with('profile_message', 'Your account Profile settings have been updated.');
     }
 
     private function getUserInfo(): array
@@ -56,6 +56,6 @@ class AccountController extends Controller
 
         $user?->update(['avatar' => $path]);
 
-        return to_route('account.settings')->with('message', 'Avatar Uploaded');
+        return to_route('account.settings')->with('avatar_message', 'Avatar Uploaded');
     }
 }

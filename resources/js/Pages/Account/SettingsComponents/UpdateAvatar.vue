@@ -31,7 +31,7 @@ const submit = () => {
                     <input type="file" @input="change" class="text-white">
                 </div>
                 <small class="text-red-600 font-semibold">{{ form.errors.avatar }}</small>
-                <small class="text-green-500 font-semibold">{{ $page.props.flash.message }}</small>
+                <small class="text-green-500 font-semibold">{{ $page.props.flash.avatar_message }}</small>
                 <div>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
                         Update Avatar
