@@ -36,13 +36,16 @@ const props = defineProps<{
                                 <p>Joined: <span class="font-semibold text-gray-100">{{ props.userData.created_at }}</span></p>
                             </div>
                             <div class="flex items-center">
-                                <p>Points: <span class="font-semibold text-gray-100">53</span></p>
+                                <p>Points: <span class="font-semibold text-gray-100">{{ props.userData.points }}</span></p>
                             </div>
                             <div class="flex items-center">
-                                <p>Posts: <span class="font-semibold text-gray-100">120</span></p>
+                                <p>Posts: <span class="font-semibold text-gray-100">0</span></p>
                             </div>
                             <div class="flex items-center">
-                                <p>Topics Started: <span class="font-semibold text-gray-100">15</span></p>
+                                <p>Comments: <span class="font-semibold text-gray-100">0</span></p>
+                            </div>
+                            <div class="flex items-center">
+                                <p>Likes: <span class="font-semibold text-gray-100">0</span></p>
                             </div>
                         </div>
 

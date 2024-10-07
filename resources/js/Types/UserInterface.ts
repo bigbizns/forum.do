@@ -3,4 +3,5 @@ export interface UserInterface {
     email: string,
     created_at: string,
     description?: string,
+    points: number,
 }
