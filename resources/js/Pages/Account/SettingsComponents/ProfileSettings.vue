@@ -14,6 +14,10 @@ const form = useForm({
 });
 
 const submit = () => {
+    if ((props.userData.username === form.username) && (props.userData.email === form.email) && (props.userData.description === form.description)) {
+        return;
+    }
+
     form.post(route('account.settingsStore'));
 };
 </script>
