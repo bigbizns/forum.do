@@ -6,13 +6,16 @@ export interface User {
     avatar: string;
 }
 
+export interface FlashMessages {
+    profile_message?: string;
+    avatar_message?: string;
+    message?: string;
+    updatedPassword_message?: string;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
     };
-    locale: string;
-    locales: {
-        label: string;
-        value: string;
-    }[];
+    flash: FlashMessages;
 };
