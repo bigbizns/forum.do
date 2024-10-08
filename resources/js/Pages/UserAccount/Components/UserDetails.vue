@@ -6,7 +6,7 @@ import {getUsDate} from "@/Helpers/getUsDate";
 const props = defineProps<{
     userData: UserInterface
 }>();
-
+console.log(props);
 
 </script>
 
@@ -14,7 +14,7 @@ const props = defineProps<{
     <div class="max-w-5xl mx-auto bg-black/40 shadow-md rounded-lg overflow-hidden">
         <div class="relative px-6 py-4">
             <div class="left-6 flex gap-5 items-center">
-                <img :src="$page.props.auth.user.avatar ? `/storage/${$page.props.auth.user.avatar}` : user" alt="User Avatar" class="w-32 h-32 rounded-full shadow-md">
+                <img :src="props.userData.avatar ? `/storage/${props.userData.avatar}` : user" alt="User Avatar" class="w-32 h-32 rounded-full shadow-md">
                 <div class="flex flex-col">
                     <h2 class="text-2xl text-gray-300 font-bold">{{ props.userData.username }}</h2>
                     <div class="flex gap-3">
