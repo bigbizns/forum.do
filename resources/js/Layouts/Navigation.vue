@@ -2,8 +2,12 @@
 import {Link, usePage} from '@inertiajs/vue3';
 import user from '@/Images/user.png';
 import {computed} from "vue";
+import type {UserInterface} from "@/Types/UserInterface";
 
 const {props} = usePage();
+const secondProps = defineProps<{
+    userData: UserInterface
+}>();
 
 const userHasAvatar = computed(() => {
     return props.auth.user.avatar ? `/storage/${props.auth.user.avatar}` : user
@@ -11,7 +15,7 @@ const userHasAvatar = computed(() => {
 </script>
 
 <template>
-  <nav class="bg-black/60 text-white shadow-md fixed top-0 w-full z-50">
+  <nav class="bg-black/60 text-white shadow-lg fixed top-0 w-full z-50">
     <div class="flex items-center justify-between p-4 mx-auto max-w-7xl">
       <a href="#" class="text-2xl font-bold">f0rum</a>
       <ul class="hidden md:flex space-x-8 ">
@@ -22,6 +26,7 @@ const userHasAvatar = computed(() => {
       <div class="hidden md:flex space-x-4 ">
           <template v-if="!$page.props.auth.user">
               <Link :href="route('login')" class="duration-300 transition hover:text-blue-500">Login</Link>
+              <span>|</span>
               <Link :href="route('register')" class="duration-300 transition hover:text-blue-500">Register</Link>
           </template>
           <template v-else>
@@ -39,4 +44,14 @@ const userHasAvatar = computed(() => {
       </div>
     </div>
   </nav>
+    <template v-if="$page.props.auth.user && !secondProps.userData.email_verified_at">
+        <div class="fixed top-12 w-full z-50 bg-yellow-400 flex justify-center items-center py-3 shadow-lg rounded-md">
+            <div class="flex items-center text-gray-900 space-x-2">
+                <span class="font-bold">⚠️ Email not verified!</span>
+                <span class="text-sm">Please go to</span>
+                <Link :href="route('account.settings')" class="text-blue-600 font-semibold text-sm transition duration-300 hover:text-blue-500">Settings</Link>
+                <span class="text-sm">to verify your email.</span>
+            </div>
+        </div>
+    </template>
 </template>

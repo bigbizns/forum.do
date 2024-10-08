@@ -2,10 +2,15 @@
 import {Link} from "@inertiajs/vue3";
 import Footer from "@/Layouts/Footer.vue";
 import Navigation from "@/Layouts/Navigation.vue";
+import type {UserInterface} from "@/Types/UserInterface";
+
+const props = defineProps<{
+    userData: UserInterface
+}>();
 </script>
 
 <template>
-    <Navigation/>
+    <Navigation :user-data="props.userData"/>
     <div class="container mx-auto w-[90%] mt-20 h-screen">
         <!-- TODO: Finish the header section -->
         <div class="bg-gray-800 rounded-lg p-4 text-white shadow-lg">
