@@ -10,7 +10,7 @@ const isItCurrentUrl = (route: string) => {
 </script>
 
 <template>
-    <aside class="w-1/4 bg-black/40 p-6 drop-shadow-[0_4px_10px_rgba(255,255,255,0.4)] rounded-r">
+    <aside class="sticky top-0 h-screen w-1/4 bg-black/40 p-6 drop-shadow-[0_4px_10px_rgba(255,255,255,0.4)] rounded-r">
         <h2 class="text-lg text-gray-300 font-semibold mb-6">Menu</h2>
         <nav class="flex flex-col space-y-3">
             <Link :href="route('home')" class="text-white font-semibold hover:text-blue-600 transition-colors">Home</Link>
