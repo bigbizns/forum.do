@@ -6,7 +6,6 @@ import {getUsDate} from "@/Helpers/getUsDate";
 const props = defineProps<{
     userData: UserInterface
 }>();
-console.log(props);
 
 </script>
 
