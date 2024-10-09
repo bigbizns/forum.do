@@ -11,7 +11,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('loginStore'), {onError: () => form.reset('password', 'remember')});
+    form.post(route('login.store'), {onError: () => form.reset('password', 'remember')});
 };
 </script>
 

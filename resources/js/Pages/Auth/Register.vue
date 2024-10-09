@@ -12,7 +12,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('registerStore'), {onError: () => form.reset('password', 'password_confirmation')})
+    form.post(route('register.store'), {onError: () => form.reset('password', 'password_confirmation')})
 };
 </script>
 

@@ -11,7 +11,7 @@ const change = (e) => {
 };
 
 const submit = () => {
-    form.post(route('account.avatarStore'));
+    form.post(route('account.avatar.store'));
 };
 </script>
 

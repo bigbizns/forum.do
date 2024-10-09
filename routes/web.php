@@ -12,17 +12,17 @@ Route::get('/user/{id}', [UserController::class, 'showUsersProfile'])->name('use
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/register', [AuthController::class, 'registerStore'])->name('registerStore');
+    Route::post('/register', [AuthController::class, 'registerStore'])->name('register.store');
 
     Route::get('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/login', [AuthController::class, 'loginStore'])->name('loginStore');
+    Route::post('/login', [AuthController::class, 'loginStore'])->name('login.store');
 
     Route::get('/recover', [AuthController::class, 'recover'])->name('recover');
-    Route::post('/recover', [AuthController::class, 'recoverStore'])->name('recoverStore');
-    Route::get('/recover-send', [AuthController::class, 'recoverComplete'])->name('recoverSend');
+    Route::post('/recover', [AuthController::class, 'recoverStore'])->name('recover.store');
+    Route::get('/recover-send', [AuthController::class, 'recoverComplete'])->name('recover.send');
 
-    Route::get('/recover-password/{recoverUrl}', [AuthController::class, 'updatePassword'])->name('updatePassword');
-    Route::post('/recover-password/{recoverUrl}', [AuthController::class, 'updatePasswordStore'])->name('updatePasswordStore');
+    Route::get('/recover-password/{recoverUrl}', [AuthController::class, 'updatePassword'])->name('update.password');
+    Route::post('/recover-password/{recoverUrl}', [AuthController::class, 'updatePasswordStore'])->name('update.password.store');
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -31,10 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/settings', [AccountController::class, 'settings'])->name('settings');
 
-        Route::post('/settings', [AccountController::class, 'settingsStore'])->name('settingsStore');
-        Route::post('/settings/upload-avatar', [AccountController::class, 'avatarStore'])->name('avatarStore');
+        Route::post('/settings', [AccountController::class, 'settingsStore'])->name('settings.store');
+        Route::post('/settings/upload-avatar', [AccountController::class, 'avatarStore'])->name('avatar.store');
 
-        Route::post('/settings/updatePassword', [AccountController::class, 'updatePassword'])->name('updatePassword');
+        Route::post('/settings/updatePassword', [AccountController::class, 'updatePassword'])->name('update.password');
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

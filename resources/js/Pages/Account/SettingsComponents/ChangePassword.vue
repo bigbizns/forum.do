@@ -9,7 +9,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('account.updatePassword'), {
+    form.post(route('account.update.password'), {
         preserveScroll: true,
         onSuccess: () => form.reset('new_password', 'new_password_confirmation', 'current_password'),
         onError: () => form.reset('current_password')

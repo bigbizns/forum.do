@@ -6,7 +6,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('recoverStore'));
+    form.post(route('recover.store'));
 };
 </script>
 
