@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->string('email')->unique();
             $table->string('code');
-            $table->string('verification_link');
             $table->timestamps();
         });
     }

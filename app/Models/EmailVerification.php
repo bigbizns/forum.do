@@ -16,7 +16,6 @@ class EmailVerification extends Model
         'email',
         'user_id',
         'code',
-        'verification_link'
     ];
 
     public function User(): belongsTo

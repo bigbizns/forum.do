@@ -86,24 +86,22 @@ class AccountController extends Controller
     public function sendVerifyEmail(): RedirectResponse
     {
         $user = Auth::user();
-        $endpoint = $this->generateRandomString();
         $code = strtoupper($this->generateRandomString(LengthEnum::Five->value));
+        $existingCode = EmailVerificationModel::where('user_id',$user?->id)->first();
 
-        Mail::to($user?->email)->queue(new EmailVerification($endpoint, $code));
+        if ($existingCode) {
+           $existingCode->delete();
+        }
+
+        Mail::to($user?->email)->queue(new EmailVerification($code));
 
         EmailVerificationModel::create([
             'email' => $user?->email,
             'code' => $code,
-            'user_id' => $user?->id,
-            'verification_link' => $endpoint,
+            'user_id' => $user?->id
         ]);
 
         return to_route('account.settings')->with('email_message', 'Your email verification link has been sent to your email address.');
-    }
-
-    public function verifyEmail(): Response
-    {
-        return Inertia::render('Account/VerifyEmail');
     }
 
     public function verifyEmailStore(StoreVerifyEmailCode $request): RedirectResponse

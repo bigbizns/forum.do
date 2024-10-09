@@ -36,11 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/settings/updatePassword', [AccountController::class, 'updatePassword'])->name('updatePassword');
 
-        Route::post('/settings/verify-email', [AccountController::class, 'sendVerifyEmail'])->name('sendVerifyEmail');
+        Route::post('/settings/send-verification-email', [AccountController::class, 'sendVerifyEmail'])->name('sendVerifyEmail');
+        Route::post('/settings/verify-email', [AccountController::class, 'verifyEmailStore'])->name('verifyEmailStore');
     });
-
-    Route::get('/verify-email/{verifyLink}', [AccountController::class, 'verifyEmail'])->name('verifyEmail');
-    Route::post('/verify-email', [AccountController::class, 'verifyEmailStore'])->name('verifyEmailStore');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -47,8 +47,7 @@
     <div class="header"><h2>Email verify Request</h2></div>
     <p>We received a request to verify your email.</p>
     <p>Your Code: <b style="color: #007bff">{{ $code }} </b></p>
-    <a href="{{ url('/verify-email/' . $verifyLink ) }}" class="button" style="color: #007bff">Verify email</a>
-    <p>If you did not request a password reset, please ignore this email.</p>
+    <p>If you did not request a Email verification, please ignore this email.</p>
 </div>
 </body>
 </html>
