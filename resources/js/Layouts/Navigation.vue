@@ -1,49 +1,67 @@
 <script lang="ts" setup>
-import {Link, usePage} from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import user from '@/Images/user.png';
-import {computed} from "vue";
+import { computed, ref } from "vue";
+import Separator from "@/Components/Separator.vue";
 import type {UserInterface} from "@/Types/UserInterface";
 
-const {props} = usePage();
+const { props } = usePage();
 const secondProps = defineProps<{
     userData: UserInterface
 }>();
 
+const modalOpen = ref<boolean>(false);
+
 const userHasAvatar = computed(() => {
-    return props.auth.user.avatar ? `/storage/${props.auth.user.avatar}` : user
+    return props.auth.user.avatar ? `/storage/${props.auth.user.avatar}` : user;
 });
+
+const toggleModal = () => {
+    modalOpen.value = !modalOpen.value;
+};
 </script>
 
 <template>
-  <nav class="bg-black/60 text-white shadow-lg fixed top-0 w-full z-50">
-    <div class="flex items-center justify-between p-4 mx-auto max-w-7xl">
-      <a href="#" class="text-2xl font-bold">f0rum</a>
-      <ul class="hidden md:flex space-x-8 ">
-        <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Home</Link></li>
-        <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Forums</Link></li>
-        <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Contact</Link></li>
-      </ul>
-      <div class="hidden md:flex space-x-4 ">
-          <template v-if="!$page.props.auth.user">
-              <Link :href="route('login')" class="duration-300 transition hover:text-blue-500">Login</Link>
-              <span>|</span>
+    <nav class="bg-black/60 text-white shadow-lg fixed top-0 w-full z-50">
+        <div class="flex items-center justify-between p-4 mx-auto max-w-7xl">
+            <a href="#" class="text-2xl font-bold">f0rum</a>
+            <ul class="hidden md:flex space-x-8 ">
+                <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Home</Link></li>
+                <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Forums</Link></li>
+                <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Contact</Link></li>
+            </ul>
+            <div class="hidden md:flex space-x-4 ">
+                <template v-if="!$page.props.auth.user">
+                    <Link :href="route('login')" class="duration-300 transition hover:text-blue-500">Login</Link>
+                    <span>|</span>
               <Link :href="route('register')" class="duration-300 transition hover:text-blue-500">Register</Link>
-          </template>
-          <template v-else>
-              <img :src="userHasAvatar"
-                   alt="User Avatar"
-                   class="w-7 h-7 object-cover rounded-full shadow-2xl"
-                    :class="{'bg-white':!$page.props.auth.user.avatar}"
-              >
-          </template>
-      </div>
-      <div class="md:hidden">
-        <svg class="w-8 h-8 text-white cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-      </div>
-    </div>
-  </nav>
+                </template>
+                <template v-else>
+                    <div class="relative inline-block">
+                        <img :src="userHasAvatar"
+                             @click="toggleModal"
+                             alt="User Avatar"
+                             class="w-7 h-7 object-cover rounded-full shadow-2xl cursor-pointer"
+                             :class="{'bg-white': !$page.props.auth.user.avatar}"
+                        >
+                        <template v-if="modalOpen">
+                            <div class="flex flex-col text-black absolute top-8 right-0 bg-white w-40 rounded-lg shadow-lg p-2 border border-gray-200 z-50">
+                                <Link :href="route('account.profile')" class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">Profile</Link>
+                                <Link :href="route('account.settings')" class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">Settings</Link>
+                                <Separator />
+                                <Link :href="route('logout')" method="post" class="text-red-600 py-2 hover:text-red-400 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">Logout</Link>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+            <div @click="toggleModal" class="md:hidden">
+                <svg class="w-8 h-8 text-white cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </div>
+        </div>
+    </nav>
     <template v-if="$page.props.auth.user && !secondProps.userData.email_verified_at">
         <div class="fixed top-12 w-full z-50 bg-yellow-400 flex justify-center items-center py-3 shadow-lg rounded-md">
             <div class="flex items-center text-gray-900 space-x-2">
