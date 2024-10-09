@@ -28,8 +28,11 @@ const form = useForm({
     password_confirmation: null,
 });
 
+const path = window.location.pathname;
+const recoveryLink = path.split('/').pop();
+
 const submit = () => {
-    form.post('');
+    form.post(route('update.password.store', {recoverUrl: recoveryLink}));
 };
 </script>
 

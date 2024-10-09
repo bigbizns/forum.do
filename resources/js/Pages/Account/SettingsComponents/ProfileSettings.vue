@@ -18,7 +18,7 @@ const submit = () => {
         return;
     }
 
-    form.post(route('account.settingsStore'));
+    form.post(route('account.settings.store'));
 };
 </script>
 

@@ -91,7 +91,7 @@ class AuthController extends Controller
             'updated_at' => Carbon::now(),
         ]);
 
-        return to_route('recoverSend');
+        return to_route('recover.send');
     }
 
     public function recoverComplete(): Response
