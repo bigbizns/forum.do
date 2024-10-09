@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +36,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/settings/upload-avatar', [AccountController::class, 'avatarStore'])->name('avatar.store');
 
         Route::post('/settings/updatePassword', [AccountController::class, 'updatePassword'])->name('update.password');
+
+        Route::post('/settings/send-verification-email', [AccountController::class, 'sendVerifyEmail'])->name('sendVerifyEmail');
+        Route::post('/settings/verify-email', [AccountController::class, 'verifyEmailStore'])->name('verifyEmailStore');
     });
+
+    Route::get('/forum', PostController::class)->name('all.forum');
+    Route::get('/create-post', [PostController::class, 'create'])->name('post.create');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

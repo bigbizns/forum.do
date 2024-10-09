@@ -11,6 +11,7 @@ export interface FlashMessages {
     avatar_message?: string;
     message?: string;
     updatedPassword_message?: string;
+    email_message: string;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {

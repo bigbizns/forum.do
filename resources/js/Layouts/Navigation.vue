@@ -3,9 +3,15 @@ import { Link, usePage } from '@inertiajs/vue3';
 import user from '@/Images/user.png';
 import { computed, ref } from "vue";
 import Separator from "@/Components/Separator.vue";
+import type {UserInterface} from "@/Types/UserInterface";
 
 const { props } = usePage();
+const secondProps = defineProps<{
+    userData: UserInterface
+}>();
+
 const modalOpen = ref<boolean>(false);
+const forumsModalOpen = ref<boolean>(false);
 
 const userHasAvatar = computed(() => {
     return props.auth.user.avatar ? `/storage/${props.auth.user.avatar}` : user;
@@ -14,21 +20,36 @@ const userHasAvatar = computed(() => {
 const toggleModal = () => {
     modalOpen.value = !modalOpen.value;
 };
+const toggleForumModal = () => {
+    forumsModalOpen.value = !forumsModalOpen.value;
+};
 </script>
 
 <template>
-    <nav class="bg-black/60 text-white shadow-md fixed top-0 w-full z-50">
+    <nav class="bg-black/60 text-white shadow-lg fixed top-0 w-full z-50">
         <div class="flex items-center justify-between p-4 mx-auto max-w-7xl">
             <a href="#" class="text-2xl font-bold">f0rum</a>
             <ul class="hidden md:flex space-x-8 ">
                 <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Home</Link></li>
-                <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Forums</Link></li>
+                <li>
+                    <div @click="toggleForumModal" class="flex items-center duration-300 transition cursor-pointer hover:text-blue-500 group">
+                        Forums
+                        <svg class="w-3 ml-2 group-hover:fill-blue-500" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 15l-8-8h16z"/></svg>
+                    </div>
+                </li>
+                <template v-if="forumsModalOpen">
+                    <div class="flex flex-col text-black absolute top-14 right-50 bg-white w-40 rounded-lg shadow-lg p-2 border border-gray-200 z-50">
+                        <Link :href="route('all.forum')" class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">All Forum posts</Link>
+                        <Link :href="route('post.create')" class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">Create Post</Link>
+                    </div>
+                </template>
                 <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Contact</Link></li>
             </ul>
             <div class="hidden md:flex space-x-4 ">
                 <template v-if="!$page.props.auth.user">
                     <Link :href="route('login')" class="duration-300 transition hover:text-blue-500">Login</Link>
-                    <Link :href="route('register')" class="duration-300 transition hover:text-blue-500">Register</Link>
+                    <span>|</span>
+              <Link :href="route('register')" class="duration-300 transition hover:text-blue-500">Register</Link>
                 </template>
                 <template v-else>
                     <div class="relative inline-block">
