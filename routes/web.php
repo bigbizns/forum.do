@@ -36,6 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/settings/upload-avatar', [AccountController::class, 'avatarStore'])->name('avatarStore');
 
         Route::post('/settings/updatePassword', [AccountController::class, 'updatePassword'])->name('updatePassword');
+
+        Route::post('/settings/send-verification-email', [AccountController::class, 'sendVerifyEmail'])->name('sendVerifyEmail');
+        Route::post('/settings/verify-email', [AccountController::class, 'verifyEmailStore'])->name('verifyEmailStore');
     });
 
     Route::get('/forum', PostController::class)->name('all.forum');

@@ -5,4 +5,5 @@ export interface UserInterface {
     description?: string,
     points: number,
     avatar: string
+    email_verified_at: string,
 }

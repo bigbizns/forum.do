@@ -3,8 +3,13 @@ import { Link, usePage } from '@inertiajs/vue3';
 import user from '@/Images/user.png';
 import { computed, ref } from "vue";
 import Separator from "@/Components/Separator.vue";
+import type {UserInterface} from "@/Types/UserInterface";
 
 const { props } = usePage();
+const secondProps = defineProps<{
+    userData: UserInterface
+}>();
+
 const modalOpen = ref<boolean>(false);
 const forumsModalOpen = ref<boolean>(false);
 
@@ -21,7 +26,7 @@ const toggleForumModal = () => {
 </script>
 
 <template>
-    <nav class="bg-black/60 text-white shadow-md fixed top-0 w-full z-50">
+    <nav class="bg-black/60 text-white shadow-lg fixed top-0 w-full z-50">
         <div class="flex items-center justify-between p-4 mx-auto max-w-7xl">
             <a href="#" class="text-2xl font-bold">f0rum</a>
             <ul class="hidden md:flex space-x-8 ">
@@ -43,7 +48,8 @@ const toggleForumModal = () => {
             <div class="hidden md:flex space-x-4 ">
                 <template v-if="!$page.props.auth.user">
                     <Link :href="route('login')" class="duration-300 transition hover:text-blue-500">Login</Link>
-                    <Link :href="route('register')" class="duration-300 transition hover:text-blue-500">Register</Link>
+                    <span>|</span>
+              <Link :href="route('register')" class="duration-300 transition hover:text-blue-500">Register</Link>
                 </template>
                 <template v-else>
                     <div class="relative inline-block">
