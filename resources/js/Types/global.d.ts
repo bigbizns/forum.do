@@ -20,3 +20,6 @@ declare module 'vue' {
 declare module '@inertiajs/core' {
     interface PageProps extends InertiaPageProps, AppPageProps {}
 }
+interface ImportMeta {
+    glob: (pattern: string) => Record<string, () => Promise<any>>;
+}

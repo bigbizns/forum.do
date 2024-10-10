@@ -3,12 +3,8 @@ import { Link, usePage } from '@inertiajs/vue3';
 import user from '@/Images/user.png';
 import { computed, ref } from "vue";
 import Separator from "@/Components/Separator.vue";
-import type {UserInterface} from "@/Types/UserInterface";
 
 const { props } = usePage();
-const secondProps = defineProps<{
-    userData: UserInterface
-}>();
 
 const modalOpen = ref<boolean>(false);
 const forumsModalOpen = ref<boolean>(false);
