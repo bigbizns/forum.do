@@ -10,7 +10,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <Navigation :user-data="props.userData"/>
+    <Navigation/>
     <template v-if="$page.props.auth.user && !props.userData.email_verified_at">
         <div class="fixed top-12 w-full z-50 bg-yellow-400 flex justify-center items-center py-3 shadow-lg rounded-md">
             <div class="flex items-center text-gray-900 space-x-2">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -35,14 +36,17 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/settings', [AccountController::class, 'settingsStore'])->name('settings.store');
         Route::post('/settings/upload-avatar', [AccountController::class, 'avatarStore'])->name('avatar.store');
 
-        Route::post('/settings/updatePassword', [AccountController::class, 'updatePassword'])->name('update.password');
+        Route::post('/settings/update-password', [AccountController::class, 'updatePassword'])->name('update.password');
 
-        Route::post('/settings/send-verification-email', [AccountController::class, 'sendVerifyEmail'])->name('sendVerifyEmail');
-        Route::post('/settings/verify-email', [AccountController::class, 'verifyEmailStore'])->name('verifyEmailStore');
+        Route::post('/settings/send-verification-email', [AccountController::class, 'sendVerifyEmail'])->name('send.verify.email');
+        Route::post('/settings/verify-email', [AccountController::class, 'verifyEmailStore'])->name('verify.email.store');
     });
 
-    Route::get('/forum', PostController::class)->name('all.forum');
+    Route::get('/forum', PostController::class)->name('forum');
     Route::get('/create-post', [PostController::class, 'create'])->name('post.create');
+
+    Route::get('/contact-us', ContactUsController::class)->name('contactus');
+    Route::post('/contact-us-store', [ContactUsController::class, 'store'])->name('contactus.store');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
