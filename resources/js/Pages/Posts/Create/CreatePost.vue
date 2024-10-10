@@ -16,7 +16,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('post.store'));
+    form.post(route('post.store'), {onSuccess: () => form.reset('title', 'category', 'pinned', 'description')});
 };
 </script>
 
