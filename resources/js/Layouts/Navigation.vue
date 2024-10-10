@@ -3,12 +3,8 @@ import { Link, usePage } from '@inertiajs/vue3';
 import user from '@/Images/user.png';
 import { computed, ref } from "vue";
 import Separator from "@/Components/Separator.vue";
-import type {UserInterface} from "@/Types/UserInterface";
 
 const { props } = usePage();
-const secondProps = defineProps<{
-    userData: UserInterface
-}>();
 
 const modalOpen = ref<boolean>(false);
 const forumsModalOpen = ref<boolean>(false);
@@ -39,11 +35,11 @@ const toggleForumModal = () => {
                 </li>
                 <template v-if="forumsModalOpen">
                     <div class="flex flex-col text-black absolute top-14 right-50 bg-white w-40 rounded-lg shadow-lg p-2 border border-gray-200 z-50">
-                        <Link :href="route('all.forum')" class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">All Forum posts</Link>
+                        <Link :href="route('forum')" class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">All Forum posts</Link>
                         <Link :href="route('post.create')" class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">Create Post</Link>
                     </div>
                 </template>
-                <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Contact</Link></li>
+                <li><Link :href="route('contactus')" class="duration-300 transition hover:text-blue-500">Contact</Link></li>
             </ul>
             <div class="hidden md:flex space-x-4 ">
                 <template v-if="!$page.props.auth.user">

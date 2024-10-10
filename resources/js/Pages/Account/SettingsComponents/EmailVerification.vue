@@ -6,14 +6,14 @@ const form = useForm({});
 const formSubmited = ref<boolean>(false);
 
 const submit = () => {
-    form.post(route('account.sendVerifyEmail'), {onSuccess: () => formSubmited.value = true});
+    form.post(route('account.send.verify.email'), {onSuccess: () => formSubmited.value = true});
 };
 const verificationform = useForm({
     code: null,
 });
 
 const submitVerification = () => {
-    verificationform.post(route('account.verifyEmailStore'))
+    verificationform.post(route('account.verify.email.store'))
 }
 </script>
 
