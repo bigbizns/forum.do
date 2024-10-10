@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/create-post', [PostController::class, 'create'])->name('post.create');
 
     Route::get('/contact-us', ContactUsController::class)->name('contactus');
-    Route::post('/contact-us-store', [ContactUsController::class, 'store'])->name('contactus.store');
+    Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contactus.store');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

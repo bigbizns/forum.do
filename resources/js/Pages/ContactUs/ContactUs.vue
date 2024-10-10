@@ -26,7 +26,7 @@ const submit = () => {
                 <form @submit.prevent="submit" class="space-y-6">
                     <div>
                         <div class="w-full max-w-xs">
-                            <label for="feedback" class="block text-sm font-medium text-white mb-2">Select Feedback Type</label>
+                            <label for="feedback" class="block text-sm font-medium text-white mb-2">Topic</label>
                             <select v-model="form.topic" id="feedback" name="feedback" class="block w-full p-2.5 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                 <option value="" selected disabled>Select</option>
                                 <option v-for="topic in topics" :value="topic.name">{{ topic.value }}</option>
@@ -50,7 +50,7 @@ const submit = () => {
                     </div>
                     <div>
                         <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-md shadow-md transition duration-300 ease-in-out">
-                            Contact
+                            Submit
                         </button>
                     </div>
                 </form>
