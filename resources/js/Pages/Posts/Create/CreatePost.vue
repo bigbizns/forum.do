@@ -41,8 +41,8 @@ const submit = () => {
                     <label for="category" class="block text-sm font-medium text-white mb-2">Select Category</label>
                     <select v-model="form.category" id="category" name="category"
                             class="block w-full p-2.5 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option v-for="category in categories" :value="category.value" :key="category.value">
-                            {{ category.name }}
+                        <option v-for="category in categories" :value="category.id" :key="category.id">
+                            {{ category.title }}
                         </option>
                     </select>
                     <small class="text-red-600 font-semibold">{{ form.errors.category }}</small>

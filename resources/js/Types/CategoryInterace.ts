@@ -1,4 +1,4 @@
 export interface CategoryInterace {
-    name: string,
-    value: string
+    id: string,
+    title: string
 }

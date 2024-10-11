@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\CategoryEnum;
 use App\Http\Requests\StorePost;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class PostController extends Controller
 
     public function create(): Response
     {
-        $categories = CategoryEnum::getCategories();
+        $categories = Category::all(['id','title']);
 
         return Inertia::render('Posts/Create/CreatePost', ['categories' => $categories]);
     }
@@ -33,7 +34,7 @@ class PostController extends Controller
         Post::create([
             'user_id' => Auth::user()->id,
             'title' => $data['title'],
-            'category' => $data['category'],
+            'category_id' => $data['category'],
             'pinned' => $data['pinned'],
             'description' => $data['description'],
         ]);
