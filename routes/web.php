@@ -12,6 +12,8 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::get('/user/{id}', [UserController::class, 'showUsersProfile'])->name('user.profile');
 
+Route::get('/post/{id}', [PostController::class, 'showPost'])->name('post.show');
+
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'registerStore'])->name('register.store');

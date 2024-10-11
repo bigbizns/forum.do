@@ -9,6 +9,7 @@ use App\Http\Requests\StorePost;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -18,6 +19,13 @@ class PostController extends Controller
     public function __invoke(): Response
     {
         return Inertia::render('Posts/Index/ForumIndex');
+    }
+
+    public function showPost(string $id):Response
+    {
+        $post = Post::find($id);
+
+        return Inertia::render('Posts/Show/ShowPost', ['post' => $post]);
     }
 
     public function create(): Response
