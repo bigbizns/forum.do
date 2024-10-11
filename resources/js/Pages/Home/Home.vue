@@ -3,9 +3,11 @@ import {Link} from "@inertiajs/vue3";
 import Footer from "@/Layouts/Footer.vue";
 import Navigation from "@/Layouts/Navigation.vue";
 import type {UserInterface} from "@/Types/UserInterface";
+import Post from "@/Components/Post.vue";
 
 const props = defineProps<{
     userData: UserInterface
+    recentPosts: PostInterface[];
 }>();
 </script>
 
@@ -44,6 +46,7 @@ const props = defineProps<{
             </div>
         </div>
         <!-- TODO: Finish the forum section-->
+        <!--TODO: Replace with UI POST-->
         <div class="bg-gray-700 pt-2">
             <div class="bg-gray-800 rounded-lg">
                 <div class="flex flex-row p-3">
@@ -74,6 +77,13 @@ const props = defineProps<{
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="mt-10">
+            <div class="bg-black/40 flex flex-col gap-4 rounded-lg p-4 mt-2">
+                <h1 class="text-white text-xl">Recent Posts</h1>
+                <Post v-for="post in recentPosts" :key="post.title" :title="post.title" :id="post.id" :description="post.description"/>
             </div>
         </div>
     </div>
