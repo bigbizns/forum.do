@@ -8,20 +8,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class EmailVerification extends Model
+class Category extends Model
 {
     use HasFactory;
 
-    protected $table = 'email_verification_links';
-
     protected $fillable = [
-        'email',
-        'user_id',
-        'code',
+        'title'
     ];
 
-    public function User(): belongsTo
+    public function Post(): belongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Post::class);
     }
 }
