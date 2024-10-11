@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function __invoke(): Response
     {
         $user = $this->getUserInfo();
-        $recentPosts = Post::all();
+        $recentPosts = Post::all()->sortByDesc('created_at');
         return Inertia::render('Home/Home', ['userData' => $user, 'recentPosts' => $recentPosts]);
     }
 
