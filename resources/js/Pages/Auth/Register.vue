@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Link, useForm} from "@inertiajs/vue3";
+import {Head, Link, useForm} from "@inertiajs/vue3";
 import FormInput from "@/Components/FormInput.vue";
 import FormInputPassword from "@/Components/FormInputPassword.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -17,6 +17,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Register"/>
     <div class="h-screen w-full flex items-center justify-center">
         <div class="bg-black/40 p-10 rounded-lg shadow-lg w-full max-w-lg">
             <h1 class="text-3xl font-bold text-center text-white mb-6">

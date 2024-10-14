@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {Link, useForm} from "@inertiajs/vue3";
+import {Head, Link, useForm} from "@inertiajs/vue3";
 
 const form = useForm({
     email: null
@@ -11,6 +11,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Recovery"/>
     <div class="h-screen w-full flex items-center justify-center">
         <div class="bg-black/40 rounded-lg shadow-lg w-full max-w-lg">
             <Link :href="route('login')" class="relative text-white top-3 left-6 transition duration-100 hover:text-blue-500">

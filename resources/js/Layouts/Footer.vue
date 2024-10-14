@@ -24,7 +24,7 @@ import accheaven from '@/Images/ads/accHeavenLogo.png';
                     <li><Link href="#" class="transition duration-300 hover:text-blue-500">About Us</Link></li>
                     <li><Link href="#" class="transition duration-300 hover:text-blue-500">Services</Link></li>
                     <li><Link href="#" class="transition duration-300 hover:text-blue-500">Blog</Link></li>
-                    <li><Link href="#" class="transition duration-300 hover:text-blue-500">Contact</Link></li>
+                    <li><Link :href="route('contactus')" class="transition duration-300 hover:text-blue-500">Contact</Link></li>
                 </ul>
             </div>
 

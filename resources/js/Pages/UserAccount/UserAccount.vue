@@ -6,6 +6,7 @@ import UserDetails from "@/Pages/UserAccount/Components/UserDetails.vue";
 import UserStatus from "@/Pages/UserAccount/Components/UserStatus.vue";
 import ActivityCard from "@/Pages/UserAccount/Components/ActivityCard.vue";
 import RecentPostCard from "@/Pages/UserAccount/Components/RecentPostCard.vue";
+import {Head} from "@inertiajs/vue3";
 
 const props = defineProps<{
     userData: UserInterface
@@ -13,7 +14,8 @@ const props = defineProps<{
 </script>
 
 <template>
-<Navigation/>
+    <Head :title=userData.username />
+    <Navigation/>
     <div class="min-h-screen mt-10 py-8">
         <UserDetails :user-data="userData"/>
             <!--@TODO:ADD REAL TRACKING OF USERS COMMENTS,LIKES,POINTS-->

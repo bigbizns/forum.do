@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
-import {Link} from "@inertiajs/vue3";
+import {Link,Head} from "@inertiajs/vue3";
 </script>
 
 <template>
+    <Head title="All posts" />
+
     <Navigation/>
     <div class="mt-20 container h-screen mx-auto p-6">
         <h1 class="text-3xl font-bold text-white mb-6">All Forum Posts</h1>
