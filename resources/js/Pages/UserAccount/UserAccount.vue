@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {UserInterface} from "@/Types/UserInterface";
+import {UserInterface, UsersPostsInterface} from "@/Types/UserInterface";
 import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
 import UserDetails from "@/Pages/UserAccount/Components/UserDetails.vue";
@@ -9,6 +9,7 @@ import RecentPostCard from "@/Pages/UserAccount/Components/RecentPostCard.vue";
 
 const props = defineProps<{
     userData: UserInterface
+    userPosts:UsersPostsInterface[]
 }>();
 </script>
 
@@ -36,7 +37,7 @@ const props = defineProps<{
         <div class="max-w-5xl mx-auto mt-6 bg-black/40 p-6 rounded-lg shadow-md">
             <h3 class="text-xl text-gray-500 font-semibold mb-3">Recent Posts</h3>
             <div class="space-y-4">
-                <RecentPostCard/>
+                <RecentPostCard :user-posts="userPosts"/>
             </div>
         </div>
     </div>
