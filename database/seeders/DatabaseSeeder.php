@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(6)->create();
-
         Category::factory(6)->create();
         Post::factory(4)->create();
     }
