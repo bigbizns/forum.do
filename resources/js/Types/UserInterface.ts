@@ -4,6 +4,6 @@ export interface UserInterface {
     created_at: string,
     description?: string,
     points: number,
-    avatar: string
+    avatar: string,
     email_verified_at: string,
 }
