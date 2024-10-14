@@ -21,9 +21,9 @@ class PostController extends Controller
         return Inertia::render('Posts/Index/ForumIndex');
     }
 
-    public function showPost(string $id):Response
+    public function showPost(int $id):Response
     {
-        $post = Post::find($id);
+        $post = $this->getPostInfo($id);
 
         return Inertia::render('Posts/Show/ShowPost', ['post' => $post]);
     }
@@ -49,5 +49,17 @@ class PostController extends Controller
 
         return to_route('home');
         //@TODO: Navigate User to his created post when available
+    }
+
+    private function getPostInfo(int $id):array
+    {
+        $data = Post::find($id);
+
+        return [
+            'title' => $data->title,
+            'description' => $data->description,
+            'createdAt' => $data->created_at,
+            'author'=> $data->user,
+        ];
     }
 }
