@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Link} from "@inertiajs/vue3";
+import {Head, Link} from "@inertiajs/vue3";
 import Footer from "@/Layouts/Footer.vue";
 import Navigation from "@/Layouts/Navigation.vue";
 import type {UserInterface} from "@/Types/UserInterface";
@@ -12,6 +12,7 @@ const props = defineProps<{
 </script>
 
 <template>
+    <Head title="Home"/>
     <Navigation/>
     <template v-if="$page.props.auth.user && !props.userData.email_verified_at">
         <div class="fixed top-12 w-full z-50 bg-yellow-400 flex justify-center items-center py-3 shadow-lg rounded-md">

@@ -9,7 +9,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 
 createInertiaApp({
-    title: (title) => `f0rum ${title ? ` | ${title}`: ''}`,
+    title: (title) => `forum.do ${title ? ` | ${title}`: ''}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob<DefineComponent>('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })

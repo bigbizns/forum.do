@@ -2,6 +2,7 @@
 import Aside from "../../Layouts/Aside.vue";
 import user from '@/Images/user.png';
 import type {UserInterface} from "@/Types/UserInterface";
+import {Head} from "@inertiajs/vue3";
 
 const props = defineProps<{
     userData: UserInterface
@@ -9,6 +10,7 @@ const props = defineProps<{
 </script>
 
 <template>
+    <Head title="Profile"/>
     <div class="flex min-h-screen">
         <Aside/>
         <main class="flex-1 p-6">

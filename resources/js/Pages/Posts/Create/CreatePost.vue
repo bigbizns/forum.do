@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
-import { useForm } from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 import { CategoryInterace } from "@/Types/CategoryInterace";
 
 defineProps<{
@@ -21,6 +21,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Create Post"/>
     <Navigation/>
     <div class="mt-20 mb-5 max-w-3xl mx-auto p-8 bg-black/40 shadow-lg rounded-lg">
         <h2 class="text-2xl font-bold mb-6 text-white">Create Post</h2>

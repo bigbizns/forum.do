@@ -2,6 +2,7 @@
 import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
 import Separator from "@/Components/Separator.vue";
+import {Head} from "@inertiajs/vue3";
 
 defineProps<{
     post: PostInterface
@@ -9,6 +10,7 @@ defineProps<{
 </script>
 
 <template>
+    <Head :title="post.title"/>
     <Navigation/>
     <div class="h-screen">
         <div class="container mx-auto mt-20 p-6 bg-black/40 shadow-md rounded-lg">
