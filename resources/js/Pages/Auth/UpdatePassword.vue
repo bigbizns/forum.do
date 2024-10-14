@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
-import {useForm} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 import openEye from '@/images/open-eye.png';
 import closeEye from '@/images/close-eye.png';
 
@@ -37,6 +37,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Recovery"/>
     <div class="h-screen w-full flex items-center justify-center">
         <div class="bg-black/40 rounded-lg shadow-lg w-full max-w-lg">
             <form @submit.prevent="submit" class="p-10">

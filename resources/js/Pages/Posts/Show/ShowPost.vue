@@ -4,7 +4,7 @@ import Footer from "@/Layouts/Footer.vue";
 import Separator from "@/Components/Separator.vue";
 import {getUsDate} from "@/Helpers/getUsDate";
 import {computed} from "vue";
-import {Link} from "@inertiajs/vue3";
+import {Link,Head} from "@inertiajs/vue3";
 
 const props = defineProps<{
     post: PostInterface
@@ -17,6 +17,7 @@ const formattedDate = computed(() => {
 </script>
 
 <template>
+    <Head :title="post.title"/>
     <Navigation/>
     <div class="h-screen">
         <div class="container mx-auto mt-20 p-6 bg-black/40 shadow-md rounded-lg">

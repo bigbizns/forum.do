@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import {Head} from "@inertiajs/vue3";
 </script>
 
 <template>
+    <Head title="Recovery"/>
     <div class="h-screen w-full flex items-center justify-center">
         <div class="bg-black/40 rounded-lg shadow-lg w-full p-4 max-w-lg">
             <h1 class="text-3xl text-white text-center font-extrabold mb-4">

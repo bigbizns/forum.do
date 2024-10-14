@@ -2,7 +2,7 @@
 import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
 import {TopicsInterface} from "@/Types/TopicsInterface";
-import {useForm} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 
 const props = defineProps<{
     topics: TopicsInterface[]
@@ -19,6 +19,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Contact Us"/>
     <Navigation/>
         <div class="mt-20 h-screen">
             <div class="mt-20 mb-5 max-w-3xl mx-auto p-8 bg-black/40 shadow-lg rounded-lg">

@@ -24,7 +24,7 @@ const toggleForumModal = () => {
 <template>
     <nav class="bg-black/60 text-white shadow-lg fixed top-0 w-full z-50">
         <div class="flex items-center justify-between p-4 mx-auto max-w-7xl">
-            <a href="#" class="text-2xl font-bold">f0rum</a>
+            <Link :href="route('home')" class="text-2xl font-bold">forum.do</Link>
             <ul class="hidden md:flex space-x-8 ">
                 <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Home</Link></li>
                 <li>
