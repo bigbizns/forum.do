@@ -9,7 +9,7 @@ import RecentPostCard from "@/Pages/UserAccount/Components/RecentPostCard.vue";
 
 const props = defineProps<{
     userData: UserInterface
-    userPosts:UsersPostsInterface[]
+    userPosts: UsersPostsInterface[]
 }>();
 </script>
 

@@ -6,8 +6,6 @@ import {getUsDate} from "@/Helpers/getUsDate";
 defineProps<{
     userPosts: UsersPostsInterface[]
 }>();
-
-
 </script>
 
 <template>

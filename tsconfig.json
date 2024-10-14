@@ -25,6 +25,7 @@
         "resources/js/**/*",
         "resources/js/**/*.vue",
         "types/**/*.d.ts",
-        "global.d.ts"],
+        "global.d.ts"
+    ],
     "exclude": ["node_modules"]
 }
