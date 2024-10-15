@@ -3,14 +3,17 @@ import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
 import {Head, useForm} from "@inertiajs/vue3";
 import { CategoryInterace } from "@/Types/CategoryInterace";
+import {CreatePostInterface} from "@/Types/CreatePostInterface";
 
 defineProps<{
     categories: CategoryInterace[],
+    tradeActions: TradeActionInterface[],
 }>();
 
-const form = useForm({
+const form = useForm<CreatePostInterface>({
     title: null,
     category: null,
+    tradeAction: null,
     description: null,
     pinned: false,
 });
@@ -42,12 +45,24 @@ const submit = () => {
                     <label for="category" class="block text-sm font-medium text-white mb-2">Select Category</label>
                     <select v-model="form.category" id="category" name="category"
                             class="block w-full p-2.5 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option v-for="category in categories" :value="category.id" :key="category.id">
+                        <option v-for="category in categories" :value="category" :key="category.id">
                             {{ category.title }}
                         </option>
                     </select>
                     <small class="text-red-600 font-semibold">{{ form.errors.category }}</small>
                 </div>
+                <template v-if="form.category?.marketplace === 1">
+                    <div class="w-full max-w-xs">
+                        <label for="category" class="block text-sm font-medium text-white mb-2">Trade Action</label>
+                        <select v-model="form.tradeAction" id="tradeAction" name="tradeAction"
+                                class="block w-full p-2.5 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option v-for="action in tradeActions" :value="action.value">
+                                {{ action.name }}
+                            </option>
+                        </select>
+                        <small class="text-red-600 font-semibold">{{ form.errors.tradeAction }}</small>
+                    </div>
+                </template>
             </div>
             <div>
                 <label for="description" class="block text-sm font-medium text-white">Description</label>

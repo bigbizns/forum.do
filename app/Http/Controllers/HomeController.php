@@ -45,6 +45,7 @@ class HomeController extends Controller
                 'id' => $recentPost->id,
                 'user_id' => $recentPost->user_id,
                 'title' => $recentPost->title,
+                'tradeAction'=> $recentPost->tradeAction,
                 'description' => $recentPost->description,
                 'created_at' => $recentPost->created_at->format('d-m-Y'),
                 'avatar' => $recentPost->user->avatar,

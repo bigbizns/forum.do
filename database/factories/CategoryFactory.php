@@ -29,6 +29,7 @@ class CategoryFactory extends Factory
 
         return [
             'title' => $this->faker->randomElement($categories),
+            'marketplace' => $this->faker->boolean('50'),
         ];
     }
 }
