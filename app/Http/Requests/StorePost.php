@@ -18,7 +18,15 @@ class StorePost extends FormRequest
         return [
             'title' => ['required', 'min:3', 'max:70'],
             'category' => ['required'],
+            'tradeAction' => ['required_if:category.marketplace,1'],
             'description' => ['required', 'min:20', 'max:2000'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'tradeAction.required_if' => 'Trade action field is required.',
         ];
     }
 }

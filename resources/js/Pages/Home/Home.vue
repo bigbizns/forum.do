@@ -77,7 +77,8 @@ const props = defineProps<{
                     <h1 class="text-white text-xl">Recent Posts</h1>
                     <Post
                         v-for="post in recentPosts"
-                        :key="post.title"
+                        :trade-action="post.tradeAction"
+                    :key="post.title"
                         :avatar="post.avatar"
                         :title="post.title"
                         :id="post.id"

@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\CategoryEnum;
+use App\Enums\TradeActionEnum;
 use App\Http\Requests\StorePost;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -30,9 +29,10 @@ class PostController extends Controller
 
     public function create(): Response
     {
-        $categories = Category::all(['id','title']);
+        $categories = Category::all(['id','title', 'marketplace']);
+        $tradeActions = tradeActionEnum::getTradeActions();
 
-        return Inertia::render('Posts/Create/CreatePost', ['categories' => $categories]);
+        return Inertia::render('Posts/Create/CreatePost', ['categories' => $categories , 'tradeActions' => $tradeActions]);
     }
 
     public function store(StorePost $request): RedirectResponse
@@ -42,7 +42,8 @@ class PostController extends Controller
         Post::create([
             'user_id' => Auth::user()->id,
             'title' => $data['title'],
-            'category_id' => $data['category'],
+            'category_id' => $data['category']['id'],
+            'tradeAction' => $data['tradeAction'],
             'pinned' => $data['pinned'],
             'description' => $data['description'],
         ]);
@@ -58,6 +59,7 @@ class PostController extends Controller
         return [
             'title' => $data->title,
             'description' => $data->description,
+            'tradeAction' => $data->tradeAction,
             'createdAt' => $data->created_at,
             'author'=> $data->user,
         ];

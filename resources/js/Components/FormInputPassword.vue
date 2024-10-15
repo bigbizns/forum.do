@@ -7,7 +7,7 @@ defineProps<{
     modelValue: string | null,
     label: string,
     labelName: string,
-    error: string,
+    error?: string,
 }>();
 
 const emit = defineEmits(['update:modelValue']);
