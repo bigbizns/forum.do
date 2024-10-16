@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->foreignIdFor(User::class);
             $table->string('title');
             $table->foreignIdFor(Category::class);
+            $table->string('tradeAction')->nullable();
             $table->string('description');
             $table->boolean('pinned');
             $table->timestamps();

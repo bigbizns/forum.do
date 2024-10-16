@@ -16,6 +16,7 @@ class Post extends Model
         'user_id',
         'title',
         'category_id',
+        'tradeAction',
         'description',
         'pinned'
     ];
