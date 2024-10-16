@@ -8,7 +8,10 @@ import CategoryPost from "@/Components/CategoryPost.vue";
 
 const props = defineProps<{
     userData: UserInterface
-    recentPosts: PostInterface[];
+    recentPosts: {
+        data: PostInterface[],
+        pagination: PaginationInterface
+    };
 }>();
 </script>
 
@@ -76,7 +79,7 @@ const props = defineProps<{
                 <div class="bg-black/40 flex flex-col gap-4 rounded-lg p-4 mt-2">
                     <h1 class="text-white text-xl">Recent Posts</h1>
                     <Post
-                        v-for="post in recentPosts"
+                        v-for="post in recentPosts.data"
                         :trade-action="post.tradeAction"
                     :key="post.title"
                         :avatar="post.avatar"
@@ -85,7 +88,26 @@ const props = defineProps<{
                         :description="post.description"
                         :user_id="post.user_id"/>
                 </div>
+            <div class="flex items-center gap-5 mt-4">
+                <Link
+                    preserve-scroll
+                    v-if="props.recentPosts.pagination.prev_page_url"
+                    :href="props.recentPosts.pagination.prev_page_url"
+                    class="text-white px-4 py-2 bg-gray-800 rounded transition duration-200 hover:bg-gray-500">
+                    Previous
+                </Link>
+                <Link
+                    preserve-scroll
+                    v-if="props.recentPosts.pagination.next_page_url"
+                    :href="props.recentPosts.pagination.next_page_url"
+                    class="text-white px-4 py-2 bg-gray-800 rounded transition duration-200 hover:bg-gray-500">
+                    Next
+                </Link>
+                <p class="text-white text-sm">
+                    Page {{ props.recentPosts.pagination.current_page }} of {{ props.recentPosts.pagination.last_page }}
+                </p>
             </div>
+        </div>
         </div>
         <Footer/>
     </div>

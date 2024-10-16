@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function __invoke(): Response
     {
         $user = $this->getUserInfo();
-        $recentPosts = $this->getFullPostInformation();
+        $recentPosts = $this->getPaginatedPosts();
 
         return Inertia::render('Home/Home', ['userData' => $user, 'recentPosts' => $recentPosts]);
     }
@@ -34,9 +34,9 @@ class HomeController extends Controller
         return $userInfo;
     }
 
-    private function getFullPostInformation(): array
+    private function getPaginatedPosts(): array
     {
-        $recentPosts = Post::all()->sortByDesc('created_at');
+        $recentPosts = Post::orderBy('created_at', 'desc')->paginate(3);
 
         $posts = [];
 
@@ -52,6 +52,17 @@ class HomeController extends Controller
             ];
         }
 
-        return $posts;
+        return [
+            'data' => $posts,
+            'pagination' => [
+                'links' => $recentPosts->linkCollection(),
+                'current_page' => $recentPosts->currentPage(),
+                'last_page' => $recentPosts->lastPage(),
+                'per_page' => $recentPosts->perPage(),
+                'total' => $recentPosts->total(),
+                'next_page_url' => $recentPosts->nextPageUrl(),
+                'prev_page_url' => $recentPosts->previousPageUrl(),
+            ],
+        ];
     }
 }
