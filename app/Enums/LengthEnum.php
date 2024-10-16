@@ -6,6 +6,7 @@ namespace App\Enums;
 
 enum LengthEnum: int
 {
-    case TwentyFive = 25;
     case Five = 5;
+    case Ten = 10;
+    case TwentyFive = 25;
 }

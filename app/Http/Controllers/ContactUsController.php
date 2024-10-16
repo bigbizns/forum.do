@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\LengthEnum;
 use App\Http\Requests\StoreContactUs;
 use App\Models\Contact;
 use Illuminate\Http\RedirectResponse;
@@ -27,6 +28,11 @@ class ContactUsController extends Controller
     {
         $data = $request->validated();
         $user = Auth::user();
+        $userMessages = Contact::where('user_id', $user->id)->get();
+
+        if ($userMessages->count() > LengthEnum::Ten->value) {
+            return to_route('contactus')->withErrors(['message' => 'Message limit has been reached.']);
+        }
 
         Contact::create([
             'topic' => $data['topic'],
