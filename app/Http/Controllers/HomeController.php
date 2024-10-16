@@ -36,7 +36,7 @@ class HomeController extends Controller
 
     private function getPaginatedPosts(): array
     {
-        $recentPosts = Post::orderBy('created_at', 'desc')->paginate(3)->appends('recent-posts', request('page'));
+        $recentPosts = Post::orderBy('created_at', 'desc')->paginate(3);
 
         $posts = [];
 
