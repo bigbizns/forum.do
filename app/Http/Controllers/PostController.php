@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReportTypesEnum;
 use App\Enums\TradeActionEnum;
 use App\Http\Requests\StoreComment;
 use App\Http\Requests\StorePost;
+use App\Http\Requests\StoreReportComment;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Report;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -22,20 +25,26 @@ class PostController extends Controller
         return Inertia::render('Posts/Index/ForumIndex');
     }
 
-    public function showPost(int $id):Response
+    public function showPost(int $id): Response
     {
         $post = $this->getPostInfo($id);
         $comments = $this->getComments($id);
+        $reportTypes = ReportTypesEnum::getReportTypes();
 
-        return Inertia::render('Posts/Show/ShowPost', ['post' => $post, 'comments' => $comments]);
+        return Inertia::render('Posts/Show/ShowPost',
+            [
+                'post' => $post,
+                'comments' => $comments,
+                'reportTypes' => $reportTypes
+            ]);
     }
 
     public function create(): Response
     {
-        $categories = Category::all(['id','title', 'marketplace']);
+        $categories = Category::all(['id', 'title', 'marketplace']);
         $tradeActions = tradeActionEnum::getTradeActions();
 
-        return Inertia::render('Posts/Create/CreatePost', ['categories' => $categories , 'tradeActions' => $tradeActions]);
+        return Inertia::render('Posts/Create/CreatePost', ['categories' => $categories, 'tradeActions' => $tradeActions]);
     }
 
     public function store(StorePost $request): RedirectResponse
@@ -67,6 +76,20 @@ class PostController extends Controller
         ]);
 
         return to_route('post.show', ['id' => $id])->with('message', 'Your comment has been posted successfully!');
+    }
+
+    public function storeReport(StoreReportComment $request, int $id): RedirectResponse
+    {
+        $postId = $id;
+        $report = $request->validated();
+
+        Report::create([
+            'user_id' => Auth::id(),
+            'reason' => $report['reason'],
+            'message' => $report['message'],
+        ]);
+
+        return to_route('post.show', ['id' => $postId])->with('message', 'Your report has been posted successfully!');
     }
 
     private function getPostInfo(int $id): array

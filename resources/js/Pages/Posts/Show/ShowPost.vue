@@ -3,17 +3,27 @@ import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
 import Separator from "@/Components/Separator.vue";
 import {getUsDate} from "@/Helpers/getUsDate";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import {Link, Head, useForm} from "@inertiajs/vue3";
 import {TradeActionEnum} from "@/Helpers/TradeActionEnum";
 import {CommentsInterface} from "@/Types/CommentsInterface";
 import UsersPostComment from "@/Components/UsersPostComment.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import reportFlag from '@/Images/report-flag.png';
+import ReportPost from "@/Pages/Posts/Report/ReportPost.vue";
+import {ReportTypeInterface} from "@/Types/ReportTypeInterface";
 
 const props = defineProps<{
     post: PostInterface
     comments: CommentsInterface[],
+    reportTypes: ReportTypeInterface[],
 }>();
+
+const isReporting = ref<boolean>(false);
+
+const toggleReport = () => {
+    isReporting.value = !isReporting.value;
+};
 
 const formattedDate = computed(() => {
     return getUsDate(props.post.createdAt);
@@ -31,25 +41,35 @@ const submit = () => {
 <template>
     <Head :title="post.title"/>
     <Navigation/>
+    <template v-if="isReporting">
+    <ReportPost @cancel="toggleReport" :is-reporting="isReporting"  :post-id="props.post.id" :report-types="props.reportTypes"/>
+    </template>
+
     <div class="flex flex-col min-h-screen mb-10">
         <div class="container mx-auto mt-20 p-6 bg-black/40 shadow-md rounded-lg">
-            <div class="pb-4 flex items-center">
-                <h1 class="text-2xl font-bold text-white mr-4">{{ post.title }}</h1>
-                <template v-if="post.tradeAction === TradeActionEnum.Selling">
-                    <div class="bg-green-600 text-white rounded-full px-3 py-1 text-xs font-semibold">
-                        {{ TradeActionEnum.Selling }}
-                    </div>
-                </template>
-                <template v-else-if="post.tradeAction === TradeActionEnum.Buying">
-                    <div class="bg-blue-600 text-white rounded-full px-3 py-1 text-xs font-semibold">
-                        {{ TradeActionEnum.Buying }}
-                    </div>
-                </template>
+            <div class="pb-4 flex justify-between items-center">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-white mr-4">{{ post.title }}</h1>
+                    <template v-if="post.tradeAction === TradeActionEnum.Selling">
+                        <div class="bg-green-600 text-white rounded-full px-3 py-1 text-xs font-semibold">
+                            {{ TradeActionEnum.Selling }}
+                        </div>
+                    </template>
+                    <template v-else-if="post.tradeAction === TradeActionEnum.Buying">
+                        <div class="bg-blue-600 text-white rounded-full px-3 py-1 text-xs font-semibold">
+                            {{ TradeActionEnum.Buying }}
+                        </div>
+                    </template>
+                </div>
+                <div>
+                    <img :src="reportFlag" @click="toggleReport" alt="report" class="w-10 cursor-pointer"/>
+                </div>
             </div>
-            <p class="text-sm text-gray-400">Posted by <b
-                class="text-white transition duration-300 hover:text-blue-500">
+            <p class="text-sm text-gray-400">Posted by
+                <b class="text-white transition duration-300 hover:text-blue-500">
                 <Link :href="route('user.profile',{id: post.author.id})">{{ post.author.username }}</Link>
-            </b> on {{ formattedDate }}
+                </b>
+                on {{ formattedDate }}
             </p>
             <div class="mb-6">
                 <Separator/>
