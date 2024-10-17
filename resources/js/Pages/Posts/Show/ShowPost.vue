@@ -4,22 +4,34 @@ import Footer from "@/Layouts/Footer.vue";
 import Separator from "@/Components/Separator.vue";
 import {getUsDate} from "@/Helpers/getUsDate";
 import {computed} from "vue";
-import {Link,Head} from "@inertiajs/vue3";
+import {Link, Head, useForm} from "@inertiajs/vue3";
 import {TradeActionEnum} from "@/Helpers/TradeActionEnum";
+import {CommentsInterface} from "@/Types/CommentsInterface";
+import UsersPostComment from "@/Components/UsersPostComment.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps<{
     post: PostInterface
+    comments: CommentsInterface[],
 }>();
 
 const formattedDate = computed(() => {
     return getUsDate(props.post.createdAt);
 });
+
+const form = useForm({
+    comment: null,
+});
+
+const submit = () => {
+    form.post(route('post.comment', {id: props.post.id}), {onSuccess: () => form.reset('comment')});
+};
 </script>
 
 <template>
     <Head :title="post.title"/>
     <Navigation/>
-    <div class="h-screen">
+    <div class="flex flex-col min-h-screen mb-10">
         <div class="container mx-auto mt-20 p-6 bg-black/40 shadow-md rounded-lg">
             <div class="pb-4 flex items-center">
                 <h1 class="text-2xl font-bold text-white mr-4">{{ post.title }}</h1>
@@ -34,7 +46,8 @@ const formattedDate = computed(() => {
                     </div>
                 </template>
             </div>
-            <p class="text-sm text-gray-400">Posted by <b class="text-white transition duration-300 hover:text-blue-500">
+            <p class="text-sm text-gray-400">Posted by <b
+                class="text-white transition duration-300 hover:text-blue-500">
                 <Link :href="route('user.profile',{id: post.author.id})">{{ post.author.username }}</Link>
             </b> on {{ formattedDate }}
             </p>
@@ -47,10 +60,45 @@ const formattedDate = computed(() => {
                 </p>
             </div>
 
-            <div class="flex justify-between items-center text-white text-sm">
+            <div class="flex justify-end gap-4 items-center text-white text-sm m-10">
                 <span>Views: 0</span>
-                <span>Replies: 0</span>
+                <span>Replies: {{ comments.length }}</span>
             </div>
+            <Separator/>
+            <div class="flex flex-col justify-center mt-10">
+                <form @submit.prevent="submit">
+                    <label for="comment" class="mb-5 text-white font-semibold text-xl">Leave Comment</label>
+                    <input v-model="form.comment" name="comment" type="text"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    <small class="text-red-600 font-semibold">{{ form.errors.comment }}</small>
+                    <small class="text-green-500 font-semibold">{{ $page.props.flash.message }}</small>
+                    <div class="w-full flex justify-end mt-4">
+                        <PrimaryButton text="Post" type="submit"/>
+                    </div>
+                </form>
+            </div>
+            <template v-if="comments.length !== 0">
+                <div class="mt-10">
+                    <div class="bg-black/25 p-5 rounded">
+                        <h1 class="text-xl font-semibold text-white">Comments</h1>
+                        <div class="flex flex-col gap-3 mt-10">
+                            <UsersPostComment
+                                v-for="comment in comments"
+                                :author="comment.author"
+                                :comment="comment.comment"
+                                :profile-picture="comment.author_avatar"
+                                :author-id="comment.authorId"/>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template v-else>
+                <div class="mt-10">
+                    <div class="bg-black/40 p-5 rounded">
+                        <h1 class="text-xl font-semibold text-white">No Comments Yet.</h1>
+                    </div>
+                </div>
+            </template>
         </div>
     </div>
     <Footer/>
