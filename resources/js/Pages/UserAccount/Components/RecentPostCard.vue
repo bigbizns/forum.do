@@ -10,7 +10,7 @@ defineProps<{
 
 <template>
     <template v-if="userPosts.length !== 0">
-        <div v-for="post in userPosts" class="bg-black/40 p-4 rounded-lg shadow-sm cursor-pointer">
+        <div v-for="post in userPosts" class="bg-black/40 p-4 rounded-lg shadow-sm cursor-pointer transition duration-200 hover:bg-black/20">
             <Link :href="route('post.show',{ id:post.id })">
                 <h4 class="text-lg text-gray-300 font-medium">{{ post.title }}</h4>
                 <p class="mt-2 text-gray-300">{{ post.description }}</p>
