@@ -8,11 +8,9 @@ use App\Enums\ReportTypesEnum;
 use App\Enums\TradeActionEnum;
 use App\Http\Requests\StoreComment;
 use App\Http\Requests\StorePost;
-use App\Http\Requests\StoreReportComment;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
-use App\Models\Report;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -76,20 +74,6 @@ class PostController extends Controller
         ]);
 
         return to_route('post.show', ['id' => $id])->with('message', 'Your comment has been posted successfully!');
-    }
-
-    public function storeReport(StoreReportComment $request, int $id): RedirectResponse
-    {
-        $postId = $id;
-        $report = $request->validated();
-
-        Report::create([
-            'user_id' => Auth::id(),
-            'reason' => $report['reason'],
-            'message' => $report['message'],
-        ]);
-
-        return to_route('post.show', ['id' => $postId])->with('message', 'Your report has been posted successfully!');
     }
 
     private function getPostInfo(int $id): array

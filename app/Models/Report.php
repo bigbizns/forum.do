@@ -14,6 +14,7 @@ class Report extends Model
 
     protected $fillable = [
         'user_id',
+        'post_id',
         'reason',
         'message'
     ];
@@ -21,5 +22,10 @@ class Report extends Model
     public function User(): belongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function Post(): belongsTo
+    {
+        return $this->belongsTo(Post::class);
     }
 }

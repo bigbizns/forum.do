@@ -33,7 +33,7 @@ const submit = () => {
                 <div class="flex justify-between items-center mb-4">
                     <div class="w-full max-w-xs">
                         <label for="category" class="block text-sm font-medium text-white mb-2">Report type</label>
-                        <select v-model="form.reason" id="category" name="category"
+                        <select v-model="form.reason" id="reason" name="reason"
                                 class="block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out">
                             <option v-for="report in reportTypes" :value="report.value" class="text-gray-400">
                                 {{ report.name }}
