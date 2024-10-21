@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contactus.store');
 
     Route::post('/post/{id}', [PostController::class, 'storeComment'])->name('post.comment');
+
+    Route::post('/report/{id}', [ReportController::class, 'store'])->name('post.report');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

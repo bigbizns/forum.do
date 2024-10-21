@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReportTypesEnum;
 use App\Enums\TradeActionEnum;
 use App\Http\Requests\StoreComment;
 use App\Http\Requests\StorePost;
@@ -28,8 +29,14 @@ class PostController extends Controller
     {
         $post = $this->getPostInfo($id);
         $comments = $this->getComments($id);
+        $reportTypes = ReportTypesEnum::getReportTypes();
 
-        return Inertia::render('Posts/Show/ShowPost', ['post' => $post, 'comments' => $comments]);
+        return Inertia::render('Posts/Show/ShowPost',
+            [
+                'post' => $post,
+                'comments' => $comments,
+                'reportTypes' => $reportTypes
+            ]);
     }
 
     public function create(): Response
