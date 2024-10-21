@@ -17,6 +17,7 @@ const props = defineProps<{
     post: PostInterface
     comments: CommentsInterface[],
     reportTypes: ReportTypeInterface[],
+    alreadyReported: boolean,
 }>();
 
 const isReporting = ref<boolean>(false);
@@ -62,7 +63,9 @@ const submit = () => {
                     </template>
                 </div>
                 <div>
+                    <template v-if="!alreadyReported">
                     <img :src="reportFlag" @click="toggleReport" alt="report" class="w-10 cursor-pointer"/>
+                    </template>
                 </div>
             </div>
             <p class="text-sm text-gray-400">Posted by

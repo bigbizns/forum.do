@@ -63,7 +63,6 @@ const submit = () => {
                     </button>
                 </div>
             </form>
-            <small class="text-green-500 font-semibold">{{ $page.props.flash.message }}</small>
         </div>
     </div>
 </template>
