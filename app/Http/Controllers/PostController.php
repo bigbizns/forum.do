@@ -11,6 +11,7 @@ use App\Http\Requests\StorePost;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Report;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -30,12 +31,14 @@ class PostController extends Controller
         $post = $this->getPostInfo($id);
         $comments = $this->getComments($id);
         $reportTypes = ReportTypesEnum::getReportTypes();
+        $alreadyReported = $this->checkIfReported($id);
 
         return Inertia::render('Posts/Show/ShowPost',
             [
                 'post' => $post,
                 'comments' => $comments,
-                'reportTypes' => $reportTypes
+                'reportTypes' => $reportTypes,
+                'alreadyReported' => $alreadyReported
             ]);
     }
 
@@ -80,7 +83,7 @@ class PostController extends Controller
 
     private function getPostInfo(int $id): array
     {
-        $data = Post::find($id);
+        $data = Post::findOrFail($id);
 
         return [
             'id' => $data->id,
@@ -140,5 +143,24 @@ class PostController extends Controller
                 'prev_page_url' => $recentPosts->previousPageUrl(),
             ],
         ];
+    }
+
+    private function checkIfReported(int $id): bool
+    {
+        $userId = Auth::id();
+        $report = Report::where('post_id', $id)->where('user_id', $userId)->first();
+        $post = Post::where('id', $id)->first();
+
+        $alreadyReported = false;
+
+        if ($report) {
+            $alreadyReported = true;
+        }
+
+        if ($post->user_id === $userId) {
+            $alreadyReported = true;
+        }
+
+        return $alreadyReported;
     }
 }
