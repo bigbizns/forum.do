@@ -12,6 +12,8 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import reportFlag from '@/Images/report-flag.png';
 import ReportPost from "@/Pages/Posts/Report/ReportPost.vue";
 import {ReportTypeInterface} from "@/Types/ReportTypeInterface";
+import Upvote from "@/Components/Upvote.vue";
+import Downvote from "@/Components/Downvote.vue";
 
 const props = defineProps<{
     post: PostInterface
@@ -34,9 +36,22 @@ const form = useForm({
     comment: null,
 });
 
+const vote = useForm({
+    vote: false,
+});
+
+const setVote = (voteValue: boolean) => {
+    vote.vote = voteValue;
+    submitVote();
+}
+
 const submit = () => {
     form.post(route('post.comment', {id: props.post.id}), {onSuccess: () => form.reset('comment')});
 };
+
+const submitVote = () => {
+    vote.post(route('post.vote',{id: props.post.id}))
+}
 </script>
 
 <template>
@@ -82,12 +97,33 @@ const submit = () => {
                     {{ post.description }}
                 </p>
             </div>
+            <div class="flex justify-between">
+                <div class="flex items-center gap-1">
 
-            <div class="flex justify-end gap-4 items-center text-white text-sm m-10">
-                <span>Views: 0</span>
-                <span>Replies: {{ comments.length }}</span>
+                </div>
             </div>
             <Separator/>
+            <div class="flex justify-between">
+                <form @submit.prevent="submitVote" class="flex items-center justify-center gap-4">
+                    <div class="flex gap-1">
+                    <button type="submit" @click="setVote(true)">
+                        <Upvote/>
+                    </button>
+                        <p class="text-green-500">0</p>
+                    </div>
+                    <div class="flex gap-1">
+                        <p class="text-red-500">0</p>
+                    <button type="submit" @click="setVote(false)">
+                        <Downvote/>
+                    </button>
+                    </div>
+                </form>
+                <div class="flex gap-4 items-center text-white text-sm m-10">
+                    <span>Views: 0</span>
+                    <span>Replies: {{ comments.length }}</span>
+                </div>
+            </div>
+
             <div class="flex flex-col justify-center mt-10">
                 <form @submit.prevent="submit">
                     <label for="comment" class="mb-5 text-white font-semibold text-xl">Leave Comment</label>
@@ -126,5 +162,3 @@ const submit = () => {
     </div>
     <Footer/>
 </template>
-
-

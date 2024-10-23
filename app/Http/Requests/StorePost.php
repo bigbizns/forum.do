@@ -19,7 +19,7 @@ class StorePost extends FormRequest
             'title' => ['required', 'min:3', 'max:70'],
             'category' => ['required'],
             'tradeAction' => ['required_if:category.marketplace,1'],
-            'description' => ['required', 'min:20', 'max:2000'],
+            'description' => ['required', 'min:20', 'max:5000'],
         ];
     }
 
