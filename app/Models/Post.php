@@ -27,12 +27,13 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function Comment(): HasMany
+    public function Comment(): hasMany
     {
-        return $this->HasMany(Comment::class);
+        return $this->hasMany(Comment::class);
     }
-    public function PostLike(): HasMany
+
+    public function PostLike(): hasMany
     {
-        return $this->HasMany(PostLike::class);
+        return $this->hasMany(PostLike::class);
     }
 }

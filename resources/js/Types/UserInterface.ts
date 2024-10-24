@@ -17,3 +17,8 @@ export interface UsersPostsInterface {
     pinned: boolean,
     created_at: string,
 }
+
+export interface UserStatsInterface {
+    postCount: number,
+    commentCount: number,
+}
