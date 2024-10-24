@@ -143,6 +143,7 @@ const submitVote = () => {
                         <div class="flex flex-col gap-3 mt-10">
                             <UsersPostComment
                                 v-for="comment in comments"
+                                :id="comment.id"
                                 :author="comment.author"
                                 :comment="comment.comment"
                                 :profile-picture="comment.author_avatar"

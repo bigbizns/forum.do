@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
@@ -53,11 +54,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/contact-us', ContactUsController::class)->name('contactus');
     Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contactus.store');
 
-    Route::post('/post/{id}', [PostController::class, 'storeComment'])->name('post.comment');
 
     Route::post('/report/{id}', [ReportController::class, 'store'])->name('post.report');
 
     Route::post('/vote/{id}', [PostLikeController::class, 'store'])->name('post.vote');
+
+    Route::post('/comment-post/{id}', [CommentController::class, 'store'])->name('post.comment');
+    Route::post('/comment-vote/{commentId}', [CommentController::class,'storeVote'])->name('post.comment.vote');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
