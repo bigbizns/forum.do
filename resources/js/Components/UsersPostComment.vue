@@ -22,12 +22,10 @@ const props = defineProps<{
                 {{ author }}
             </Link>
         </div>
-        <div class="ml-6 flex items-center">
-            <div>
-                <p class="text-white text-l break-words">
-                    {{ comment }}
-                </p>
-            </div>
+        <div class="ml-6 flex-grow flex items-center break-words w-52">
+            <p class="text-white text-l leading-relaxed break-words flex-grow overflow-hidden">
+                {{ comment }}
+            </p>
         </div>
     </div>
 </template>

@@ -11,12 +11,16 @@ defineProps<{
     avatar: string,
     user_id: number
 }>();
+
+const minimizeString = (text: string): string => {
+    return text.slice(0, 150) + '...';
+};
 </script>
 
 <template>
     <Link :href="route('post.show', { id: id })">
         <div class="flex bg-gray-800 shadow-lg cursor-pointer rounded-lg overflow-hidden p-4 hover:bg-gray-700 transition duration-200">
-            <div class="flex items-center">
+            <div class="flex flex-col gap-2 justify-center items-center">
                 <Link :href="route('user.profile', { id: user_id })">
                     <img
                         :src="avatar ? `/storage/${avatar}` : user"
@@ -24,12 +28,12 @@ defineProps<{
                         class="max-w-12 rounded-full border-2 bg-white border-gray-600 shadow-lg">
                 </Link>
                 <template v-if="tradeAction === TradeActionEnum.Selling">
-                    <div class="bg-green-600 text-white rounded-full px-3 py-1 text-xs font-semibold ml-3">
+                    <div class="bg-green-600 text-white rounded-full py-1 px-1 text-xs font-semibold">
                         {{ TradeActionEnum.Selling }}
                     </div>
                 </template>
                 <template v-else-if="tradeAction === TradeActionEnum.Buying">
-                    <div class="bg-blue-600 text-white rounded-full px-3 py-1 text-xs font-semibold ml-3">
+                    <div class="bg-blue-600 text-white rounded-full py-1 px-1 text-xs font-semibold">
                         {{ TradeActionEnum.Buying }}
                     </div>
                 </template>
@@ -38,8 +42,8 @@ defineProps<{
                 <div class="text-white">
                     <h2 class="font-bold text-lg opacity-90">{{ title }}</h2>
                 </div>
-                <div class="text-gray-300">
-                    <p class="opacity-70">{{ description }}</p>
+                <div class="text-gray-300 flex-grow flex items-center break-words">
+                    <p class="opacity-70 overflow-hidden overflow-ellipsis break-all">{{ minimizeString(description) }}</p>
                 </div>
             </div>
         </div>
