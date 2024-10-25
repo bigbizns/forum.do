@@ -93,7 +93,7 @@ const submitVote = () => {
                 <Separator/>
             </div>
             <div class="text-white leading-relaxed mb-6">
-                <p>
+                <p class="text-white leading-relaxed mb-6 break-words max-w-full">
                     {{ post.description }}
                 </p>
             </div>

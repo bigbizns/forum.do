@@ -6,6 +6,10 @@ import {getUsDate} from "@/Helpers/getUsDate";
 defineProps<{
     userPosts: UsersPostsInterface[]
 }>();
+
+const minimizeString = (text: string): string => {
+    return text.slice(0, 100) + '...';
+};
 </script>
 
 <template>
@@ -13,7 +17,7 @@ defineProps<{
         <div v-for="post in userPosts" class="bg-black/40 p-4 rounded-lg shadow-sm cursor-pointer transition duration-200 hover:bg-black/20">
             <Link :href="route('post.show',{ id:post.id })">
                 <h4 class="text-lg text-gray-300 font-medium">{{ post.title }}</h4>
-                <p class="mt-2 text-gray-300">{{ post.description }}</p>
+                <p class="mt-2 text-gray-300 break-words">{{ minimizeString(post.description) }}</p>
                 <p class="text-sm mt-1 text-gray-500">{{ getUsDate(post.created_at) }}</p>
             </Link>
         </div>
