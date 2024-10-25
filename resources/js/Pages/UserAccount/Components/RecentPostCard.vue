@@ -2,15 +2,14 @@
 import {UsersPostsInterface} from "@/Types/UserInterface";
 import {Link} from "@inertiajs/vue3";
 import {getUsDate} from "@/Helpers/getUsDate";
-const props = defineProps<{
+
+defineProps<{
     userPosts: UsersPostsInterface[]
 }>();
 
 const minimizeString = (text: string): string => {
     return text.slice(0, 100) + '...';
 };
-
-
 </script>
 
 <template>
