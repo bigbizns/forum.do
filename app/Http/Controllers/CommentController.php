@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreComment;
+use App\Http\Requests\StorePostVote;
 use App\Models\Comment;
+use App\Models\CommentLike;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -28,9 +33,33 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreComment $request, int $id): RedirectResponse
     {
-        //
+        $comment = $request->validated();
+        $user = Auth::id();
+
+        Comment::create([
+            'user_id' => $user,
+            'post_id' => $id,
+            'comment' => $comment['comment'],
+        ]);
+
+        return to_route('post.show', ['id' => $id])->with('message', 'Your comment has been posted successfully!');
+    }
+
+    public function storeVote(StorePostVote $request, int $id): RedirectResponse
+    {
+        $vote = $request->validated('vote');
+        $user = Auth::id();
+        $message = $vote === true ? 'You have liked this comment' : 'You have disliked this comment';
+
+        CommentLike::create([
+            'comment_id' => $id,
+            'user_id' => $user,
+            'vote' => $vote
+        ]);
+
+        return back()->with('message', $message);
     }
 
     /**

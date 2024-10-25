@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\ReportTypesEnum;
 use App\Enums\TradeActionEnum;
-use App\Http\Requests\StoreComment;
 use App\Http\Requests\StorePost;
 use App\Models\Category;
 use App\Models\Comment;
@@ -67,20 +66,6 @@ class PostController extends Controller
         //@TODO: Navigate User to his created post when available
     }
 
-    public function storeComment(StoreComment $request, int $id): RedirectResponse
-    {
-        $comment = $request->validated();
-        $user = Auth::user();
-
-        Comment::create([
-            'user_id' => $user['id'],
-            'post_id' => $id,
-            'comment' => $comment['comment'],
-        ]);
-
-        return to_route('post.show', ['id' => $id])->with('message', 'Your comment has been posted successfully!');
-    }
-
     private function getPostInfo(int $id): array
     {
         $data = Post::findOrFail($id);
@@ -103,6 +88,7 @@ class PostController extends Controller
         foreach ($data as $comment) {
 
             $comments[] = [
+                'id'=> $comment->id,
                 'comment' => $comment->comment,
                 'author' => $comment->User->username,
                 'authorId' => $comment->User->id,

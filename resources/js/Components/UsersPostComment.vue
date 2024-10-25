@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import user from "@/Images/user.png";
 import {Link} from "@inertiajs/vue3";
+import UsersPostCommentForm from "@/Components/UsersPostCommentForm.vue";
 
 const props = defineProps<{
+    id: string,
     author: string,
     comment: string,
     profilePicture: string
@@ -21,6 +23,7 @@ const props = defineProps<{
                   class="text-white font-bold text-sm transition duration-200 hover:text-blue-500">
                 {{ author }}
             </Link>
+            <UsersPostCommentForm :comment-id="id"/>
         </div>
         <div class="ml-6 flex-grow flex items-center break-words w-52">
             <p class="text-white text-l leading-relaxed break-words flex-grow overflow-hidden">
