@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {UserInterface, UsersPostsInterface} from "@/Types/UserInterface";
+import {UserInterface, UsersPostsInterface, UserStatsInterface} from "@/Types/UserInterface";
 import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
 import UserDetails from "@/Pages/UserAccount/Components/UserDetails.vue";
@@ -9,8 +9,9 @@ import RecentPostCard from "@/Pages/UserAccount/Components/RecentPostCard.vue";
 import {Head} from "@inertiajs/vue3";
 
 const props = defineProps<{
-    userData: UserInterface
-    userPosts: UsersPostsInterface[]
+    userData: UserInterface,
+    userPosts: UsersPostsInterface[],
+    userStats: UserStatsInterface,
 }>();
 </script>
 
@@ -19,8 +20,8 @@ const props = defineProps<{
     <Navigation/>
     <div class="min-h-screen mt-10 py-8">
         <UserDetails :user-data="userData"/>
-            <!--@TODO:ADD REAL TRACKING OF USERS COMMENTS,LIKES,POINTS-->
-        <UserStatus  :user-data="props.userData"/>
+            <!--@TODO:ADD REAL TRACKING LIKES-->
+        <UserStatus  :user-data="props.userData"  :user-stats="userStats"/>
 
         <div class="max-w-5xl mx-auto mt-6 bg-black/40 p-6 rounded-lg shadow-md">
             <h3 class="text-gray-500 text-xl font-semibold mb-3">Description</h3>

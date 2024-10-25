@@ -15,6 +15,14 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
 
+        $postCount = count($user->Post);
+        $commentCount = count($user->Comment);
+
+        $userStats = [
+            'postCount' => $postCount,
+            'commentCount' => $commentCount,
+        ];
+
         if ($user === null) {
             return to_route('home');
         }
@@ -23,6 +31,10 @@ class UserController extends Controller
 
         $userPosts = $user->post()->orderBy('created_at', 'desc')->take(3)->get();
 
-        return Inertia::render('UserAccount/UserAccount', ['userData' => $user, 'userPosts' => $userPosts]);
+        return Inertia::render('UserAccount/UserAccount', [
+            'userData' => $user,
+            'userPosts' => $userPosts,
+            'userStats' => $userStats,
+        ]);
     }
 }
