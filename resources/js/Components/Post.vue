@@ -2,6 +2,7 @@
 import {Link} from "@inertiajs/vue3";
 import user from '@/Images/user.png';
 import {TradeActionEnum} from "@/Helpers/TradeActionEnum";
+import {TextLengthEnum} from '@/Enums/TextLengthEnum';
 
 defineProps<{
     title: string,
@@ -13,7 +14,11 @@ defineProps<{
 }>();
 
 const minimizeString = (text: string): string => {
-    return text.slice(0, 150) + '...';
+    if (text.length > TextLengthEnum.HundredFifty) {
+        return text.slice(0, TextLengthEnum.HundredFifty) + '...';
+    } else {
+        return text;
+    }
 };
 </script>
 

@@ -2,13 +2,18 @@
 import {UsersPostsInterface} from "@/Types/UserInterface";
 import {Link} from "@inertiajs/vue3";
 import {getUsDate} from "@/Helpers/getUsDate";
+import {TextLengthEnum} from "@/Enums/TextLengthEnum";
 
 defineProps<{
     userPosts: UsersPostsInterface[]
 }>();
 
 const minimizeString = (text: string): string => {
-    return text.slice(0, 100) + '...';
+    if (text.length > TextLengthEnum.Hundred) {
+        return text.slice(0, TextLengthEnum.Hundred) + '...';
+    } else {
+        return text;
+    }
 };
 </script>
 
