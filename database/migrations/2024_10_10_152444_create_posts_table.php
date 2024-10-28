@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('title');
             $table->foreignIdFor(Category::class);
             $table->string('tradeAction')->nullable();
-            $table->string('description');
+            $table->text('description');
             $table->boolean('pinned');
             $table->timestamps();
         });
