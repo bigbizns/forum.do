@@ -78,7 +78,7 @@ const submitVote = () => {
                     </template>
                 </div>
                 <div>
-                    <template v-if="!alreadyReported">
+                    <template v-if="!alreadyReported && $page.props.auth.user !== null">
                     <img :src="reportFlag" @click="toggleReport" alt="report" class="w-10 cursor-pointer"/>
                     </template>
                 </div>
@@ -89,7 +89,7 @@ const submitVote = () => {
                 </b>
                 on {{ formattedDate }}
             </p>
-            <div class="mb-6">
+            <div class="mb-6 mt-3">
                 <Separator/>
             </div>
             <div class="text-white leading-relaxed mb-6">
@@ -106,25 +106,25 @@ const submitVote = () => {
             <div class="flex justify-between">
                 <form @submit.prevent="submitVote" class="flex items-center justify-center gap-4">
                     <div class="flex gap-1">
-                    <button type="submit" @click="setVote(true)">
+                    <button type="submit" @click="setVote(true)" v-if="$page.props.auth.user !== null">
                         <Upvote/>
                     </button>
                         <p class="text-green-500">0</p>
                     </div>
                     <div class="flex gap-1">
                         <p class="text-red-500">0</p>
-                    <button type="submit" @click="setVote(false)">
+                    <button type="submit" @click="setVote(false)" v-if="$page.props.auth.user !== null">
                         <Downvote/>
                     </button>
                     </div>
                 </form>
-                <div class="flex gap-4 items-center text-white text-sm m-10">
+                <div class="flex gap-4 items-center text-white text-sm m-5">
                     <span>Views: 0</span>
                     <span>Replies: {{ comments.length }}</span>
                 </div>
             </div>
 
-            <div class="flex flex-col justify-center mt-10">
+            <div class="flex flex-col justify-center">
                 <form @submit.prevent="submit">
                     <label for="comment" class="mb-5 text-white font-semibold text-xl">Leave Comment</label>
                     <input v-model="form.comment" name="comment" type="text"
