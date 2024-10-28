@@ -7,7 +7,7 @@ defineProps<{
     title: string,
     description: string,
     tradeAction: string,
-    id: number,
+    id: string,
     avatar: string,
     user_id: number
 }>();
