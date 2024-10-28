@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
+Route::get('/forum', PostController::class)->name('forum');
+
 Route::get('/user/{id}', [UserController::class, 'showUsersProfile'])->name('user.profile');
 
-Route::get('/post/{id}', [PostController::class, 'showPost'])->name('post.show');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');
@@ -47,24 +49,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/settings/verify-email', [AccountController::class, 'verifyEmailStore'])->name('verify.email.store');
     });
 
-    Route::get('/forum', PostController::class)->name('forum');
     Route::get('/create-post', [PostController::class, 'create'])->name('post.create');
     Route::post('/create-post', [PostController::class, 'store'])->name('post.store');
 
     Route::get('/contact-us', ContactUsController::class)->name('contactus');
     Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contactus.store');
 
+    Route::prefix('post')->name('post.')->group(function () {
+        Route::get('/{id}', [PostController::class, 'showPost'])->name('show')->withoutMiddleware('auth');
 
-    Route::post('/report/{id}', [ReportController::class, 'store'])->name('post.report');
+        Route::post('/vote/{id}', [PostLikeController::class, 'store'])->name('vote');
 
-    Route::post('/vote/{id}', [PostLikeController::class, 'store'])->name('post.vote');
+        Route::post('/report/{id}', [ReportController::class, 'store'])->name('report');
 
-    Route::post('/comment-post/{id}', [CommentController::class, 'store'])->name('post.comment');
-    Route::post('/comment-vote/{commentId}', [CommentController::class,'storeVote'])->name('post.comment.vote');
-
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::post('/comment-post/{id}', [CommentController::class, 'store'])->name('comment');
+        Route::post('/comment-vote/{commentId}', [CommentController::class, 'storeVote'])->name('comment.vote');
+    });
 });
-
-
-
-
