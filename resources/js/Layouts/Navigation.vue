@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 import user from '@/Images/user.png';
 import { computed, ref } from "vue";
 import Separator from "@/Components/Separator.vue";
+import logo from "@/Images/bg1.png";
 
 const { props } = usePage();
 
@@ -24,7 +25,8 @@ const toggleForumModal = () => {
 <template>
     <nav class="bg-black/60 text-white shadow-lg fixed top-0 w-full z-50">
         <div class="flex items-center justify-between p-4 mx-auto max-w-7xl">
-            <Link :href="route('home')" class="text-2xl font-bold">forum.do</Link>
+
+            <Link :href="route('home')" class="text-2xl font-bold flex items-center gap-2"><img :src="logo" alt="logo" class="w-10"><p class="text-sm">forum.do</p></Link>
             <ul class="hidden md:flex space-x-8 ">
                 <li><Link :href="route('home')" class="duration-300 transition hover:text-blue-500">Home</Link></li>
                 <li>
