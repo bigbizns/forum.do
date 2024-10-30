@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
 import {Head, useForm} from "@inertiajs/vue3";
+import Navigation from "@/Layouts/Navigation.vue";
+import FormInput from "@/Components/FormInput.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { CategoryInterace } from "@/Types/CategoryInterace";
 import {CreatePostInterface} from "@/Types/CreatePostInterface";
 
@@ -30,15 +32,7 @@ const submit = () => {
         <h2 class="text-2xl font-bold mb-6 text-white">Create Post</h2>
         <form @submit.prevent="submit" class="space-y-6">
             <div>
-                <label for="title" class="block text-sm font-medium text-white">Title</label>
-                <input
-                    v-model="form.title"
-                    type="text"
-                    id="title"
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your post title"
-                />
-                <small class="text-red-600 font-semibold">{{ form.errors.title }}</small>
+                <FormInput v-model="form.title" label="title" label-name="Title" type="text" :error="form.errors.title"/>
             </div>
             <div class="flex justify-between">
                 <div class="w-full max-w-xs">
@@ -85,14 +79,7 @@ const submit = () => {
                     <span class="ml-2 text-white">Pin this post</span>
                 </label>
             </div>
-            <div>
-                <button
-                    type="submit"
-                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-md shadow-md transition duration-300 ease-in-out"
-                >
-                    Post
-                </button>
-            </div>
+                <PrimaryButton text="Post" type="submit" class="w-full"/>
         </form>
     </div>
     <Footer/>
