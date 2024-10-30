@@ -3,7 +3,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 import user from '@/Images/user.png';
 import { computed, ref } from "vue";
 import Separator from "@/Components/Separator.vue";
-import logo from "@/Images/bg1.png";
+import logo from "@/Images/logo1.png";
 
 const { props } = usePage();
 
