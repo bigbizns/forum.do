@@ -20,6 +20,7 @@ const props = defineProps<{
     comments: CommentsInterface[],
     reportTypes: ReportTypeInterface[],
     alreadyReported: boolean,
+    votes: PostVotesInterface,
 }>();
 
 const isReporting = ref<boolean>(false);
@@ -109,10 +110,10 @@ const submitVote = () => {
                     <button type="submit" @click="setVote(true)" v-if="$page.props.auth.user !== null">
                         <Upvote/>
                     </button>
-                        <p class="text-green-500">0</p>
+                        <p class="text-green-500">{{ votes.upVote }}</p>
                     </div>
                     <div class="flex gap-1">
-                        <p class="text-red-500">0</p>
+                        <p class="text-red-500">{{ votes.downVote }}</p>
                     <button type="submit" @click="setVote(false)" v-if="$page.props.auth.user !== null">
                         <Downvote/>
                     </button>
@@ -147,7 +148,8 @@ const submitVote = () => {
                                 :author="comment.author"
                                 :comment="comment.comment"
                                 :profile-picture="comment.author_avatar"
-                                :author-id="comment.authorId"/>
+                                :author-id="comment.authorId"
+                                :comment-votes="comment.commentVotes"/>
                         </div>
                     </div>
                 </div>

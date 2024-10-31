@@ -14,6 +14,11 @@ interface PostInterface {
     }
 }
 
+interface PostVotesInterface {
+    upVote: number,
+    downVote: number
+}
+
 interface PaginationInterface {
     current_page: number,
     last_page: number,

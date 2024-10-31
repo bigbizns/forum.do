@@ -5,6 +5,10 @@ import {useForm} from "@inertiajs/vue3";
 
 const props = defineProps<{
     commentId: string,
+    commentVotes: {
+        upVote: number,
+        downVote: number
+    }
 }>();
 const vote = useForm({
     vote: false,
@@ -26,11 +30,10 @@ const submitVote = () => {
             <button type="submit" @click="setVote(true)">
                 <Upvote/>
             </button>
-
-            <p class="text-green-500">0</p>
+            <p class="text-green-500">{{ commentVotes.upVote }}</p>
         </div>
         <div class="flex gap-1">
-            <p class="text-red-500">0</p>
+            <p class="text-red-500">{{ commentVotes.downVote }}</p>
             <button type="submit" @click="setVote(false)">
                 <Downvote/>
             </button>

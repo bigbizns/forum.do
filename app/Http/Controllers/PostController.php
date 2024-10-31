@@ -10,6 +10,7 @@ use App\Http\Requests\StorePost;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\PostLike;
 use App\Models\Report;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -31,13 +32,15 @@ class PostController extends Controller
         $comments = $this->getComments($id);
         $reportTypes = ReportTypesEnum::getReportTypes();
         $alreadyReported = $this->checkIfReported($id);
+        $votes = $this->getPostVotesCount($id);
 
         return Inertia::render('Posts/Show/ShowPost',
             [
                 'post' => $post,
                 'comments' => $comments,
                 'reportTypes' => $reportTypes,
-                'alreadyReported' => $alreadyReported
+                'alreadyReported' => $alreadyReported,
+                'votes' => $votes,
             ]);
     }
 
@@ -53,7 +56,7 @@ class PostController extends Controller
     {
         $data = $request->all();
 
-        Post::create([
+        $post = Post::create([
             'user_id' => Auth::user()->id,
             'title' => $data['title'],
             'category_id' => $data['category']['id'],
@@ -62,8 +65,7 @@ class PostController extends Controller
             'description' => $data['description'],
         ]);
 
-        return to_route('home');
-        //@TODO: Navigate User to his created post when available
+        return to_route('post.show', $post->id);
     }
 
     private function getPostInfo(int $id): array
@@ -83,16 +85,21 @@ class PostController extends Controller
     private function getComments(int $id): array
     {
         $data = Comment::where('post_id', $id)->get();
-
         $comments = [];
-        foreach ($data as $comment) {
 
+        foreach ($data as $comment) {
+            $downVoteCount = $comment->vote->where('vote', 0)->count();
+            $upVoteCount = $comment->vote->where('vote', 1)->count();
             $comments[] = [
-                'id'=> $comment->id,
+                'id' => $comment->id,
                 'comment' => $comment->comment,
                 'author' => $comment->User->username,
                 'authorId' => $comment->User->id,
                 'author_avatar' => $comment->User->avatar,
+                'commentVotes' => [
+                    'upVote' => $upVoteCount,
+                    'downVote' => $downVoteCount,
+                ],
             ];
         }
 
@@ -148,5 +155,28 @@ class PostController extends Controller
         }
 
         return $alreadyReported;
+    }
+
+    private function getPostVotesCount(int $postId): array
+    {
+        $totalVotes = PostLike::where('post_id', $postId)->get();
+
+        $votes = [
+            'downVote' => [],
+            'upVote' => [],
+        ];
+
+        foreach ($totalVotes as $vote) {
+            if ($vote->vote === 0) {
+                $votes['downVote'][] = [$vote];
+            } else {
+                $votes['upVote'][] = [$vote];
+            }
+        }
+
+        return [
+            'downVote' => count($votes['downVote']),
+            'upVote' => count($votes['upVote']),
+        ];
     }
 }
