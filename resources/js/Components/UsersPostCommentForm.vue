@@ -27,14 +27,14 @@ const submitVote = () => {
 <template>
     <form @submit.prevent="submitVote" class="flex items-center justify-center gap-4">
         <div class="flex gap-1">
-            <button type="submit" @click="setVote(true)">
+            <button type="submit" @click="setVote(true)" v-if="$page.props.auth.user !== null">
                 <Upvote/>
             </button>
             <p class="text-green-500">{{ commentVotes.upVote }}</p>
         </div>
         <div class="flex gap-1">
             <p class="text-red-500">{{ commentVotes.downVote }}</p>
-            <button type="submit" @click="setVote(false)">
+            <button type="submit" @click="setVote(false)" v-if="$page.props.auth.user !== null">
                 <Downvote/>
             </button>
         </div>
