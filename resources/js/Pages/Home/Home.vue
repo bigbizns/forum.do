@@ -5,6 +5,9 @@ import Navigation from "@/Layouts/Navigation.vue";
 import type {UserInterface} from "@/Types/UserInterface";
 import Post from "@/Components/Post.vue";
 import CategoryPost from "@/Components/CategoryPost.vue";
+import HomeTopicLinks from "@/Pages/Home/HomeComponents/HomeTopicLinks.vue";
+import WarningEmailMessage from "@/Components/WarningEmailMessage.vue";
+import RecentPostPagination from "@/Pages/Home/HomeComponents/RecentPostPagination.vue";
 
 const props = defineProps<{
     userData: UserInterface
@@ -20,29 +23,18 @@ const props = defineProps<{
         <Head title="Home"/>
         <Navigation/>
         <template v-if="$page.props.auth.user && !props.userData.email_verified_at">
-            <div
-                class="fixed top-12 w-full z-50 bg-yellow-400 flex justify-center items-center py-3 shadow-lg rounded-md">
-                <div class="flex items-center text-gray-900 space-x-2">
-                    <span class="font-bold">⚠️ Email not verified!</span>
-                    <span class="text-sm">Please go to</span>
-                    <Link :href="route('account.settings')"
-                          class="text-blue-600 font-semibold text-sm transition duration-300 hover:text-blue-500">
-                        Settings
-                    </Link>
-                    <span class="text-sm">to verify your email.</span>
-                </div>
-            </div>
+            <WarningEmailMessage/>
         </template>
 
         <div class="container mx-auto w-[90%] flex-grow mt-20 mb-16 h-auto">
             <!-- TODO: Finish the header section -->
             <div class="bg-gray-800 rounded-lg p-4 text-white shadow-lg">
-                <div class="mb-4">
-                    <h2 class="text-15 font-bold">Search Forum</h2>
-                </div>
+                <div class="mb-4"><h2 class="text-15 font-bold">Search Forum</h2></div>
                 <div>
-                    <input type="text" placeholder="minecraft accounts"
-                           class="bg-gray-700 w-full p-1 placeholder-opacity-25 text-opacity-75 placeholder-white text-white border border-gray-600 rounded focus:outline-none focus:border-blue-400"
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        class="bg-gray-700 w-full p-1 placeholder-opacity-25 text-opacity-75 placeholder-white text-white border border-gray-600 rounded focus:outline-none focus:border-blue-400"
                     />
                 </div>
                 <p class="text-sm text-white mt-2 font-bold text-center text-opacity-35">
@@ -52,20 +44,7 @@ const props = defineProps<{
             </div>
             <!-- TODO: Think about the topics-->
             <div class="bg-gray-900 mt-10 rounded-lg">
-                <div class="flex items-center rounded-lg">
-                    <Link href=""
-                          class="px-8 py-4 m-2 hover:bg-gray-700 transition duration-300 text-opacity text-white rounded text-gray">
-                        Gaming Marketplace
-                    </Link>
-                    <Link href=""
-                          class="px-8 py-4 m-2 hover:bg-gray-700 transition duration-300 text-opacity text-white rounded text-gray">
-                        Discussion Forum
-                    </Link>
-                    <Link href=""
-                          class="px-8 py-4 m-2 hover:bg-gray-700 transition duration-300 text-opacity text-white rounded text-gray hover">
-                        Other Marketplace
-                    </Link>
-                </div>
+                <HomeTopicLinks/>
             </div>
             <div class="bg-gray-700 pt-2 mt-5">
                 <div class="bg-black/40 flex flex-col gap-4 rounded-lg p-4 mt-2">
@@ -74,39 +53,20 @@ const props = defineProps<{
                     <CategoryPost title="CS 2" description="Skins,Accounts,Gamble,Discussions"/>
                 </div>
             </div>
-
             <div class="mt-10">
                 <div class="bg-black/40 flex flex-col gap-4 rounded-lg p-4 mt-2">
                     <h1 class="text-white text-xl">Recent Posts</h1>
                     <Post
                         v-for="post in recentPosts.data"
                         :trade-action="post.tradeAction"
-                    :key="post.title"
+                        :key="post.title"
                         :avatar="post.avatar"
                         :title="post.title"
                         :id="post.id"
                         :description="post.description"
                         :user_id="post.user_id"/>
                 </div>
-            <div class="flex items-center gap-5 mt-4">
-                <Link
-                    preserve-scroll
-                    v-if="props.recentPosts.pagination.prev_page_url"
-                    :href="props.recentPosts.pagination.prev_page_url"
-                    class="text-white px-4 py-2 bg-gray-800 rounded transition duration-200 hover:bg-gray-500">
-                    Previous
-                </Link>
-                <Link
-                    preserve-scroll
-                    v-if="props.recentPosts.pagination.next_page_url"
-                    :href="props.recentPosts.pagination.next_page_url"
-                    class="text-white px-4 py-2 bg-gray-800 rounded transition duration-200 hover:bg-gray-500">
-                    Next
-                </Link>
-                <p class="text-white text-sm">
-                    Page {{ props.recentPosts.pagination.current_page }} of {{ props.recentPosts.pagination.last_page }}
-                </p>
-            </div>
+            <RecentPostPagination :pagination="recentPosts.pagination"/>
         </div>
         </div>
         <Footer/>
