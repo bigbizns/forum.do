@@ -5,6 +5,7 @@ import {Link, usePage} from '@inertiajs/vue3';
 import NavigationGuestAuth from "@/Layouts/NavigationComponents/NavigationGuestAuth.vue";
 import NavigationProfileModal from "@/Layouts/NavigationComponents/NavigationProfileModal.vue";
 import NavigationLinks from "@/Layouts/NavigationComponents/NavigationLinks.vue";
+import logo from "@/Images/logo1.png";
 
 const {props} = usePage();
 
@@ -22,7 +23,8 @@ const toggleModal = () => {
 <template>
     <nav class="bg-black/60 text-white shadow-lg fixed top-0 w-full z-50">
         <div class="flex items-center justify-between p-4 mx-auto max-w-7xl">
-            <Link :href="route('home')" class="text-2xl font-bold">forum.do</Link>
+
+            <Link :href="route('home')" class="text-2xl font-bold flex items-center gap-2"><img :src="logo" alt="logo" class="w-10"><p class="text-sm">forum.do</p></Link>
             <NavigationLinks/>
             <div class="hidden md:flex space-x-4 ">
                 <template v-if="!$page.props.auth.user">
