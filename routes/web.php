@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\ReportController;
@@ -18,6 +19,12 @@ Route::get('/forum', PostController::class)->name('forum');
 Route::get('/user/{id}', [UserController::class, 'showUsersProfile'])->name('user.profile');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::prefix('info')->name('info.')->group(function () {
+   Route::get('about-us', [InfoController::class, 'AboutUs'])->name('about-us');
+   Route::get('services', [InfoController::class, 'Services'])->name('services');
+   Route::get('terms', [InfoController::class, 'Terms'])->name('terms');
+});
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [AuthController::class, 'register'])->name('register');
