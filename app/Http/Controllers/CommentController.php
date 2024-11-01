@@ -51,7 +51,15 @@ class CommentController extends Controller
     {
         $vote = $request->validated('vote');
         $user = Auth::id();
-        $message = $vote === true ? 'You have liked this comment' : 'You have disliked this comment';
+        $message = $vote === true ? 'You have upvoted comment' : 'You have downvoted comment';
+        $commentVote = CommentLike::where('user_id', $user)->where('comment_id', $id)->first();
+
+        if ($commentVote) {
+            $commentVote->vote = $vote;
+            $commentVote->save();
+
+            return back()->with('message', $message);
+        }
 
         CommentLike::create([
             'comment_id' => $id,

@@ -36,7 +36,7 @@ class PostLikeController extends Controller
         $vote = $request->validated();
         $userId = Auth::id();
         $postId = $id;
-        $message = $vote['vote'] === true ? 'You have liked this post' : 'You have disliked this post';
+        $message = $vote['vote'] === true ? 'You have upvoted this post' : 'You have downvoted this post';
         $postLike = PostLike::where('user_id', $userId)->where('post_id', $postId)->first();
 
         if ($postLike) {
