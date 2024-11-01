@@ -125,7 +125,7 @@ const submitVote = () => {
                 </div>
             </div>
 
-            <div class="flex flex-col justify-center">
+            <div class="flex flex-col justify-center" v-if="$page.props.auth.user !== null">
                 <form @submit.prevent="submit">
                     <label for="comment" class="mb-5 text-white font-semibold text-xl">Leave Comment</label>
                     <input v-model="form.comment" name="comment" type="text"
@@ -136,6 +136,14 @@ const submitVote = () => {
                         <PrimaryButton text="Post" type="submit"/>
                     </div>
                 </form>
+            </div>
+            <div v-else>
+                <p class="text-white">
+                    Be Part of the Discussion
+                    <Link :href="route('login')" class="text-white transition duration-200 hover:text-blue-500 cursor-pointer font-semibold">Login</Link>
+                    |
+                    <Link :href="route('register')" class="text-white transition duration-200 hover:text-blue-500 cursor-pointer font-semibold">Register</Link>
+                </p>
             </div>
             <template v-if="comments.length !== 0">
                 <div class="mt-10">

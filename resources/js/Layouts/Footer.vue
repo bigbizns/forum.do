@@ -20,10 +20,9 @@ import accheaven from '@/Images/ads/accHeavenLogo.png';
             <div class="text-center">
                 <h4 class="text-white font-bold mb-2">Quick Links</h4>
                 <ul class="space-y-1">
-                    <li><Link href="#" class="transition duration-300 hover:text-blue-500">Home</Link></li>
-                    <li><Link href="#" class="transition duration-300 hover:text-blue-500">About Us</Link></li>
-                    <li><Link href="#" class="transition duration-300 hover:text-blue-500">Services</Link></li>
-                    <li><Link href="#" class="transition duration-300 hover:text-blue-500">Blog</Link></li>
+                    <li><Link :href="route('home')" class="transition duration-300 hover:text-blue-500">Home</Link></li>
+                    <li><Link :href="route('info.about-us')" class="transition duration-300 hover:text-blue-500">About Us</Link></li>
+                    <li><Link :href="route('info.services')" class="transition duration-300 hover:text-blue-500">Services</Link></li>
                     <li><Link :href="route('contactus')" class="transition duration-300 hover:text-blue-500">Contact</Link></li>
                 </ul>
             </div>
@@ -31,10 +30,8 @@ import accheaven from '@/Images/ads/accHeavenLogo.png';
             <div class="text-center">
                 <h4 class="text-white font-bold mb-2">Usefully Links</h4>
                 <ul class="space-y-1">
-                    <li><Link href="#" class="transition duration-300 hover:text-blue-500">About Us</Link></li>
-                    <li><Link href="#" class="transition duration-300 hover:text-blue-500">Services</Link></li>
-                    <li><Link href="#" class="transition duration-300 hover:text-blue-500">Terms & Rules</Link></li>
-                    <li><Link href="#" class="transition duration-300 hover:text-blue-500">Support</Link></li>
+                    <li><Link :href="route('info.terms')" class="transition duration-300 hover:text-blue-500">Terms & Rules</Link></li>
+                    <li><Link :href="route('contactus')" class="transition duration-300 hover:text-blue-500">Support</Link></li>
                 </ul>
             </div>
 
