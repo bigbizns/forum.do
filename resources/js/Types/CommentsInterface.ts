@@ -3,7 +3,8 @@ export interface CommentsInterface {
     comment: string,
     author: string,
     author_avatar: string,
-    authorId: string,
+    authorId: number,
+    edited: number,
     commentVotes: commentVotes,
 }
 

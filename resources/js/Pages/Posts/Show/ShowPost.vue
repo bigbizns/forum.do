@@ -157,7 +157,8 @@ const submitVote = () => {
                                 :comment="comment.comment"
                                 :profile-picture="comment.author_avatar"
                                 :author-id="comment.authorId"
-                                :comment-votes="comment.commentVotes"/>
+                                :comment-votes="comment.commentVotes"
+                                :edited="comment.edited" />
                         </div>
                     </div>
                 </div>
