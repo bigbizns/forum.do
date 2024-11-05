@@ -6,18 +6,30 @@ import FormInput from "@/Components/FormInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { CategoryInterace } from "@/Types/CategoryInterace";
 import {CreatePostInterface} from "@/Types/CreatePostInterface";
+import {watch} from "vue";
+import {SubCategoryInterface} from "@/Types/SubCategoryInterface";
 
-defineProps<{
+const props = defineProps<{
     categories: CategoryInterace[],
+    subCategories: SubCategoryInterface[],
     tradeActions: TradeActionInterface[],
 }>();
+
+let catSubCategories: SubCategoryInterface[] = [];
 
 const form = useForm<CreatePostInterface>({
     title: null,
     category: null,
+    subCategory: null,
     tradeAction: null,
     description: null,
     pinned: false,
+});
+
+watch(() => form.category, () => {
+    let catId = form.category?.id;
+
+    catSubCategories = props.subCategories.filter((item) => item.category_id === catId);
 });
 
 const submit = () => {
@@ -58,6 +70,18 @@ const submit = () => {
                     </div>
                 </template>
             </div>
+                <template v-if="catSubCategories.length != 0">
+                    <div class="w-full max-w-l">
+                        <label for="category" class="block text-sm font-medium text-white mb-2">Sub Category</label>
+                        <select v-model="form.subCategory"  id="tradeAction" name="tradeAction"
+                                class="block w-full p-2.5 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option v-for="subCategory in catSubCategories" :value="subCategory.id">
+                                {{ subCategory.title }}
+                            </option>
+                        </select>
+                        <small class="text-red-600 font-semibold">{{ form.errors.tradeAction }}</small>
+                    </div>
+                </template>
             <div>
                 <label for="description" class="block text-sm font-medium text-white">Description</label>
                 <textarea

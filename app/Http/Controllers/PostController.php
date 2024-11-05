@@ -12,6 +12,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\PostLike;
 use App\Models\Report;
+use App\Models\SubCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -47,9 +48,15 @@ class PostController extends Controller
     public function create(): Response
     {
         $categories = Category::all(['id', 'title', 'marketplace']);
+        $subCategories = SubCategory::all(['id', 'category_id', 'title']);
         $tradeActions = tradeActionEnum::getTradeActions();
 
-        return Inertia::render('Posts/Create/CreatePost', ['categories' => $categories, 'tradeActions' => $tradeActions]);
+        return Inertia::render('Posts/Create/CreatePost',
+            [
+                'categories' => $categories,
+                'tradeActions' => $tradeActions,
+                'subCategories' => $subCategories,
+            ]);
     }
 
     public function store(StorePost $request): RedirectResponse
@@ -60,6 +67,7 @@ class PostController extends Controller
             'user_id' => Auth::user()->id,
             'title' => $data['title'],
             'category_id' => $data['category']['id'],
+            'sub_category_id' => $data['subCategory'],
             'tradeAction' => $data['tradeAction'],
             'pinned' => $data['pinned'],
             'description' => $data['description'],

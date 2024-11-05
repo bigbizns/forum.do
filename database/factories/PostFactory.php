@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,6 +25,7 @@ class PostFactory extends Factory
             'user_id' => User::all()->random()->id,
             'title' => $this->faker->sentence(),
             'category_id' => Category::all()->random()->id,
+            'sub_category_id' => SubCategory::all()->random()->id,
             'description' => $this->faker->paragraph(),
             'pinned' => $this->faker->boolean(),
         ];
