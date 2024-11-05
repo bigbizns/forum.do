@@ -44,7 +44,7 @@ const toggleEdit = () => {
             </Link>
             <UsersPostCommentForm :comment-id="id" :comment-votes="commentVotes"/>
             <div>
-                <p class="text-gray-500" v-if="edited === 1">
+                <p v-if="edited === 1" class="text-gray-500">
                     Edited
                 </p>
             </div>

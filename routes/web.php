@@ -71,6 +71,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/comment-post/{id}', [CommentController::class, 'store'])->name('comment');
         Route::post('/comment-vote/{commentId}', [CommentController::class, 'storeVote'])->name('comment.vote');
-        Route::post('/comment-edit/{id}', [CommentController::class, 'edit'])->name('comment.edit');
+        Route::post('/comment-edit/{commentId}', [CommentController::class, 'edit'])->name('comment.edit');
     });
 });
