@@ -70,7 +70,6 @@ const submit = () => {
                     </div>
                 </template>
             </div>
-                <template v-if="catSubCategories.length != 0">
                     <div class="w-full max-w-l">
                         <label for="category" class="block text-sm font-medium text-white mb-2">Sub Category</label>
                         <select v-model="form.subCategory"  id="tradeAction" name="tradeAction"
@@ -79,9 +78,8 @@ const submit = () => {
                                 {{ subCategory.title }}
                             </option>
                         </select>
-                        <small class="text-red-600 font-semibold">{{ form.errors.tradeAction }}</small>
+                        <small class="text-red-600 font-semibold">{{ form.errors.subCategory }}</small>
                     </div>
-                </template>
             <div>
                 <label for="description" class="block text-sm font-medium text-white">Description</label>
                 <textarea
