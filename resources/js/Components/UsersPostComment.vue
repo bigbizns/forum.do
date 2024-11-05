@@ -5,6 +5,8 @@ import UsersPostCommentForm from "@/Components/UsersPostCommentForm.vue";
 import {ref} from "vue";
 import EditComment from "@/Pages/Posts/Show/EditComment.vue";
 import editLogo from '@/Images/edit.png';
+import deleteLogo from '@/Images/x-button.png';
+import DeleteComment from "@/Pages/Posts/Show/DeleteComment.vue";
 
 defineProps<{
     id: string,
@@ -22,15 +24,22 @@ defineProps<{
 const page = usePage();
 const currentUser = page.props.auth?.user?.id;
 const edit = ref<boolean>(false);
+const deletePost = ref<boolean>(false);
 
 const toggleEdit = () => {
     edit.value = !edit.value
 };
+const toggleDelete = () => {
+    deletePost.value = !deletePost.value;
+}
 </script>
 
 <template>
     <template v-if="edit">
         <EditComment @cancel="toggleEdit" :comment="comment" :comment-id="id"/>
+    </template>
+    <template v-if="deletePost">
+        <DeleteComment @cancel="toggleDelete" :comment="comment" :comment-id="id"/>
     </template>
     <div class="flex bg-gray-800 shadow-lg rounded-lg overflow-hidden p-4">
         <div class="flex-shrink-0 flex flex-col items-center w-24">
@@ -54,9 +63,13 @@ const toggleEdit = () => {
                 {{ comment }}
             </p>
         </div>
-
-        <template v-if="authorId === currentUser">
-            <img :src="editLogo" alt="Edit" class="w-6 h-6 cursor-pointer" @click="toggleEdit">
-        </template>
+        <div class="flex gap-4">
+            <template v-if="authorId === currentUser">
+                <img :src="editLogo" alt="Edit" class="w-6 h-6 cursor-pointer" @click="toggleEdit">
+            </template>
+            <template v-if="authorId === currentUser">
+                <img :src="deleteLogo" alt="Edit" class="w-6 h-6 cursor-pointer" @click="toggleDelete">
+            </template>
+        </div>
     </div>
 </template>

@@ -107,8 +107,15 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comments)
+    public function destroy(int $commentId): RedirectResponse
     {
-        //
+        $user =Auth::id();
+        $comment = Comment::where('id', $commentId)->first();
+
+        if ($user === $comment->user_id) {
+            $comment->delete();
+        }
+
+        return back()->with('message', 'Your comment has been deleted successfully!');
     }
 }
