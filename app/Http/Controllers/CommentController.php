@@ -81,9 +81,19 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Comment $comments)
+    public function edit(StoreComment $request, int $commentId): RedirectResponse
     {
-        //
+        $editedComment = $request->only(['comment','edited']);
+        $user = Auth::id();
+        $comment = Comment::where('id', $commentId)->first();
+
+        if ($user === $comment->user_id) {
+            $comment->update($editedComment);
+
+            return back()->with('message', 'Your comment has been updated successfully!');
+        }
+
+        return back();
     }
 
     /**

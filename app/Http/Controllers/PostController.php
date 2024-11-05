@@ -84,7 +84,7 @@ class PostController extends Controller
 
     private function getComments(int $id): array
     {
-        $data = Comment::where('post_id', $id)->get();
+        $data = Comment::where('post_id', $id)->orderby('created_at', 'desc')->get();
         $comments = [];
 
         foreach ($data as $comment) {
@@ -96,6 +96,7 @@ class PostController extends Controller
                 'author' => $comment->User->username,
                 'authorId' => $comment->User->id,
                 'author_avatar' => $comment->User->avatar,
+                'edited' => $comment->edited,
                 'commentVotes' => [
                     'upVote' => $upVoteCount,
                     'downVote' => $downVoteCount,
