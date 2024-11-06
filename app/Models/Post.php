@@ -19,7 +19,8 @@ class Post extends Model
         'category_id',
         'tradeAction',
         'description',
-        'pinned'
+        'pinned',
+        'sub_category_id'
     ];
 
     public function User(): belongsTo
