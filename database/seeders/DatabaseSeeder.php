@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
             'password' => 'asdqwe123',
         ]);
 
-
         User::factory(6)->create();
         Category::factory(6)->create();
         SubCategory::factory(6)->create();

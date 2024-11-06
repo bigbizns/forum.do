@@ -17,9 +17,21 @@ class SubCategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $categories = [
+            'Dota2 Accounts',
+            'Dota2 Boost',
+            'CS2 Hacks',
+            'CS2 Accounts',
+            'CS2 Boost',
+            'LoL Accounts',
+            'LoL Boost',
+            'Warzone Accounts',
+            'Other'
+        ];
+
         return [
             'category_id' => Category::all()->random()->id,
-            'title'=>$this->faker->company(),
+            'title' => $this->faker->randomElement($categories),
         ];
     }
 }
