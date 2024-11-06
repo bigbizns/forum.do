@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Category;
@@ -26,7 +28,8 @@ class SubCategoryFactory extends Factory
             'LoL Accounts',
             'LoL Boost',
             'Warzone Accounts',
-            'Other'
+            'Other',
+            'Social Accounts',
         ];
 
         return [

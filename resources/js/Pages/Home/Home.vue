@@ -8,6 +8,7 @@ import CategoryPost from "@/Components/CategoryPost.vue";
 import HomeTopicLinks from "@/Pages/Home/HomeComponents/HomeTopicLinks.vue";
 import WarningEmailMessage from "@/Components/WarningEmailMessage.vue";
 import RecentPostPagination from "@/Pages/Home/HomeComponents/RecentPostPagination.vue";
+import {CategoryInterace} from "@/Types/CategoryInterace";
 
 const props = defineProps<{
     userData: UserInterface
@@ -15,6 +16,7 @@ const props = defineProps<{
         data: PostInterface[],
         pagination: PaginationInterface
     };
+    categories: CategoryInterace[]
 }>();
 </script>
 
@@ -42,9 +44,8 @@ const props = defineProps<{
                     YouTube, Instagram, currency exchange, and many more.
                 </p>
             </div>
-            <!-- TODO: Think about the topics-->
             <div class="bg-gray-900 mt-10 rounded-lg">
-                <HomeTopicLinks/>
+                <HomeTopicLinks :categories="categories"/>
             </div>
             <div class="bg-gray-700 pt-2 mt-5">
                 <div class="bg-black/40 flex flex-col gap-4 rounded-lg p-4 mt-2">

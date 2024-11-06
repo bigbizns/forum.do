@@ -1,20 +1,28 @@
 <script setup lang="ts">
-import {Link} from "@inertiajs/vue3";
+import TopicLink from "@/Pages/Home/HomeComponents/TopicLink.vue";
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
+import {CategoryInterace} from "@/Types/CategoryInterace";
+
+defineProps<{
+    categories: CategoryInterace[]
+}>();
+
+const config = {
+    itemsToShow: 5,
+    wrapAround: true,
+};
 </script>
 
 <template>
     <div class="flex items-center rounded-lg">
-        <Link href=""
-              class="px-8 py-4 m-2 hover:bg-gray-700 transition duration-300 text-opacity text-white rounded text-gray">
-            Gaming Marketplace
-        </Link>
-        <Link href=""
-              class="px-8 py-4 m-2 hover:bg-gray-700 transition duration-300 text-opacity text-white rounded text-gray">
-            Discussion Forum
-        </Link>
-        <Link href=""
-              class="px-8 py-4 m-2 hover:bg-gray-700 transition duration-300 text-opacity text-white rounded text-gray hover">
-            Other Marketplace
-        </Link>
+        <Carousel v-bind="config" class="w-full">
+            <Slide v-for="category in categories" :key="category.id">
+                <TopicLink :title="category.title"/>
+            </Slide>
+            <template #addons>
+                <Navigation />
+            </template>
+        </Carousel>
     </div>
 </template>

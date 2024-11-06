@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -15,8 +16,15 @@ class HomeController extends Controller
     {
         $user = $this->getUserInfo();
         $recentPosts = $this->getPaginatedPosts();
+        $categories = Category::all(['id', 'title']);
 
-        return Inertia::render('Home/Home', ['userData' => $user, 'recentPosts' => $recentPosts]);
+        return Inertia::render('Home/Home',
+            [
+                'userData' => $user,
+                'recentPosts' => $recentPosts,
+                'categories' => $categories
+            ]
+        );
     }
 
     private function getUserInfo(): array|string
