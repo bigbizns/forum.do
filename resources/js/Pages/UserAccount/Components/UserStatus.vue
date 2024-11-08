@@ -22,7 +22,7 @@ defineProps<{
             <p class="text-gray-500">Comments</p>
         </div>
         <div class="bg-black/40 p-4 rounded-lg shadow-md text-center">
-            <p class="text-2xl text-gray-300 font-bold">0</p>
+            <p class="text-2xl text-gray-300 font-bold">{{ userStats.likes ?? '0' }}</p>
             <p class="text-gray-500">Likes</p>
         </div>
     </div>
