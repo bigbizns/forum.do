@@ -21,6 +21,7 @@ const props = defineProps<{
     reportTypes: ReportTypeInterface[],
     alreadyReported: boolean,
     votes: PostVotesInterface,
+    views: number,
 }>();
 
 const isReporting = ref<boolean>(false);
@@ -120,7 +121,7 @@ const submitVote = () => {
                     </div>
                 </form>
                 <div class="flex gap-4 items-center text-white text-sm m-5">
-                    <span>Views: 0</span>
+                    <span>Views: {{ views }}</span>
                     <span>Replies: {{ comments.length }}</span>
                 </div>
             </div>

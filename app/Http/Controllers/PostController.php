@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\PostLike;
+use App\Models\PostView;
 use App\Models\Report;
 use App\Models\SubCategory;
 use Illuminate\Http\RedirectResponse;
@@ -30,6 +31,7 @@ class PostController extends Controller
     public function showPost(int $id): Response
     {
         $post = $this->getPostInfo($id);
+        $views = $this->getPostViews($id);
         $comments = $this->getComments($id);
         $reportTypes = ReportTypesEnum::getReportTypes();
         $alreadyReported = $this->checkIfReported($id);
@@ -42,6 +44,7 @@ class PostController extends Controller
                 'reportTypes' => $reportTypes,
                 'alreadyReported' => $alreadyReported,
                 'votes' => $votes,
+                'views' => $views,
             ]);
     }
 
@@ -86,6 +89,7 @@ class PostController extends Controller
             'description' => $data->description,
             'tradeAction' => $data->tradeAction,
             'createdAt' => $data->created_at,
+            'views' => $data->views,
             'author' => $data->user,
         ];
     }
@@ -187,5 +191,20 @@ class PostController extends Controller
             'downVote' => count($votes['downVote']),
             'upVote' => count($votes['upVote']),
         ];
+    }
+
+    private function getPostViews(int $postId): int
+    {
+        $user = Auth::id();
+        $data = Post::findOrFail($postId);
+        $viewed = $data->View->where('user_id', $user);
+
+        if (!count($viewed)) {
+            PostView::create([
+                'user_id' => $user,
+                'post_id' => $postId,
+            ]);
+        }
+        return $data->View->where('post_id', $postId)->count();
     }
 }

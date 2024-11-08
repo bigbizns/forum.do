@@ -37,4 +37,9 @@ class Post extends Model
     {
         return $this->hasMany(PostLike::class);
     }
+
+    public function View(): hasMany
+    {
+        return $this->hasMany(PostView::class);
+    }
 }
