@@ -16,6 +16,8 @@ import Upvote from "@/Components/Upvote.vue";
 import Downvote from "@/Components/Downvote.vue";
 import Edit from '@/Images/edit.png';
 import EditPost from "@/Pages/Posts/Show/EditPost.vue";
+import deletePost from '@/Images/x-button.png';
+import DeletePost from "@/Pages/Posts/Show/DeletePost.vue";
 
 const props = defineProps<{
     post: PostInterface
@@ -29,6 +31,7 @@ const props = defineProps<{
 const page = usePage();
 const isReporting = ref<boolean>(false);
 const isEditingPost = ref<boolean>(false);
+const isDeletingPost = ref<boolean>(false);
 
 const currentUser = page.props.auth?.user?.id;
 
@@ -37,6 +40,9 @@ const toggleReport = () => {
 };
 const toggleEditPost = () => {
     isEditingPost.value = !isEditingPost.value;
+};
+const toggleDeletePost = () => {
+    isDeletingPost.value = !isDeletingPost.value;
 };
 
 const formattedDate = computed(() => {
@@ -77,6 +83,10 @@ const submitVote = () => {
         <EditPost @cancel="toggleEditPost" :id="post.id" :title="post.title" :description="post.description"/>
     </template>
 
+    <template v-if="isDeletingPost">
+        <DeletePost @cancel="toggleDeletePost" :id="post.id" :title="post.title"/>
+    </template>
+
     <div class="flex flex-col min-h-screen mb-10">
         <div class="container mx-auto mt-20 p-6 bg-black/40 shadow-md rounded-lg">
             <div class="pb-4 flex justify-between items-center">
@@ -98,7 +108,10 @@ const submitVote = () => {
                     <img :src="reportFlag" @click="toggleReport" class="w-10 cursor-pointer" alt="report"/>
                     </template>
                     <template v-if="post.user_id === currentUser">
-                        <img :src="Edit" @click="toggleEditPost" class="w-5 cursor-pointer" alt="edit"/>
+                        <div class="flex gap-3">
+                        <img :src="Edit" @click="toggleEditPost" class="w-6 cursor-pointer" alt="edit"/>
+                        <img :src="deletePost" @click="toggleDeletePost" alt="delete" class="w-6 cursor-pointer">
+                        </div>
                     </template>
                 </div>
             </div>
