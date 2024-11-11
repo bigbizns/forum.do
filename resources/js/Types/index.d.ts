@@ -12,6 +12,7 @@ export interface FlashMessages {
     message?: string;
     updatedPassword_message?: string;
     email_message: string;
+    warning_message: string;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {

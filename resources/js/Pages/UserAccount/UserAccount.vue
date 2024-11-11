@@ -18,7 +18,7 @@ const props = defineProps<{
 <template>
     <Head :title=userData.username />
     <Navigation/>
-    <div class="min-h-screen mt-10 py-8">
+    <div class="min-h-screen mt-12 py-8">
         <UserDetails :user-data="userData"/>
             <!--@TODO:ADD REAL TRACKING LIKES-->
         <UserStatus  :user-data="props.userData"  :user-stats="userStats"/>
