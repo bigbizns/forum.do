@@ -199,12 +199,17 @@ class PostController extends Controller
         $data = Post::findOrFail($postId);
         $viewed = $data->View->where('user_id', $user);
 
+        if (!$user){
+            return $data->View->where('post_id', $postId)->count();
+        }
+
         if (!count($viewed)) {
             PostView::create([
                 'user_id' => $user,
                 'post_id' => $postId,
             ]);
         }
+
         return $data->View->where('post_id', $postId)->count();
     }
 }
