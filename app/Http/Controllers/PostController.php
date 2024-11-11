@@ -20,6 +20,7 @@ use App\Models\PostView;
 use App\Models\Report;
 use App\Models\SubCategory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -84,13 +85,13 @@ class PostController extends Controller
         return to_route('post.show', $post->id);
     }
 
-    public function edit(StoreEditedPost $request, int $postId)
+    public function edit(StoreEditedPost $request, int $postId): RedirectResponse
     {
-        $requested = EditRequest::where('post_id', $postId)->first();
+        $requested = EditRequest::where('post_id', $postId)->where('action', RequestEnum::Edit->value)->first();
         $data = $request->only(['title', 'description']);
         $user = Auth::id();
         $message = 'Your request to edit the post has been submitted for review';
-        $warningMessage = 'Your request to edit the post is Already submitted for review';
+        $warningMessage = 'Your request to edit the post is already submitted for review';
 
         if ($requested) {
             return back()->with('warning_message', $warningMessage);
@@ -102,6 +103,28 @@ class PostController extends Controller
             'action' => RequestEnum::Edit->value,
             'title' => $data['title'],
             'description' => $data['description'],
+        ]);
+
+        return back()->with('message', $message);
+    }
+
+    public function destroy (Request $request, int $postId): RedirectResponse
+    {
+        $requested = EditRequest::where('post_id', $postId)->where('action', RequestEnum::Edit->value)->first();
+        $data = $request->only('title');
+        $user = Auth::id();
+        $message = 'Your request to delete the post has been submitted for review';
+        $warningMessage = 'Your request to delete the post is already submitted for review';
+
+        if($requested) {
+            return back()->with('warning_message', $warningMessage);
+        }
+
+        EditRequest::create([
+            'user_id' => $user,
+            'post_id' => $postId,
+            'action' => RequestEnum::Delete->value,
+            'title' => $data['title'],
         ]);
 
         return back()->with('message', $message);

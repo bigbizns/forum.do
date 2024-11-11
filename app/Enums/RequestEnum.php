@@ -7,4 +7,5 @@ namespace App\Enums;
 enum RequestEnum: string
 {
     case Edit = 'Edit';
+    case Delete = 'Delete';
 }
