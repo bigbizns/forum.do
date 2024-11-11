@@ -44,26 +44,9 @@ class EditRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(StoreEditedPost $request, int $postId)
+    public function edit()
     {
-        $requested = EditRequest::where('post_id', $postId)->firstOrFail();
-        $cc = $request->only(['title', 'description']);
-        $user = Auth::id();
-        $message = 'Your request to edit the post has been submitted for review';
-        $errorMessage = 'Your request to edit the post is Already submitted for review';
-
-        if ($requested) {
-            return back()->with('warning_message', $errorMessage);
-        }
-
-        EditRequest::create([
-            'user_id' => $user,
-            'post_id' => $postId,
-            'title' => $cc['title'],
-            'description' => $cc['description'],
-        ]);
-
-        return back()->with('message', $message);
+        //
     }
 
 
