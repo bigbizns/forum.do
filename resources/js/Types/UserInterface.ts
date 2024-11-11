@@ -21,4 +21,5 @@ export interface UsersPostsInterface {
 export interface UserStatsInterface {
     postCount: number,
     commentCount: number,
+    likes: number,
 }

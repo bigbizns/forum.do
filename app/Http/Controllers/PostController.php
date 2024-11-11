@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\LengthEnum;
 use App\Enums\ReportTypesEnum;
 use App\Enums\TradeActionEnum;
+use App\Enums\UserCountEnum;
 use App\Http\Requests\StorePost;
 use App\Models\Category;
 use App\Models\Comment;
@@ -100,8 +102,8 @@ class PostController extends Controller
         $comments = [];
 
         foreach ($data as $comment) {
-            $downVoteCount = $comment->vote->where('vote', 0)->count();
-            $upVoteCount = $comment->vote->where('vote', 1)->count();
+            $downVoteCount = $comment->CommentLike->where('vote', UserCountEnum::Zero->value)->count();
+            $upVoteCount = $comment->CommentLike->where('vote', UserCountEnum::One->value)->count();
             $comments[] = [
                 'id' => $comment->id,
                 'comment' => $comment->comment,
@@ -121,7 +123,7 @@ class PostController extends Controller
 
     private function getPaginatedPosts(): array
     {
-        $recentPosts = Post::orderBy('created_at', 'desc')->paginate(10);
+        $recentPosts = Post::orderBy('created_at', 'desc')->paginate(LengthEnum::Ten->value);
 
         $posts = [];
 
