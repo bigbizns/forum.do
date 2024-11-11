@@ -4,7 +4,7 @@ import Footer from "@/Layouts/Footer.vue";
 import Separator from "@/Components/Separator.vue";
 import {getUsDate} from "@/Helpers/getUsDate";
 import {computed, ref} from "vue";
-import {Link, Head, useForm} from "@inertiajs/vue3";
+import {Link, Head, useForm, usePage} from "@inertiajs/vue3";
 import {TradeActionEnum} from "@/Helpers/TradeActionEnum";
 import {CommentsInterface} from "@/Types/CommentsInterface";
 import UsersPostComment from "@/Components/UsersPostComment.vue";
@@ -14,6 +14,8 @@ import ReportPost from "@/Pages/Posts/Report/ReportPost.vue";
 import {ReportTypeInterface} from "@/Types/ReportTypeInterface";
 import Upvote from "@/Components/Upvote.vue";
 import Downvote from "@/Components/Downvote.vue";
+import Edit from '@/Images/edit.png';
+import EditPost from "@/Pages/Posts/Show/EditPost.vue";
 
 const props = defineProps<{
     post: PostInterface
@@ -24,10 +26,17 @@ const props = defineProps<{
     views: number,
 }>();
 
+const page = usePage();
 const isReporting = ref<boolean>(false);
+const isEditingPost = ref<boolean>(false);
+
+const currentUser = page.props.auth?.user?.id;
 
 const toggleReport = () => {
     isReporting.value = !isReporting.value;
+};
+const toggleEditPost = () => {
+    isEditingPost.value = !isEditingPost.value;
 };
 
 const formattedDate = computed(() => {
@@ -59,8 +68,13 @@ const submitVote = () => {
 <template>
     <Head :title="post.title"/>
     <Navigation/>
+
     <template v-if="isReporting">
-    <ReportPost @cancel="toggleReport" :is-reporting="isReporting"  :post-id="props.post.id" :report-types="props.reportTypes"/>
+    <ReportPost @cancel="toggleReport" :post-id="post.id" :report-types="reportTypes"/>
+    </template>
+
+    <template v-if="isEditingPost">
+        <EditPost @cancel="toggleEditPost" :id="post.id" :title="post.title" :description="post.description"/>
     </template>
 
     <div class="flex flex-col min-h-screen mb-10">
@@ -81,7 +95,10 @@ const submitVote = () => {
                 </div>
                 <div>
                     <template v-if="!alreadyReported && $page.props.auth.user !== null">
-                    <img :src="reportFlag" @click="toggleReport" alt="report" class="w-10 cursor-pointer"/>
+                    <img :src="reportFlag" @click="toggleReport" class="w-10 cursor-pointer" alt="report"/>
+                    </template>
+                    <template v-if="post.user_id === currentUser">
+                        <img :src="Edit" @click="toggleEditPost" class="w-5 cursor-pointer" alt="edit"/>
                     </template>
                 </div>
             </div>
@@ -133,6 +150,8 @@ const submitVote = () => {
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                     <small class="text-red-600 font-semibold">{{ form.errors.comment }}</small>
                     <small class="text-green-500 font-semibold">{{ $page.props.flash.message }}</small>
+                    <small class="text-yellow-500 font-semibold">{{ $page.props.flash.warning_message }}</small>
+
                     <div class="w-full flex justify-end mt-4">
                         <PrimaryButton text="Post" type="submit"/>
                     </div>

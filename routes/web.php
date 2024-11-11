@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/create-post', [PostController::class, 'create'])->name('post.create');
     Route::post('/create-post', [PostController::class, 'store'])->name('post.store');
+    Route::post('/edit-post/{postId}', [PostController::class, 'edit'])->name('post.edit');
 
     Route::get('/contact-us', ContactUsController::class)->name('contactus');
     Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contactus.store');

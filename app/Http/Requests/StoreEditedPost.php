@@ -6,8 +6,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePost extends FormRequest
+class StoreEditedPost extends FormRequest
 {
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,17 +18,7 @@ class StorePost extends FormRequest
     {
         return [
             'title' => ['required', 'min:10', 'max:70'],
-            'category' => ['required'],
-            'tradeAction' => ['required_if:category.marketplace,1'],
             'description' => ['required', 'min:20', 'max:5000'],
-            'subCategory' => ['required'],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'tradeAction.required_if' => 'Trade action field is required.',
         ];
     }
 }

@@ -1,25 +1,29 @@
 <script setup lang="ts">
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
-import {ReportTypeInterface} from "@/Types/ReportTypeInterface";
 
 const props = defineProps<{
-    postId: number | string,
-    reportTypes: ReportTypeInterface[],
+    id: string,
+    title: string,
+    description: string,
+
 }>();
 
 const emit = defineEmits<{
     (e: 'cancel'): void;
 }>();
+
 const form = useForm({
-    reason: null,
-    message: null
+    title: props.title,
+    description: props.description
 });
+
 const cancel = () => {
     emit('cancel');
 };
+
 const submit = () => {
-    form.post(route('post.report', {id: props.postId}), {onSuccess: () => emit('cancel')});
+    form.post(route('post.edit', {postId: props.id}), {onSuccess: () => emit('cancel')});
 };
 </script>
 
@@ -29,29 +33,22 @@ const submit = () => {
         @click="cancel">
         <div class="z-30 bg-gray-800 p-8 rounded-lg shadow-lg transform w-[100vh]" @click.stop>
             <form @submit.prevent="submit">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="w-full max-w-xs">
-                        <label for="category" class="block text-sm font-medium text-white mb-2">Report type</label>
-                        <select v-model="form.reason" id="reason" name="reason"
-                                class="block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out">
-                            <option v-for="report in reportTypes" :value="report.value" class="text-gray-400">
-                                {{ report.name }}
-                            </option>
-                        </select>
-                        <small class="text-red-600 font-semibold">{{ form.errors.reason }}</small>
-                    </div>
+                <div class="flex justify-between items-center mb-4 text-white">
+                    Edit Your Post
                 </div>
-
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-white">Reason for Report</label>
+                    <input v-model="form.title" type="text" placeholder="Edit Title" class="mt-2 block w-full p-3 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-300 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out">
+                    <small class="text-red-600 font-semibold">{{ form.errors.title }}</small>
+                </div>
+                <div class="mb-4">
                     <textarea
-                        v-model="form.message"
+                        v-model="form.description"
                         rows="5"
                         id="title"
                         class="mt-2 block w-full p-3 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-300 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out"
-                        placeholder="Explain why the post should be removed"
-                    ></textarea>
-                    <small class="text-red-600 font-semibold">{{ form.errors.message }}</small>
+                        placeholder="Edit Description"
+                    >{{ form.description }}</textarea>
+                    <small class="text-red-600 font-semibold">{{ form.errors.description }}</small>
                 </div>
 
                 <div class="flex mt-6 gap-4">
@@ -65,3 +62,5 @@ const submit = () => {
         </div>
     </div>
 </template>
+
+

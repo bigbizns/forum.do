@@ -45,6 +45,7 @@ class HandleInertiaRequests extends Middleware
                 'profile_message' => fn() => $request->session()->get('profile_message'),
                 'avatar_message' => fn() => $request->session()->get('avatar_message'),
                 'message' => fn() => $request->session()->get('message'),
+                'warning_message' => fn() => $request->session()->get('warning_message'),
                 'updatedPassword_message' => fn() => $request->session()->get('updatedPassword_message'),
                 'email_message' => fn() => $request->session()->get('email_message'),
             ],

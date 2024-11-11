@@ -6,11 +6,14 @@ namespace App\Http\Controllers;
 
 use App\Enums\LengthEnum;
 use App\Enums\ReportTypesEnum;
+use App\Enums\RequestEnum;
 use App\Enums\TradeActionEnum;
 use App\Enums\UserCountEnum;
+use App\Http\Requests\StoreEditedPost;
 use App\Http\Requests\StorePost;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\EditRequest;
 use App\Models\Post;
 use App\Models\PostLike;
 use App\Models\PostView;
@@ -81,12 +84,36 @@ class PostController extends Controller
         return to_route('post.show', $post->id);
     }
 
+    public function edit(StoreEditedPost $request, int $postId)
+    {
+        $requested = EditRequest::where('post_id', $postId)->first();
+        $data = $request->only(['title', 'description']);
+        $user = Auth::id();
+        $message = 'Your request to edit the post has been submitted for review';
+        $warningMessage = 'Your request to edit the post is Already submitted for review';
+
+        if ($requested) {
+            return back()->with('warning_message', $warningMessage);
+        }
+
+        EditRequest::create([
+            'user_id' => $user,
+            'post_id' => $postId,
+            'action' => RequestEnum::Edit->value,
+            'title' => $data['title'],
+            'description' => $data['description'],
+        ]);
+
+        return back()->with('message', $message);
+    }
+
     private function getPostInfo(int $id): array
     {
         $data = Post::findOrFail($id);
 
         return [
             'id' => $data->id,
+            'user_id' => $data->user_id,
             'title' => $data->title,
             'description' => $data->description,
             'tradeAction' => $data->tradeAction,
