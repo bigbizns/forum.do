@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Post::class);
+            $table->string('action');
             $table->string('title');
             $table->text('description');
             $table->timestamps();

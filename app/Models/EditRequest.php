@@ -15,6 +15,7 @@ class EditRequest extends Model
     protected $fillable = [
         'user_id',
         'post_id',
+        'action',
         'title',
         'description',
     ];

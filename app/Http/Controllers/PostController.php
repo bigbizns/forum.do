@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\LengthEnum;
 use App\Enums\ReportTypesEnum;
+use App\Enums\RequestEnum;
 use App\Enums\TradeActionEnum;
 use App\Enums\UserCountEnum;
 use App\Http\Requests\StoreEditedPost;
@@ -85,21 +86,22 @@ class PostController extends Controller
 
     public function edit(StoreEditedPost $request, int $postId)
     {
-        $requested = EditRequest::where('post_id', $postId)->firstOrFail();
-        $cc = $request->only(['title', 'description']);
+        $requested = EditRequest::where('post_id', $postId)->first();
+        $data = $request->only(['title', 'description']);
         $user = Auth::id();
         $message = 'Your request to edit the post has been submitted for review';
-        $errorMessage = 'Your request to edit the post is Already submitted for review';
+        $warningMessage = 'Your request to edit the post is Already submitted for review';
 
         if ($requested) {
-            return back()->with('warning_message', $errorMessage);
+            return back()->with('warning_message', $warningMessage);
         }
 
         EditRequest::create([
             'user_id' => $user,
             'post_id' => $postId,
-            'title' => $cc['title'],
-            'description' => $cc['description'],
+            'action' => RequestEnum::Edit->value,
+            'title' => $data['title'],
+            'description' => $data['description'],
         ]);
 
         return back()->with('message', $message);
