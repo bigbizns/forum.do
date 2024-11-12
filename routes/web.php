@@ -47,19 +47,19 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/settings', [AccountController::class, 'settings'])->name('settings');
 
-        Route::post('/settings', [AccountController::class, 'settingsStore'])->name('settings.store');
-        Route::post('/settings/upload-avatar', [AccountController::class, 'avatarStore'])->name('avatar.store');
+        Route::post('/settings-save', [AccountController::class, 'settingsStore'])->name('settings.store');
+        Route::post('/settings-upload-avatar', [AccountController::class, 'avatarStore'])->name('avatar.store');
 
-        Route::post('/settings/update-password', [AccountController::class, 'updatePassword'])->name('update.password');
+        Route::post('/settings-update-password', [AccountController::class, 'updatePassword'])->name('update.password');
 
-        Route::post('/settings/send-verification-email', [AccountController::class, 'sendVerifyEmail'])->name('send.verify.email');
-        Route::post('/settings/verify-email', [AccountController::class, 'verifyEmailStore'])->name('verify.email.store');
+        Route::post('/settings-send-verification-email', [AccountController::class, 'sendVerifyEmail'])->name('send.verify.email');
+        Route::post('/settings-verify-email', [AccountController::class, 'verifyEmailStore'])->name('verify.email.store');
     });
 
-    Route::get('/create-post', [PostController::class, 'create'])->name('post.create');
-    Route::post('/create-post', [PostController::class, 'store'])->name('post.store');
-    Route::post('/edit-post/{postId}', [PostController::class, 'edit'])->name('post.edit');
-    Route::post('/delete-post/{postId}', [PostController::class, 'destroy'])->name('post.delete');
+    Route::get('/post-create', [PostController::class, 'create'])->name('post.create');
+    Route::post('/post-store', [PostController::class, 'store'])->name('post.store');
+    Route::post('/post-edit/{postId}', [PostController::class, 'edit'])->name('post.edit');
+    Route::post('/post-destroy/{postId}', [PostController::class, 'destroy'])->name('post.delete');
 
     Route::get('/contact-us', ContactUsController::class)->name('contactus');
     Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contactus.store');
