@@ -110,7 +110,7 @@ class PostController extends Controller
 
     public function destroy (Request $request, int $postId): RedirectResponse
     {
-        $requested = EditRequest::where('post_id', $postId)->where('action', RequestEnum::Edit->value)->first();
+        $requested = EditRequest::where('post_id', $postId)->where('action', RequestEnum::Delete->value)->first();
         $data = $request->only('title');
         $user = Auth::id();
         $message = 'Your request to delete the post has been submitted for review';
