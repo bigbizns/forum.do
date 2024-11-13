@@ -7,7 +7,8 @@ defineProps<{
 </script>
 
 <template>
-    <Link :href="route('home')">
+
+    <Link :href="route('subCategory.index', {subCategory: title})">
         <!--TODO: ADD TO TABLE PICTURES OF THE SUBCATEGORIES AND SHOW THEM IN THE FRONT LIKE USER PICTURE-->
         <div class="flex bg-gray-800 shadow-xl hover:bg-gray-700 transition duration-200 cursor-pointer rounded flex-row p-3">
             <div class="mx-5">
