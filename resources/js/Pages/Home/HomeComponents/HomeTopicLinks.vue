@@ -2,10 +2,10 @@
 import TopicLink from "@/Pages/Home/HomeComponents/TopicLink.vue";
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
-import {CategoryInterace} from "@/Types/CategoryInterace";
+import {CategoryInterface} from "@/Types/CategoryInterface";
 
 defineProps<{
-    categories: CategoryInterace[]
+    categories: CategoryInterface[]
 }>();
 
 const config = {

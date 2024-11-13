@@ -12,7 +12,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', HomeController::class)->name('home');
+Route::get('/{Category?}', HomeController::class)->name('home');
 
 Route::get('/forum', PostController::class)->name('forum');
 

@@ -6,25 +6,39 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function __invoke(): Response
+    public function __invoke(string $title = ''): Response
     {
         $user = $this->getUserInfo();
         $recentPosts = $this->getPaginatedPosts();
         $categories = Category::all(['id', 'title']);
+        $subCategories = $this->getSelectedCategorySubCategories($title);
 
         return Inertia::render('Home/Home',
             [
                 'userData' => $user,
                 'recentPosts' => $recentPosts,
-                'categories' => $categories
+                'categories' => $categories,
+                'subCategories' => $subCategories,
             ]
         );
+    }
+
+    private function getSelectedCategorySubCategories(string $title): array
+    {
+        if (!empty($title)) {
+            $category = Category::where('title', $title)->first();
+
+            return SubCategory::where('category_id', $category->id)->get()->toArray();
+        }
+
+        return SubCategory::all()->toArray();
     }
 
     private function getUserInfo(): array|string
