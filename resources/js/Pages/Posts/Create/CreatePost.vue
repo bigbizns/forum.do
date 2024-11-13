@@ -4,13 +4,13 @@ import {Head, useForm} from "@inertiajs/vue3";
 import Navigation from "@/Layouts/Navigation.vue";
 import FormInput from "@/Components/FormInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { CategoryInterace } from "@/Types/CategoryInterace";
+import { CategoryInterface } from "@/Types/CategoryInterface";
 import {CreatePostInterface} from "@/Types/CreatePostInterface";
 import {watch} from "vue";
 import {SubCategoryInterface} from "@/Types/SubCategoryInterface";
 
 const props = defineProps<{
-    categories: CategoryInterace[],
+    categories: CategoryInterface[],
     subCategories: SubCategoryInterface[],
     tradeActions: TradeActionInterface[],
 }>();

@@ -4,11 +4,12 @@ import Footer from "@/Layouts/Footer.vue";
 import Navigation from "@/Layouts/Navigation.vue";
 import type {UserInterface} from "@/Types/UserInterface";
 import Post from "@/Components/Post.vue";
-import CategoryPost from "@/Components/CategoryPost.vue";
+import SubCategory from "@/Components/SubCategoryCard.vue";
 import HomeTopicLinks from "@/Pages/Home/HomeComponents/HomeTopicLinks.vue";
 import WarningEmailMessage from "@/Components/WarningEmailMessage.vue";
 import RecentPostPagination from "@/Pages/Home/HomeComponents/RecentPostPagination.vue";
-import {CategoryInterace} from "@/Types/CategoryInterace";
+import {CategoryInterface} from "@/Types/CategoryInterface";
+import {SubCategoryInterface} from "@/Types/SubCategoryInterface";
 
 const props = defineProps<{
     userData: UserInterface
@@ -16,7 +17,8 @@ const props = defineProps<{
         data: PostInterface[],
         pagination: PaginationInterface
     };
-    categories: CategoryInterace[]
+    categories: CategoryInterface[],
+    subCategories: SubCategoryInterface[],
 }>();
 </script>
 
@@ -44,14 +46,16 @@ const props = defineProps<{
                     YouTube, Instagram, currency exchange, and many more.
                 </p>
             </div>
-            <div class="bg-gray-900 mt-10 rounded-lg">
+            <div class="bg-gray-900 rounded-lg mt-5">
                 <HomeTopicLinks :categories="categories"/>
             </div>
             <div class="bg-gray-700 pt-2 mt-5">
                 <div class="bg-black/40 flex flex-col gap-4 rounded-lg p-4 mt-2">
-                    <h1 class="text-white text-xl">Categories</h1>
-                    <CategoryPost title="DOTA 2" description="Skins,Accounts,boosts"/>
-                    <CategoryPost title="CS 2" description="Skins,Accounts,Gamble,Discussions"/>
+                    <h1 class="text-white text-xl">Sub-Categories</h1>
+                    <SubCategory
+                        v-for="sub in subCategories"
+                        :id="sub.id"
+                        :title="sub.title"/>
                 </div>
             </div>
             <div class="mt-10">
