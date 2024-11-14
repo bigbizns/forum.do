@@ -55,7 +55,9 @@ const props = defineProps<{
                     <SubCategory
                         v-for="sub in subCategories"
                         :id="sub.id"
-                        :title="sub.title"/>
+                        :title="sub.title"
+                        :slug="sub.slug"
+                    />
                 </div>
             </div>
             <div class="mt-10">

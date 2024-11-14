@@ -13,12 +13,12 @@ use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function __invoke(string $title = ''): Response
+    public function __invoke(string $slug = ''): Response
     {
         $user = $this->getUserInfo();
         $recentPosts = $this->getPaginatedPosts();
-        $categories = Category::all(['id', 'title']);
-        $subCategories = $this->getSelectedCategorySubCategories($title);
+        $categories = Category::all(['id', 'title', 'slug']);
+        $subCategories = $this->getSelectedCategorySubCategories($slug);
 
         return Inertia::render('Home/Home',
             [
@@ -30,10 +30,10 @@ class HomeController extends Controller
         );
     }
 
-    private function getSelectedCategorySubCategories(string $title): array
+    private function getSelectedCategorySubCategories(string $slug): array
     {
-        if (!empty($title)) {
-            $category = Category::where('title', $title)->first();
+        if (!empty($slug)) {
+            $category = Category::where('slug', $slug)->first();
 
             return SubCategory::where('category_id', $category->id)->get()->toArray();
         }

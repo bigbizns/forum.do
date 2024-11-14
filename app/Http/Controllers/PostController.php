@@ -34,15 +34,30 @@ class PostController extends Controller
         return Inertia::render('Posts/Index/ForumIndex', ['posts' => $posts]);
     }
 
-    public function subCategoryIndex(string $title): Response
+    public function subCategoryIndex(string $slug): Response
     {
-        // TODO: NEED TO FINISH PROPERLY POSTS, LEFT TO ADD USERS IMAGE TO POST.
-        $subCategory = SubCategory::where('title', $title)->first();
-        $posts = Post::where('sub_category_id', $subCategory->id)->get(['id', 'user_id', 'title', 'tradeAction', 'description', 'pinned'])->toArray();
+        $subCategory = SubCategory::where('slug', $slug)->firstOrFail();
+
+        $data = Post::where('sub_category_id', $subCategory->id)->get(['id', 'user_id', 'title', 'tradeAction', 'description', 'pinned']);
+
+
+        $posts=[];
+
+        foreach ($data as $post) {
+            $posts[] = [
+                'id' => $post->id,
+                'user_id' => $post->user_id,
+                'title' => $post->title,
+                'tradeAction' => $post->tradeAction,
+                'description' => $post->description,
+                'pinned' => $post->pinned,
+                'avatar' => $post->user->avatar,
+                ];
+        }
 
         return Inertia::render('SubCategory/Index',
             [
-                'title' => $title,
+                'title' => $subCategory->title,
                 'posts' => $posts,
             ]);
     }

@@ -18,7 +18,7 @@ const config = {
     <div class="flex items-center rounded-lg">
         <Carousel v-bind="config" class="w-full">
             <Slide v-for="category in categories" :key="category.id">
-                <TopicLink :title="category.title"/>
+                <TopicLink :title="category.title" :slug="category.slug"/>
             </Slide>
             <template #addons>
                 <Navigation />

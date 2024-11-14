@@ -25,7 +25,7 @@ defineProps<{
                     :trade-action="post.tradeAction"
                     :description="post.description"
                     :id="post.id"
-                    avatar=""
+                    :avatar="post.avatar"
                     :title="post.title"
                 />
             </div>

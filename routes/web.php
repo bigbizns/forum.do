@@ -12,9 +12,10 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/forum', PostController::class)->name('forum');
+Route::get('/', HomeController::class)->name('home');
+Route::get('/home/{Category?}', HomeController::class)->name('subCategory.get');
 
-Route::get('/{Category?}', HomeController::class)->name('home');
+Route::get('/forum', PostController::class)->name('forum');
 
 Route::get('/posts/{subCategory}', [PostController::class, 'subCategoryIndex'])->name('subCategory.index');
 
