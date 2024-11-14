@@ -34,6 +34,31 @@ class PostController extends Controller
         return Inertia::render('Posts/Index/ForumIndex', ['posts' => $posts]);
     }
 
+    public function subCategoryIndex(string $slug): Response
+    {
+        $subCategory = SubCategory::where('slug', $slug)->firstOrFail();
+        $data = Post::where('sub_category_id', $subCategory->id)->get(['id', 'user_id', 'title', 'tradeAction', 'description', 'pinned']);
+        $posts = [];
+
+        foreach ($data as $post) {
+            $posts[] = [
+                'id' => $post->id,
+                'user_id' => $post->user_id,
+                'title' => $post->title,
+                'tradeAction' => $post->tradeAction,
+                'description' => $post->description,
+                'pinned' => $post->pinned,
+                'avatar' => $post->user->avatar,
+            ];
+        }
+
+        return Inertia::render('SubCategory/Index',
+            [
+                'title' => $subCategory->title,
+                'posts' => $posts,
+            ]);
+    }
+
     public function showPost(int $id): Response
     {
         $post = $this->getPostInfo($id);
@@ -108,7 +133,7 @@ class PostController extends Controller
         return back()->with('message', $message);
     }
 
-    public function destroy (Request $request, int $postId): RedirectResponse
+    public function destroy(Request $request, int $postId): RedirectResponse
     {
         $requested = EditRequest::where('post_id', $postId)->where('action', RequestEnum::Delete->value)->first();
         $data = $request->only('title');
@@ -116,7 +141,7 @@ class PostController extends Controller
         $message = 'Your request to delete the post has been submitted for review';
         $warningMessage = 'Your request to delete the post is already submitted for review';
 
-        if($requested) {
+        if ($requested) {
             return back()->with('warning_message', $warningMessage);
         }
 

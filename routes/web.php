@@ -12,18 +12,21 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/{Category?}', HomeController::class)->name('home');
+Route::get('/', HomeController::class)->name('home');
+Route::get('/home/{Category?}', HomeController::class)->name('subCategory.get');
 
 Route::get('/forum', PostController::class)->name('forum');
+
+Route::get('/posts/{subCategory}', [PostController::class, 'subCategoryIndex'])->name('subCategory.index');
 
 Route::get('/user/{id}', [UserController::class, 'showUsersProfile'])->name('user.profile');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('info')->name('info.')->group(function () {
-   Route::get('about-us', [InfoController::class, 'AboutUs'])->name('about-us');
-   Route::get('services', [InfoController::class, 'Services'])->name('services');
-   Route::get('terms', [InfoController::class, 'Terms'])->name('terms');
+    Route::get('about-us', [InfoController::class, 'AboutUs'])->name('about-us');
+    Route::get('services', [InfoController::class, 'Services'])->name('services');
+    Route::get('terms', [InfoController::class, 'Terms'])->name('terms');
 });
 
 Route::group(['middleware' => 'guest'], function () {

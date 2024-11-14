@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SubCategory>
@@ -32,9 +33,11 @@ class SubCategoryFactory extends Factory
             'Social Accounts',
         ];
 
+        $title = $this->faker->randomElement($categories);
         return [
             'category_id' => Category::all()->random()->id,
-            'title' => $this->faker->randomElement($categories),
+            'title' => $title,
+            'slug' => Str::slug($title),
         ];
     }
 }

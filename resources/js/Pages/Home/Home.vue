@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Head, Link} from "@inertiajs/vue3";
+import {Head} from "@inertiajs/vue3";
 import Footer from "@/Layouts/Footer.vue";
 import Navigation from "@/Layouts/Navigation.vue";
 import type {UserInterface} from "@/Types/UserInterface";
@@ -55,7 +55,9 @@ const props = defineProps<{
                     <SubCategory
                         v-for="sub in subCategories"
                         :id="sub.id"
-                        :title="sub.title"/>
+                        :title="sub.title"
+                        :slug="sub.slug"
+                    />
                 </div>
             </div>
             <div class="mt-10">
