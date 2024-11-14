@@ -19,15 +19,20 @@ defineProps<{
                 <h2 class="text-15 font-bold">{{ title }}</h2>
             </div>
             <div class="flex flex-col gap-3">
-                <Post
-                    v-for="post in posts"
-                    :user_id="post.user_id"
-                    :trade-action="post.tradeAction"
-                    :description="post.description"
-                    :id="post.id"
-                    :avatar="post.avatar"
-                    :title="post.title"
-                />
+                <template v-if="posts.length != 0">
+                    <Post
+                        v-for="post in posts"
+                        :user_id="post.user_id"
+                        :trade-action="post.tradeAction"
+                        :description="post.description"
+                        :id="post.id"
+                        :avatar="post.avatar"
+                        :title="post.title"
+                    />
+                </template>
+                <template v-else>
+                    No one yet posted
+                </template>
             </div>
         </div>
     </div>

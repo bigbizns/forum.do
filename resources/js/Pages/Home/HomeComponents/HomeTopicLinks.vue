@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TopicLink from "@/Pages/Home/HomeComponents/TopicLink.vue";
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Navigation } from 'vue3-carousel'
+import {Carousel, Slide, Navigation} from 'vue3-carousel'
 import {CategoryInterface} from "@/Types/CategoryInterface";
 
 defineProps<{
@@ -21,7 +21,7 @@ const config = {
                 <TopicLink :title="category.title" :slug="category.slug"/>
             </Slide>
             <template #addons>
-                <Navigation />
+                <Navigation/>
             </template>
         </Carousel>
     </div>

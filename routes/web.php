@@ -24,9 +24,9 @@ Route::get('/user/{id}', [UserController::class, 'showUsersProfile'])->name('use
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('info')->name('info.')->group(function () {
-   Route::get('about-us', [InfoController::class, 'AboutUs'])->name('about-us');
-   Route::get('services', [InfoController::class, 'Services'])->name('services');
-   Route::get('terms', [InfoController::class, 'Terms'])->name('terms');
+    Route::get('about-us', [InfoController::class, 'AboutUs'])->name('about-us');
+    Route::get('services', [InfoController::class, 'Services'])->name('services');
+    Route::get('terms', [InfoController::class, 'Terms'])->name('terms');
 });
 
 Route::group(['middleware' => 'guest'], function () {
