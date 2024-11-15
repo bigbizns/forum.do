@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 
 const props = defineProps<{
     id: string,
@@ -28,6 +28,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Edit post"/>
     <div
         class="fixed z-10 inset-0 flex items-center justify-center bg-black/60 transition-opacity duration-300 ease-out"
         @click="cancel">

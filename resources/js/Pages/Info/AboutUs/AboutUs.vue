@@ -2,8 +2,10 @@
 
 import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
+import {Head} from "@inertiajs/vue3";
 </script>
 <template>
+    <Head title="About us"/>
     <Navigation/>
     <div class="min-h-screen flex justify-center items-center">
     <section class="max-w-4xl mx-auto p-6 bg-black/40 shadow-xl rounded-lg">
