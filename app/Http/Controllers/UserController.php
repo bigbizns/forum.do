@@ -12,6 +12,11 @@ use Inertia\Response;
 
 class UserController extends Controller
 {
+    public function __invoke(): Response
+    {
+        return Inertia::render('Dashboards/User/Index');
+    }
+
     public function showUsersProfile($id): Response|RedirectResponse
     {
         $user = User::where('id', $id)->first();

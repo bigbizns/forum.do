@@ -81,10 +81,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/comment-edit/{commentId}', [CommentController::class, 'edit'])->name('comment.edit');
         Route::post('/comment-delete/{commentId}', [CommentController::class, 'destroy'])->name('comment.delete');
     });
+
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/', UserController::class)->name('index');
+    });
 });
 
 Route::group(['middleware' => AdminMiddleware::class], function () {
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', AdminController::class)->name('admin.dashboard');
+    Route::prefix('admin/dashboard')->name('admin.dashboard.')->group(function () {
+        Route::get('/', AdminController::class)->name('index');
     });
 });
