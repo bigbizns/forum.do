@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {Head, Link} from "@inertiajs/vue3";
-import logo from '@/Images/logo1.png';
 import {AdminDashUsersInterface} from "@/Types/adminDashUsersInterface";
 import {getUsDate} from "@/Helpers/getUsDate";
 import user from '@/Images/user.png';
+import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
 
 defineProps<{
     users:AdminDashUsersInterface[]
@@ -15,27 +15,7 @@ const UserDefault = user;
 <template>
     <Head title="Admin Dashboard"/>
     <div class="min-h-full">
-        <nav class="bg-gray-800">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex h-16 items-center justify-between">
-                    <div class="flex items-center">
-                        <div class="shrink-0">
-                            <img class="size-10" :src="logo" alt="Your Company">
-                        </div>
-                        <div class="hidden md:block">
-                            <div class="ml-10 flex items-baseline space-x-4">
-                                <Link :href="route('admin.dashboard.index')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Dashboard</Link>
-                                <Link :href="route('admin.dashboard.index')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Edit Requests</Link>
-                                <Link :href="route('admin.dashboard.index')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Delete Requests</Link>
-                                <Link :href="route('admin.dashboard.index')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Reports</Link>
-                                <Link :href="route('home')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Home Page</Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
+        <AdminDashboardNav/>
         <header class="bg-black/40 shadow">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 <h1 class="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
