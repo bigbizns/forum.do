@@ -3,6 +3,7 @@ import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
 import {SubCategoryItemInterface} from "@/Types/SubCategoryItemInterface";
 import Post from "@/Components/Post.vue";
+import {Head} from "@inertiajs/vue3";
 
 defineProps<{
     title: string,
@@ -11,6 +12,7 @@ defineProps<{
 </script>
 
 <template>
+    <Head :title="title"/>
     <Navigation/>
 
     <div class="mx-auto w-[90%] flex-grow mt-20 mb-16 h-screen">

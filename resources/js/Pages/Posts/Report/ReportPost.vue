@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 import {ReportTypeInterface} from "@/Types/ReportTypeInterface";
 
 const props = defineProps<{
@@ -24,6 +24,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Report Post"/>
     <div
         class="fixed z-10 inset-0 flex items-center justify-center bg-black/60 transition-opacity duration-300 ease-out"
         @click="cancel">
