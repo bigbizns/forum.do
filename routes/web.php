@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactUsController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -78,5 +80,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/comment-vote/{commentId}', [CommentController::class, 'storeVote'])->name('comment.vote');
         Route::post('/comment-edit/{commentId}', [CommentController::class, 'edit'])->name('comment.edit');
         Route::post('/comment-delete/{commentId}', [CommentController::class, 'destroy'])->name('comment.delete');
+    });
+});
+
+Route::group(['middleware' => AdminMiddleware::class], function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', AdminController::class)->name('admin.dashboard');
     });
 });
