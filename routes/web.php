@@ -90,5 +90,9 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => AdminMiddleware::class], function () {
     Route::prefix('admin/dashboard')->name('admin.dashboard.')->group(function () {
         Route::get('/', AdminController::class)->name('index');
+        Route::get('/edit-requests', [AdminController::class, 'editRequests'])->name('edit.requests');
+        Route::get('/delete-requests', [AdminController::class, 'deleteRequests'])->name('delete.requests');
+        Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
+        Route::get('/messages', [AdminController::class, 'messages'])->name('messages');
     });
 });
