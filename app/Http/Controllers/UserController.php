@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\UserCountEnum;
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -50,7 +54,9 @@ class UserController extends Controller
 
     public function yourPosts(): Response
     {
-        return Inertia::render('Dashboards/User/YourPosts');
+        $posts = $this->getUserPosts();
+
+        return Inertia::render('Dashboards/User/YourPosts', ['posts' => $posts]);
     }
 
     public function yourRequests(): Response
@@ -87,5 +93,33 @@ class UserController extends Controller
     private function getTotalLikes(int $postLikes, int $commentLikes): int
     {
         return $commentLikes + $postLikes;
+    }
+
+    private function getUserPosts(): array
+    {
+        $userId = Auth::id();
+        $posts = Post::where('user_id', $userId)->get();
+        $data = [];
+
+        foreach ($posts as $post) {
+            $postLikes = $post->PostLike->where('vote', UserCountEnum::One->value)->count();
+            $postViews = $post->View->where('post_id', $post->id)->count();
+            $categoryTitle = Category::where('id', $post->category_id)->first()->title;
+            $subCategoryTitle = SubCategory::where('id', $post->sub_category_id)->first()->title;
+
+            $data[] = [
+                'id' => $post->id,
+                'title' => $post->title,
+                'tradeAction' => $post->tradeAction,
+                'description' => $post->description,
+                'pinned' => $post->pinned,
+                'likes' => $postLikes,
+                'views' => $postViews,
+                'catTitle' => $categoryTitle,
+                'subCatTitle' => $subCategoryTitle,
+            ];
+        }
+
+        return $data;
     }
 }
