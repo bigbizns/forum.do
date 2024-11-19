@@ -16,4 +16,25 @@ class AdminController extends Controller
 
         return Inertia::render('Dashboards/Admin/Index', ['users' => $users]);
     }
+
+    public function editRequests(): Response
+    {
+        return Inertia::render('Dashboards/Admin/EditRequests');
+    }
+
+    public function deleteRequests(): Response
+    {
+        return Inertia::render('Dashboards/Admin/DeleteRequests');
+
+    }
+
+    public function reports(): Response
+    {
+        return Inertia::render('Dashboards/Admin/Reports');
+    }
+
+    public function messages(): Response
+    {
+        return Inertia::render('Dashboards/Admin/Messages');
+    }
 }
