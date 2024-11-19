@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {Link} from "@inertiajs/vue3";
 import logo from "@/Images/logo1.png";
+import DashBoardLink from "@/Components/DashBoardLink.vue";
 </script>
 
 <template>
@@ -13,10 +14,13 @@ import logo from "@/Images/logo1.png";
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <Link :href="route('dashboard.index')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Dashboard</Link>
-                            <Link :href="route('dashboard.index')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Your Posts</Link>
-                            <Link :href="route('dashboard.index')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Your Requests</Link>
-                            <Link :href="route('home')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Home Page</Link>
+                            <DashBoardLink href="dashboard.index">Dashboard</DashBoardLink>
+                            <DashBoardLink href="dashboard.your.posts">Your Posts</DashBoardLink>
+                            <DashBoardLink href="dashboard.your.requests">Your Requests</DashBoardLink>
+                            <Link :href="route('home')"
+                                  class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">
+                                Home Page
+                            </Link>
                         </div>
                     </div>
                 </div>

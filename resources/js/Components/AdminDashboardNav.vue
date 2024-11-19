@@ -3,8 +3,6 @@ import {Link} from "@inertiajs/vue3";
 import logo from "@/Images/logo1.png";
 import { route } from 'ziggy-js';
 import DashBoardLink from "@/Components/DashBoardLink.vue";
-
-
 </script>
 
 <template>

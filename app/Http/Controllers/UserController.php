@@ -48,6 +48,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function yourPosts(): Response
+    {
+        return Inertia::render('Dashboards/User/YourPosts');
+    }
+
+    public function yourRequests(): Response
+    {
+        return Inertia::render('Dashboards/User/YourRequests');
+    }
+
     private function getCommentLikes(User $user): int
     {
         $comments = $user->Comment;

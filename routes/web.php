@@ -83,7 +83,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::get('/', UserController::class)->name('index');
+        Route::get('/', UserController::class)->name('index');
+        Route::get('/your-posts', [UserController::class, 'yourPosts'])->name('your.posts');
+        Route::get('/your-requests', [UserController::class, 'yourRequests'])->name('your.requests');
     });
 });
 
