@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserCountEnum;
 use App\Models\Category;
+use App\Models\EditRequest;
 use App\Models\Post;
 use App\Models\SubCategory;
 use App\Models\User;
@@ -61,7 +62,9 @@ class UserController extends Controller
 
     public function yourRequests(): Response
     {
-        return Inertia::render('Dashboards/User/YourRequests');
+        $requests = EditRequest::where('user_id', Auth::id())->get(['id', 'post_id', 'action', 'title', 'created_at']);
+
+        return Inertia::render('Dashboards/User/YourRequests', ['requests' => $requests]);
     }
 
     private function getCommentLikes(User $user): int
