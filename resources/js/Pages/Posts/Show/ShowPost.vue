@@ -110,7 +110,7 @@ const submitVote = () => {
                     <template v-if="post.user_id === currentUser">
                         <div class="flex gap-3">
                         <img :src="Edit" @click="toggleEditPost" class="w-6 cursor-pointer" alt="edit"/>
-                        <img :src="deletePost" @click="toggleDeletePost" alt="delete" class="w-6 cursor-pointer">
+                        <img :src="deletePost" @click="toggleDeletePost" class="w-6 cursor-pointer" alt="delete"/>
                         </div>
                     </template>
                 </div>
