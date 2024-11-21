@@ -11,6 +11,10 @@ import Separator from "@/Components/Separator.vue";
             class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">Profile
         </Link>
         <Link
+            :href="route('payment.add.funds')"
+            class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">Add Funds
+        </Link>
+        <Link
             :href="route('dashboard.index')"
             class="py-2 hover:text-blue-500 w-fit h-fit cursor-pointer transition duration-200 ease-in-out">Dashboard
         </Link>
