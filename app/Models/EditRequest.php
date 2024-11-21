@@ -18,5 +18,7 @@ class EditRequest extends Model
         'action',
         'title',
         'description',
+        'originalTitle',
+        'originalDescription',
     ];
 }

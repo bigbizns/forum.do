@@ -18,7 +18,9 @@ return new class extends Migration {
             $table->foreignIdFor(Post::class);
             $table->string('action');
             $table->string('title');
+            $table->string('originalTitle');
             $table->text('description')->nullable();
+            $table->text('originalDescription')->nullable();
             $table->timestamps();
         });
     }
