@@ -98,5 +98,6 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
         Route::get('/messages', [AdminController::class, 'messages'])->name('messages');
 
         Route::post('/approve-edit-request', [AdminController::class, 'approveEditRequest'])->name('approve.edit.request');
+        Route::post('/delete-request/{postId}', [AdminController::class, 'deleteRequest'])->name('delete.request');
     });
 });

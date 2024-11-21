@@ -151,7 +151,7 @@ class PostController extends Controller
             'user_id' => $user,
             'post_id' => $postId,
             'action' => RequestEnum::Delete->value,
-            'title' => $data['title'],
+            'originalTitle' => $data['title'],
         ]);
 
         return back()->with('message', $message);
