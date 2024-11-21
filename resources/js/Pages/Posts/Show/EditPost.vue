@@ -14,8 +14,10 @@ const emit = defineEmits<{
 }>();
 
 const form = useForm({
+    originalTitle: props.title,
+    originalDescription: props.description,
     title: props.title,
-    description: props.description
+    description: props.description,
 });
 
 const cancel = () => {

@@ -113,7 +113,7 @@ class PostController extends Controller
     public function edit(StoreEditedPost $request, int $postId): RedirectResponse
     {
         $requested = EditRequest::where('post_id', $postId)->where('action', RequestEnum::Edit->value)->first();
-        $data = $request->only(['title', 'description']);
+        $data = $request->only(['title', 'originalTitle', 'description', 'originalDescription']);
         $user = Auth::id();
         $message = 'Your request to edit the post has been submitted for review';
         $warningMessage = 'Your request to edit the post is already submitted for review';
@@ -127,7 +127,9 @@ class PostController extends Controller
             'post_id' => $postId,
             'action' => RequestEnum::Edit->value,
             'title' => $data['title'],
+            'originalTitle' => $data['originalTitle'],
             'description' => $data['description'],
+            'originalDescription' => $data['originalDescription'],
         ]);
 
         return back()->with('message', $message);
