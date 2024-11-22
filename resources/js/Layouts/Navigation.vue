@@ -32,12 +32,20 @@ const toggleModal = () => {
                 </template>
                 <template v-else>
                     <div class="relative inline-block">
+                        <div class="flex items-center gap-2">
+                            <p class="text-sm">
+                                <Link :href="route('payment.add.funds')"
+                                      class="duration-300 transition hover:text-blue-500">
+                                    {{ $page.props.auth.user.balance.toFixed(2) }}
+                                </Link>
+                                $
+                            </p>
                         <img :src="userHasAvatar"
                              @click="toggleModal"
                              alt="User Avatar"
                              class="w-7 h-7 object-cover rounded-full shadow-2xl cursor-pointer"
-                             :class="{'bg-white': !$page.props.auth.user.avatar}"
-                        >
+                             :class="{'bg-white': !$page.props.auth.user.avatar}">
+                        </div>
                         <template v-if="modalOpen">
                             <NavigationProfileModal/>
                         </template>

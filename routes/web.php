@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\ReportController;
@@ -86,6 +87,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', UserController::class)->name('index');
         Route::get('/your-posts', [UserController::class, 'yourPosts'])->name('your.posts');
         Route::get('/your-requests', [UserController::class, 'yourRequests'])->name('your.requests');
+    });
+
+    Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('/add-funds', PaymentController::class)->name('add.funds');
     });
 });
 
