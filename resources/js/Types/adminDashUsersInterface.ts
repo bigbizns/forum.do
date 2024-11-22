@@ -35,3 +35,19 @@ export interface DeleteRequestInterface {
     description: string,
     originalDescription: string,
 }
+
+export interface ReportsInterface {
+    id: string,
+    post_id: string,
+    user_id: number,
+    reason: string,
+    message: string,
+}
+
+export interface MessagesInterface {
+    id: string,
+    user_id: string,
+    email: string,
+    topic: string,
+    message: string,
+}
