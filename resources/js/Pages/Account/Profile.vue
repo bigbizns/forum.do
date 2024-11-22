@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import Aside from "../../Layouts/Aside.vue";
 import user from '@/Images/user.png';
-import type {UserInterface} from "@/Types/UserInterface";
+import {UserInterface, UserStatsInterface} from "@/Types/UserInterface";
 import {Head} from "@inertiajs/vue3";
 import ProfileStatus from "@/Pages/Account/ProfileComponents/ProfileStatus.vue";
-import ProfileLinks from "@/Pages/Account/ProfileComponents/ProfileLinks.vue";
 
 const props = defineProps<{
-    userData: UserInterface
+    userData: UserInterface,
+    data: UserStatsInterface
 }>();
 </script>
 
@@ -28,8 +28,7 @@ const props = defineProps<{
                         <h2 class="text-2xl font-bold text-gray-300 mb-1">{{ userData.username }}</h2>
                         <p class="text-gray-300 text-sm mb-4">{{ userData.email }}</p>
                         <p class="text-gray-300 mb-4">{{ userData.description }}</p>
-                        <ProfileStatus :user-data="props.userData"/>
-                        <ProfileLinks/>
+                        <ProfileStatus :user-data="props.userData" :data="data"/>
                     </div>
                 </div>
             </div>

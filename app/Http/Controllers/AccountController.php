@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\LengthEnum;
+use App\Enums\UserCountEnum;
 use App\Http\Requests\StoreAccountPasswordChange;
 use App\Http\Requests\StoreSettingsUpdate;
 use App\Http\Requests\StoreAvatarPicture;
@@ -26,8 +27,20 @@ class AccountController extends Controller
     public function __invoke(): Response
     {
         $user = $this->getUserInfo();
+        $auth = User::where('id', Auth::id())->first();
+        $postCount = count($auth->Post);
+        $commentCount = count($auth->Comment);
+        $commentLikes = $this->getCommentLikes($auth);
+        $postLikes = $this->getPostLikes($auth);
+        $totalLikes = $this->getTotalLikes($postLikes, $commentLikes);
 
-        return Inertia::render('Account/Profile', ['userData' => $user]);
+        $data = [
+            'postCount' => $postCount,
+            'commentCount' => $commentCount,
+            'likes' => $totalLikes,
+        ];
+
+        return Inertia::render('Account/Profile', ['userData' => $user, 'data' => $data]);
     }
 
     public function settings(): Response
@@ -151,5 +164,36 @@ class AccountController extends Controller
         }
 
         return $randomString;
+    }
+
+    private function getCommentLikes(User $auth): int
+    {
+        $comments = $auth->Comment;
+        $commentVotesCount = UserCountEnum::Zero->value;
+
+        foreach ($comments as $comment) {
+            $commentVotes = $comment->CommentLike->where('vote', UserCountEnum::One->value);
+            $commentVotesCount += $commentVotes->count();
+        }
+
+        return $commentVotesCount;
+    }
+
+    private function getPostLikes(User $auth): int
+    {
+        $posts = $auth->Post;
+        $postVotesCount = UserCountEnum::Zero->value;
+
+        foreach ($posts as $post) {
+            $postVotes = $post->PostLike->where('vote', UserCountEnum::One->value);
+            $postVotesCount += $postVotes->count();
+        }
+
+        return $postVotesCount;
+    }
+
+    private function getTotalLikes(int $postLikes, int $commentLikes): int
+    {
+        return $commentLikes + $postLikes;
     }
 }
