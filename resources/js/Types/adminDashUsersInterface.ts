@@ -25,3 +25,13 @@ export interface EditRequestPostInterface {
     description?: string | null,
     originalDescription?: string | null,
 }
+
+export interface DeleteRequestInterface {
+    user_id: number,
+    post_id: number,
+    action: string,
+    title: string,
+    originalTitle: string,
+    description: string,
+    originalDescription: string,
+}

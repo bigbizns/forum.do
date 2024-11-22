@@ -84,7 +84,7 @@ const submitVote = () => {
     </template>
 
     <template v-if="isDeletingPost">
-        <DeletePost @cancel="toggleDeletePost" :id="post.id" :title="post.title"/>
+        <DeletePost @cancel="toggleDeletePost" :id="post.id" :title="post.title" :description="post.description"/>
     </template>
 
     <div class="flex flex-col min-h-screen mb-10">

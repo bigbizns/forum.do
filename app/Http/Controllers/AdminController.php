@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\RequestEnum;
 use App\Models\EditRequest;
 use App\Models\Post;
 use App\Models\User;
@@ -23,7 +24,7 @@ class AdminController extends Controller
 
     public function editRequests(): Response
     {
-        $editRequests = EditRequest::all();
+        $editRequests = EditRequest::where('action', RequestEnum::Edit->value)->get();
 
         return Inertia::render('Dashboards/Admin/EditRequests', ['editRequests' => $editRequests]);
     }
@@ -42,7 +43,20 @@ class AdminController extends Controller
 
     public function deleteRequests(): Response
     {
-        return Inertia::render('Dashboards/Admin/DeleteRequests');
+        $deleteRequests = EditRequest::where('action', RequestEnum::Delete->value)->get();
+
+        return Inertia::render('Dashboards/Admin/DeleteRequests', ['deleteRequests' => $deleteRequests]);
+    }
+
+    public function deleteRequest(Request $request): RedirectResponse
+    {
+        $post = Post::where('id', $request['postId'])->first();
+        $editRequest = EditRequest::where('post_id', $request['postId'])->first();
+
+        $editRequest->delete();
+        $post->delete();
+
+        return redirect()->back()->with('message', "Deleted {$post->title}");
     }
 
     public function reports(): Response

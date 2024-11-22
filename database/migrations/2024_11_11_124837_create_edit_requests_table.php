@@ -17,10 +17,10 @@ return new class extends Migration {
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Post::class);
             $table->string('action');
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('originalTitle');
             $table->text('description')->nullable();
-            $table->text('originalDescription')->nullable();
+            $table->text('originalDescription');
             $table->timestamps();
         });
     }
