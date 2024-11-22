@@ -48,10 +48,10 @@ class AdminController extends Controller
         return Inertia::render('Dashboards/Admin/DeleteRequests', ['deleteRequests' => $deleteRequests]);
     }
 
-    public function deleteRequest(int $postId): RedirectResponse
+    public function deleteRequest(Request $request): RedirectResponse
     {
-        $post = Post::where('id', $postId)->first();
-        $editRequest = EditRequest::where('post_id', $postId)->first();
+        $post = Post::where('id', $request['postId'])->first();
+        $editRequest = EditRequest::where('post_id', $request['postId'])->first();
 
         $editRequest->delete();
         $post->delete();

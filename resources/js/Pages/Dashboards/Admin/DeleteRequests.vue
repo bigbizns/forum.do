@@ -2,15 +2,25 @@
 import {Head, useForm, Link} from "@inertiajs/vue3";
 import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
 import {DeleteRequestInterface} from "@/Types/adminDashUsersInterface";
-import approve from '@/Images/approve.png';
+import approveDelete from '@/Images/x-button.png';
 
 defineProps<{
     deleteRequests: DeleteRequestInterface[],
 }>();
-const form = useForm({});
 
-const submit = (postId: number) => {
-    form.post(route('admin.dashboard.delete.request', {postId: postId}));
+const form = useForm({
+    postId: '',
+});
+
+const getPostId = (id: string) => {
+    form.postId = id;
+
+    submit();
+};
+
+
+const submit = () => {
+    form.post(route('admin.dashboard.delete.request'));
 }
 </script>
 
@@ -39,8 +49,8 @@ const submit = (postId: number) => {
                             </div>
                         </div>
                         <div>
-                            <form @submit.prevent="submit(req.post_id)">
-                                <button><img :src="approve" class="w-7 cursor-pointer" alt="approve"/></button>
+                            <form @submit.prevent="getPostId(req.post_id)">
+                                <button><img :src="approveDelete" class="w-7 cursor-pointer" alt="delete"/></button>
                             </form>
                         </div>
                     </li>
