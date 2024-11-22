@@ -112,13 +112,14 @@ class PostController extends Controller
 
     public function edit(StoreEditedPost $request, int $postId): RedirectResponse
     {
-        $requested = EditRequest::where('post_id', $postId)->where('action', RequestEnum::Edit->value)->first();
-        $data = $request->only(['title', 'originalTitle', 'description', 'originalDescription']);
         $user = Auth::id();
+        $requested = EditRequest::where('post_id', $postId)->where('user_id', $user)->first();
+        $data = $request->only(['title', 'originalTitle', 'description', 'originalDescription']);
         $message = 'Your request to edit the post has been submitted for review';
-        $warningMessage = 'Your request to edit the post is already submitted for review';
 
         if ($requested) {
+            $warningMessage = "You already submitted this post for {$requested['action']} review, please wait for the request to be approved.";
+
             return back()->with('warning_message', $warningMessage);
         }
 
@@ -137,13 +138,14 @@ class PostController extends Controller
 
     public function destroy(Request $request, int $postId): RedirectResponse
     {
-        $requested = EditRequest::where('post_id', $postId)->where('action', RequestEnum::Delete->value)->first();
-        $data = $request->only('originalTitle', 'originalDescription');
         $user = Auth::id();
+        $requested = EditRequest::where('post_id', $postId)->where('user_id', $user)->first();
+        $data = $request->only('originalTitle', 'originalDescription');
         $message = 'Your request to delete the post has been submitted for review';
-        $warningMessage = 'Your request to delete the post is already submitted for review';
 
         if ($requested) {
+            $warningMessage = "You already submitted this post for {$requested['action']} review, please wait for the request to be approved.";
+
             return back()->with('warning_message', $warningMessage);
         }
 
