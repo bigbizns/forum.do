@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Head, useForm} from "@inertiajs/vue3";
+import {Head, useForm, Link} from "@inertiajs/vue3";
 import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
 import {DeleteRequestInterface} from "@/Types/adminDashUsersInterface";
 import approve from '@/Images/approve.png';
@@ -31,7 +31,10 @@ const submit = (postId: number) => {
                         class="flex justify-between gap-x-6 py-5 bg-black/40 mb-2 p-2 rounded">
                         <div class="flex min-w-0 gap-x-4">
                             <div class="min-w-0 flex-auto">
-                                <p class="mt-1 truncate text-xs/5 text-white">{{ req.originalTitle }}</p>
+                                <Link :href="route('post.show',{id: req.post_id})"
+                                      class="mt-1 truncate text-xs/5 text-white duration-300 transition hover:text-blue-500">
+                                    {{ req.originalTitle }}
+                                </Link>
                                 <p class="mt-1 truncate text-xs/5 text-white">{{ req.originalDescription }}</p>
                             </div>
                         </div>

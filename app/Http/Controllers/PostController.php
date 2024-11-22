@@ -138,7 +138,7 @@ class PostController extends Controller
     public function destroy(Request $request, int $postId): RedirectResponse
     {
         $requested = EditRequest::where('post_id', $postId)->where('action', RequestEnum::Delete->value)->first();
-        $data = $request->only('title');
+        $data = $request->only('originalTitle', 'originalDescription');
         $user = Auth::id();
         $message = 'Your request to delete the post has been submitted for review';
         $warningMessage = 'Your request to delete the post is already submitted for review';
@@ -151,7 +151,8 @@ class PostController extends Controller
             'user_id' => $user,
             'post_id' => $postId,
             'action' => RequestEnum::Delete->value,
-            'originalTitle' => $data['title'],
+            'originalTitle' => $data['originalTitle'],
+            'originalDescription' => $data['originalDescription'],
         ]);
 
         return back()->with('message', $message);

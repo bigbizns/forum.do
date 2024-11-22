@@ -5,6 +5,7 @@ import {Head, useForm} from "@inertiajs/vue3";
 const props = defineProps<{
     id: string,
     title: string,
+    description: string
 }>();
 
 const emit = defineEmits<{
@@ -12,7 +13,8 @@ const emit = defineEmits<{
 }>();
 
 const form = useForm({
-    title: props.title,
+    originalTitle: props.title,
+    originalDescription: props.description,
 });
 
 const cancel = () => {
