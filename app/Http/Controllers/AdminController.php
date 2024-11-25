@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\RequestEnum;
+use App\Models\Contact;
 use App\Models\EditRequest;
 use App\Models\Post;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -61,11 +63,28 @@ class AdminController extends Controller
 
     public function reports(): Response
     {
-        return Inertia::render('Dashboards/Admin/Reports');
+        $reports = Report::all();
+
+        return Inertia::render('Dashboards/Admin/Reports', ['reports' => $reports]);
+    }
+
+    public function deleteReportedPost(Request $request): RedirectResponse
+    {
+        $postId = $request['postId'];
+
+        $post = Post::where('id', $postId)->first();
+        $report = Report::where('post_id', $postId)->first();
+
+        $report->delete();
+        $post->delete();
+
+        return redirect()->back()->with('message', "Deleted {$post->title}");
     }
 
     public function messages(): Response
     {
-        return Inertia::render('Dashboards/Admin/Messages');
+        $messages = Contact::all();
+
+        return Inertia::render('Dashboards/Admin/Messages', ['messages' => $messages]);
     }
 }

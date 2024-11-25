@@ -3,6 +3,7 @@ import {Head, useForm, Link} from "@inertiajs/vue3";
 import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
 import {DeleteRequestInterface} from "@/Types/adminDashUsersInterface";
 import approveDelete from '@/Images/x-button.png';
+import AdminDashboardHeader from "@/Layouts/AdminDashboardHeader.vue";
 
 defineProps<{
     deleteRequests: DeleteRequestInterface[],
@@ -28,12 +29,7 @@ const submit = () => {
     <Head title="Admin Delete-Requests"/>
     <div class="min-h-full">
         <AdminDashboardNav/>
-        <header class="bg-black/40 shadow">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex gap-2 items-center">
-                <h1 class="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
-                <h1 class="text-3xl font-semibold text-green-500">{{ $page.props.flash.message }}</h1>
-            </div>
-        </header>
+        <AdminDashboardHeader/>
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 <ul v-if="deleteRequests.length != 0" role="list">

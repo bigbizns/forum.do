@@ -33,7 +33,7 @@ const UserDefault = user;
                                     class="size-12 flex-none rounded-full bg-gray-50">
                             </Link>
                             <div class="min-w-0 flex-auto">
-                                <Link :href="route('user.profile', { id: user.id })" class="text-sm/6 font-semibold text-white">{{ user.username }}</Link>
+                                <Link :href="route('user.profile', { id: user.id })" class="text-sm/6 font-semibold text-white duration-300 transition hover:text-blue-500">{{ user.username }}</Link>
                                 <p class="mt-1 truncate text-xs/5 text-white">{{ user.email }}</p>
                             </div>
                         </div>
