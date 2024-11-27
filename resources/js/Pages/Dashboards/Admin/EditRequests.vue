@@ -4,7 +4,7 @@ import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
 import {EditRequestInterface, EditRequestPostInterface} from "@/Types/adminDashUsersInterface";
 import {ref} from "vue";
 import EditRequestModal from "@/Pages/Dashboards/Admin/Modals/EditRequestModal.vue";
-import AdminDashboardHeader from "@/Layouts/AdminDashboardHeader.vue";
+import DashboardHeader from "@/Layouts/DashboardHeader.vue";
 
 defineProps<{
     editRequests: EditRequestInterface[]
@@ -36,7 +36,7 @@ const toggleModal = (req?: EditRequestPostInterface) => {
     </template>
     <div class="min-h-full">
         <AdminDashboardNav/>
-        <AdminDashboardHeader/>
+        <DashboardHeader/>
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 <ul v-if="editRequests.length != 0" role="list">

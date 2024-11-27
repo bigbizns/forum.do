@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {Head} from "@inertiajs/vue3";
 import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
-import AdminDashboardHeader from "@/Layouts/AdminDashboardHeader.vue";
 import {MessagesInterface} from "@/Types/adminDashUsersInterface";
 import {ref} from "vue";
 import MessageAnswerModal from "@/Pages/Dashboards/Admin/Modals/MessageAnswerModal.vue";
+import DashboardHeader from "@/Layouts/DashboardHeader.vue";
 
 defineProps<{
     messages: MessagesInterface[]
@@ -31,7 +31,7 @@ const toggleModal = (message?: MessagesInterface) => {
     <Head title="Admin Edit-Requests"/>
     <div class="min-h-full">
         <AdminDashboardNav/>
-        <AdminDashboardHeader/>
+        <DashboardHeader/>
         <template v-if="isAnswering">
             <MessageAnswerModal @cancel="toggleModal" :message="messageInfo"/>
         </template>

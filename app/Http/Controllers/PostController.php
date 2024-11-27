@@ -153,6 +153,7 @@ class PostController extends Controller
             'user_id' => $user,
             'post_id' => $postId,
             'action' => RequestEnum::Delete->value,
+            'title' => $data['originalTitle'],
             'originalTitle' => $data['originalTitle'],
             'originalDescription' => $data['originalDescription'],
         ]);

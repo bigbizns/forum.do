@@ -101,7 +101,7 @@ class UserController extends Controller
     private function getUserPosts(): array
     {
         $userId = Auth::id();
-        $posts = Post::where('user_id', $userId)->get();
+        $posts = Post::where('user_id', $userId) ->orderBy('created_at', 'desc')->get();
         $data = [];
 
         foreach ($posts as $post) {

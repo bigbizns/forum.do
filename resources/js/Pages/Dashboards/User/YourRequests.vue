@@ -2,7 +2,7 @@
 import {Head, Link} from "@inertiajs/vue3";
 import UserDashBoardNav from "@/Components/UserDashBoardNav.vue";
 import {EditRequestsInterface} from "@/Types/EditRequestsInterface";
-import deletePost from "@/Images/x-button.png";
+import DashboardHeader from "@/Layouts/DashboardHeader.vue";
 
 defineProps<{
     requests: EditRequestsInterface[]
@@ -14,11 +14,8 @@ defineProps<{
     <div class="min-h-full">
         <UserDashBoardNav/>
 
-        <header class="bg-black/40 shadow">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
-            </div>
-        </header>
+        <DashboardHeader/>
+
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 <div v-for="req in requests" :key="req.id" class="flex justify-between gap-x-6 py-5 bg-black/40 mb-2 p-2 rounded shadow-xl">
@@ -34,9 +31,6 @@ defineProps<{
                         </div>
                     </div>
                     <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                        <div class="flex gap-3">
-                            <img :src="deletePost" class="w-6 cursor-pointer" alt="delete"/>
-                        </div>
                     </div>
                 </div>
             </div>
