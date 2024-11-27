@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Head} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 import Footer from "@/Layouts/Footer.vue";
 import Navigation from "@/Layouts/Navigation.vue";
 import type {UserInterface} from "@/Types/UserInterface";
@@ -10,6 +10,11 @@ import WarningEmailMessage from "@/Components/WarningEmailMessage.vue";
 import RecentPostPagination from "@/Pages/Home/HomeComponents/RecentPostPagination.vue";
 import {CategoryInterface} from "@/Types/CategoryInterface";
 import {SubCategoryInterface} from "@/Types/SubCategoryInterface";
+import {ref, watch} from "vue";
+import debounce from 'lodash/debounce';
+import axios from "axios";
+import SearchModal from "@/Pages/Home/HomeComponents/SearchModal.vue";
+import close from '@/Images/close.png';
 
 const props = defineProps<{
     userData: UserInterface
@@ -20,6 +25,40 @@ const props = defineProps<{
     categories: CategoryInterface[],
     subCategories: SubCategoryInterface[],
 }>();
+
+const form = useForm({
+    search: ''
+});
+const searchPosts = ref<PostInterface[]>([]);
+const searchMessage = ref<string>('');
+const isLookingAtModal = ref<boolean>(false);
+
+const findSearchingPosts = debounce(() => {
+    axios.get(route('searchBar', {search: form.search}))
+        .then((res) => {
+            if (res.data.length === 0 && form.search != '') {
+                searchMessage.value = 'Nothing Found';
+            }
+            if (res.data.length === 0 && form.search === '') {
+                searchMessage.value = '';
+            }
+
+            searchPosts.value = res.data
+
+        })
+        .finally(() => isLookingAtModal.value = true);
+}, 300);
+
+watch(() => form.search, () => {
+    findSearchingPosts();
+});
+
+const cancelSearch = () => {
+    searchMessage.value = '';
+    form.search = '';
+    isLookingAtModal.value = false;
+    searchPosts.value = [];
+}
 </script>
 
 <template>
@@ -35,16 +74,29 @@ const props = defineProps<{
             <div class="bg-gray-800 rounded-lg p-4 text-white shadow-lg">
                 <div class="mb-4"><h2 class="text-15 font-bold">Search Forum</h2></div>
                 <div>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        class="bg-gray-700 w-full p-1 placeholder-opacity-25 text-opacity-75 placeholder-white text-white border border-gray-600 rounded focus:outline-none focus:border-blue-400"
-                    />
+                    <form class="relative">
+                        <div class="flex">
+                            <input
+                                v-model="form.search"
+                                type="text"
+                                placeholder="Search..."
+                                class="bg-gray-700 w-full p-1 pr-10 placeholder-opacity-25 text-opacity-75 placeholder-white text-white border border-gray-600 rounded focus:outline-none focus:border-blue-400"
+                            />
+                            <img
+                                :src="close"
+                                class="absolute right-2 top-1/2 transform -translate-y-1/2 w-5 cursor-pointer"
+                                alt="clear"
+                                @click="cancelSearch"
+                            />
+                        </div>
+                        <template v-if="searchPosts.length != 0">
+                            <div class="absolute left-0 right-0 mt-1">
+                                <SearchModal :search-posts="searchPosts" @cancel="cancelSearch" :title="form.search"/>
+                            </div>
+                        </template>
+                    </form>
+                    <p class="mt-2 text-xl">{{ searchMessage }}</p>
                 </div>
-                <p class="text-sm text-white mt-2 font-bold text-center text-opacity-35">
-                    Search your games: GTA, PUBG, WoW, COC, etc. Available 3000+ games. We support Xbox, PS, Steam,
-                    YouTube, Instagram, currency exchange, and many more.
-                </p>
             </div>
             <div class="bg-gray-900 rounded-lg mt-5">
                 <HomeTopicLinks :categories="categories"/>
