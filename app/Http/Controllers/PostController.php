@@ -116,6 +116,13 @@ class PostController extends Controller
         $requested = EditRequest::where('post_id', $postId)->where('user_id', $user)->first();
         $data = $request->only(['title', 'originalTitle', 'description', 'originalDescription']);
         $message = 'Your request to edit the post has been submitted for review';
+        $existingPost = Post::where('id', $postId)->first();
+
+        if ($existingPost['title'] === $data['title'] && $existingPost['description'] === $data['description']) {
+            $message = 'The title or description must be different from the original post.';
+
+            return back()->with('warning_message',$message);
+        }
 
         if ($requested) {
             $warningMessage = "You already submitted this post for {$requested['action']} review, please wait for the request to be approved.";
