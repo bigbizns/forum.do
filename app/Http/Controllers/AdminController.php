@@ -63,7 +63,21 @@ class AdminController extends Controller
 
     public function reports(): Response
     {
-        $reports = Report::all();
+        $data = Report::all();
+        $reports = [];
+
+        foreach ($data as $report) {
+            $user = User::where('id', $report->user_id)->first();
+
+            $reports[] = [
+                'id' => $report->id,
+                'userId' => $user->id,
+                'reason' => $report->reason,
+                'message' => $report->message,
+                'userName' => $user->username,
+                'avatar' => $user->avatar,
+            ];
+        }
 
         return Inertia::render('Dashboards/Admin/Reports', ['reports' => $reports]);
     }
