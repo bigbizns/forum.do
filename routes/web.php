@@ -16,7 +16,8 @@ use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/home/{Category?}', HomeController::class)->name('subCategory.get');
+Route::get('/home/', [HomeController::class, 'searchBar'])->name('searchBar');
+Route::get('/home/category/{Category:slug?}', HomeController::class)->name('subCategory.get');
 
 Route::get('/forum', PostController::class)->name('forum');
 
@@ -72,6 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('post')->name('post.')->group(function () {
         Route::get('/{id}', [PostController::class, 'showPost'])->name('show')->withoutMiddleware('auth');
+        Route::get('/search/{title}', [PostController::class, 'showSearchedPosts'])->name('searched.posts');
 
         Route::post('/vote/{id}', [PostLikeController::class, 'store'])->name('vote');
 

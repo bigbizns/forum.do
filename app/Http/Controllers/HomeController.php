@@ -7,6 +7,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\SubCategory;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -28,6 +30,36 @@ class HomeController extends Controller
                 'subCategories' => $subCategories,
             ]
         );
+    }
+
+    public function searchBar(Request $request)
+    {
+        $text = $request['search'];
+
+        if (empty($text)) {
+            return [];
+        }
+        $data = Post::where('title', 'like', '%' . $text . '%')->take(3)->get();
+
+        $posts = [];
+
+        foreach ($data as $post) {
+            $user = User::where('id', $post->user_id)->first();
+
+            $posts[] = [
+                'user_id' => $user->id,
+                'username' => $user->username,
+                'email' => $user->email,
+                'avatar' => $user->avatar,
+                'id' => $post->id,
+                'title' => $post->title,
+                'description' => $post->description,
+                'tradeAction' => $post->tradeAction,
+                'pinned' => $post->pinned,
+            ];
+        }
+
+        return $posts;
     }
 
     private function getSelectedCategorySubCategories(string $slug): array

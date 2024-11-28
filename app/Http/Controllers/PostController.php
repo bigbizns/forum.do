@@ -161,6 +161,13 @@ class PostController extends Controller
         return back()->with('message', $message);
     }
 
+    public function showSearchedPosts(string $title): Response
+    {
+        $posts = Post::where('title', 'like', '%' . $title . '%')->take(6)->get();
+
+        return Inertia::render('Posts/SearchedTitlePosts/SearchedTitlePosts', ['posts' => $posts, 'title' => $title]);
+    }
+
     private function getPostInfo(int $id): array
     {
         $data = Post::findOrFail($id);
