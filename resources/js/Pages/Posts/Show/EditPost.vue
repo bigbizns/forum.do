@@ -3,7 +3,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {Head, useForm} from "@inertiajs/vue3";
 
 const props = defineProps<{
-    id: string,
+    id: number,
     title: string,
     description: string,
 

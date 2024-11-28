@@ -9,3 +9,9 @@ export interface UserDashboardPostInterface {
     catTitle: string,
     subCatTitle: string,
 }
+
+export interface postDataInterface {
+    id: number,
+    title: string,
+    description: string
+}

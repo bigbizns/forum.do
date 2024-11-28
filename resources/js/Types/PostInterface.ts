@@ -2,7 +2,7 @@ interface PostInterface {
     title: string,
     description: string,
     tradeAction: string,
-    id: string,
+    id: number,
     user_id: number,
     avatar: string,
     createdAt: string,

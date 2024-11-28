@@ -2,7 +2,7 @@
 import {Head, Link, useForm} from "@inertiajs/vue3";
 import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
 import {ReportsInterface} from "@/Types/adminDashUsersInterface";
-import AdminDashboardHeader from "@/Layouts/AdminDashboardHeader.vue";
+import DashboardHeader from "@/Layouts/DashboardHeader.vue";
 
 defineProps<{
     reports: ReportsInterface[]
@@ -27,7 +27,7 @@ const submit = () => {
     <Head title="Admin Reports"/>
     <div class="min-h-full">
         <AdminDashboardNav/>
-        <AdminDashboardHeader/>
+        <DashboardHeader/>
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 <ul v-if="reports.length != 0" role="list">
