@@ -10,7 +10,6 @@ export interface UserDashboardPostInterface {
     subCatTitle: string,
 }
 
-
 export interface postDataInterface {
     id: number,
     title: string,

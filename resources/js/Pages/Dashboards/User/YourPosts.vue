@@ -41,7 +41,6 @@ const toggleDeletePost = (id: number, title: string, description: string) => {
     };
     isDeletingPost.value = !isDeletingPost.value;
 };
-
 </script>
 
 <template>
