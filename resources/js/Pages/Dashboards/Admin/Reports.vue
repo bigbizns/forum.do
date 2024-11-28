@@ -3,6 +3,7 @@ import {Head, Link, useForm} from "@inertiajs/vue3";
 import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
 import {ReportsInterface} from "@/Types/adminDashUsersInterface";
 import DashboardHeader from "@/Layouts/DashboardHeader.vue";
+import user from "@/Images/user.png";
 
 defineProps<{
     reports: ReportsInterface[]
@@ -34,16 +35,24 @@ const submit = () => {
                     <li v-for="rep in reports" :key="rep.id"
                         class="flex justify-between gap-x-6 py-5 bg-black/40 mb-2 p-2 rounded">
                         <div class="flex min-w-0 gap-x-4">
-                            <!--TODO: Add User who reported this in case he trolling with reports-->
+                            <div class="flex flex-col items-center p-2">
+                                <Link :href="route('user.profile', { id: rep.userId })">
+                                    <img
+                                        :src="rep.avatar ? `/storage/${rep.avatar}` : user"
+                                        alt=""
+                                        class="max-w-12 rounded-full border-2 bg-white border-gray-600 shadow-lg">
+                                </Link>
+                                <p class="text-white mt-1">{{ rep.userName }}</p>
+                            </div>
                             <div class="min-w-0 flex-auto">
                                 <p class="mt-1 truncate text-xl text-white">{{ rep.reason }}</p>
                                 <p class="mt-1 truncate text-m text-white">{{ rep.message }}</p>
                                 <div class="flex gap-2">
-                                    <Link :href="route('post.show',{id: rep.post_id})"
+                                    <Link :href="route('post.show',{id: rep.id})"
                                           class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
                                         Check Post
                                     </Link>
-                                    <form @submit.prevent="getPostId(rep.post_id)">
+                                    <form @submit.prevent="getPostId(rep.id)">
                                         <button
                                             class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
                                             Delete Post

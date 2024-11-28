@@ -121,7 +121,7 @@ class PostController extends Controller
         if ($existingPost['title'] === $data['title'] && $existingPost['description'] === $data['description']) {
             $message = 'The title or description must be different from the original post.';
 
-            return back()->with('warning_message',$message);
+            return back()->with('warning_message', $message);
         }
 
         if ($requested) {
