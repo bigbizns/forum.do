@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\RequestEnum;
+use App\Mail\MessageAnswer;
 use App\Models\Contact;
 use App\Models\EditRequest;
 use App\Models\Post;
@@ -12,6 +13,7 @@ use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -100,5 +102,12 @@ class AdminController extends Controller
         $messages = Contact::all();
 
         return Inertia::render('Dashboards/Admin/Messages', ['messages' => $messages]);
+    }
+
+    public function sendMessage(Request $request): RedirectResponse
+    {
+        Mail::to($request->userEmail)->queue(new MessageAnswer($request->topic, $request->userMessage, $request->answer));
+
+        return to_route('admin.dashboard.messages')->with('message', 'Message sent!');
     }
 }
