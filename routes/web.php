@@ -13,6 +13,7 @@ use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\VerifiedEmailMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -23,7 +24,7 @@ Route::get('/forum', PostController::class)->name('forum');
 
 Route::get('/posts/{subCategory}', [PostController::class, 'subCategoryIndex'])->name('subCategory.index');
 
-Route::get('/user/{id}', [UserController::class, 'showUsersProfile'])->name('user.profile');
+Route::get('/user/{id}', [UserController::class, 'showUsersProfile'])->name('user.profile')->middleware(VerifiedEmailMiddleware::class);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -63,10 +64,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/settings-verify-email', [AccountController::class, 'verifyEmailStore'])->name('verify.email.store');
     });
 
-    Route::get('/post-create', [PostController::class, 'create'])->name('post.create');
-    Route::post('/post-store', [PostController::class, 'store'])->name('post.store');
-    Route::post('/post-edit/{postId}', [PostController::class, 'edit'])->name('post.edit');
-    Route::post('/post-destroy/{postId}', [PostController::class, 'destroy'])->name('post.delete');
+    Route::group(['middleware' => VerifiedEmailMiddleware::class], function () {
+        Route::get('/post-create', [PostController::class, 'create'])->name('post.create');
+        Route::post('/post-store', [PostController::class, 'store'])->name('post.store');
+        Route::post('/post-edit/{postId}', [PostController::class, 'edit'])->name('post.edit');
+        Route::post('/post-destroy/{postId}', [PostController::class, 'destroy'])->name('post.delete');
+    });
 
     Route::get('/contact-us', ContactUsController::class)->name('contactus');
     Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contactus.store');
@@ -75,14 +78,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{id}', [PostController::class, 'showPost'])->name('show')->withoutMiddleware('auth');
         Route::get('/search/{title}', [PostController::class, 'showSearchedPosts'])->name('searched.posts');
 
-        Route::post('/vote/{id}', [PostLikeController::class, 'store'])->name('vote');
+        Route::group(['middleware' => VerifiedEmailMiddleware::class], function () {
+            Route::post('/vote/{id}', [PostLikeController::class, 'store'])->name('vote');
 
-        Route::post('/report/{id}', [ReportController::class, 'store'])->name('report');
+            Route::post('/report/{id}', [ReportController::class, 'store'])->name('report');
 
-        Route::post('/comment-post/{id}', [CommentController::class, 'store'])->name('comment');
-        Route::post('/comment-vote/{commentId}', [CommentController::class, 'storeVote'])->name('comment.vote');
-        Route::post('/comment-edit/{commentId}', [CommentController::class, 'edit'])->name('comment.edit');
-        Route::post('/comment-delete/{commentId}', [CommentController::class, 'destroy'])->name('comment.delete');
+            Route::post('/comment-post/{id}', [CommentController::class, 'store'])->name('comment');
+            Route::post('/comment-vote/{commentId}', [CommentController::class, 'storeVote'])->name('comment.vote');
+            Route::post('/comment-edit/{commentId}', [CommentController::class, 'edit'])->name('comment.edit');
+            Route::post('/comment-delete/{commentId}', [CommentController::class, 'destroy'])->name('comment.delete');
+        });
     });
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
