@@ -9,16 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class EmailVerification extends Mailable
+class MessageAnswer extends Mailable
 {
     use Queueable, SerializesModels;
-    protected string $code;
+
+    public string $topic;
+    public string $userMessage;
+    public string $answer;
+
     /**
      * Create a new message instance.
      */
-    public function __construct(string $code)
+    public function __construct(string $topic, string $userMessage, string $answer)
     {
-        $this->code = $code;
+        $this->topic = $topic;
+        $this->userMessage = $userMessage;
+        $this->answer = $answer;
     }
 
     /**
@@ -27,7 +33,7 @@ class EmailVerification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Email Verification',
+            subject: "Answering: $this->topic",
         );
     }
 
@@ -37,17 +43,17 @@ class EmailVerification extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'Emails.email-verification',
+            view: 'Emails.answer-email',
             with: [
-                'code' => $this->code,
+                'topic' => $this->topic,
+                'userMessage' => $this->userMessage,
+                'answer' => $this->answer,
             ]
         );
     }
 
     /**
      * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
     public function attachments(): array
     {

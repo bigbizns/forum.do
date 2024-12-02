@@ -4,7 +4,7 @@ import {Head, useForm} from "@inertiajs/vue3";
 import {MessagesInterface} from "@/Types/adminDashUsersInterface";
 import Separator from "@/Components/Separator.vue";
 
-defineProps<{
+const props = defineProps<{
     message: MessagesInterface;
 }>();
 
@@ -17,13 +17,19 @@ const cancel = () => {
 };
 
 const form = useForm({
+    id: props.message.id,
+    userEmail: props.message.email,
+    topic: props.message.topic,
+    userMessage: props.message.message,
+    answer: '',
 });
 const submit = () => {
+    form.post(route('admin.dashboard.message.send'), {onSuccess: () => emit('cancel')});
 };
 </script>
 
 <template>
-    <Head title="Delete post"/>
+    <Head title="Answering...."/>
     <div
         class="fixed z-10 inset-0 flex items-center justify-center bg-black/60 transition-opacity duration-300 ease-out"
         @click="cancel">
@@ -38,7 +44,7 @@ const submit = () => {
                     {{ message.message }}
                 </div>
                 <div class="mt-5">
-                <textarea cols="95" rows="10" class="rounded p-3" placeholder="Answer Here"></textarea>
+                <textarea v-model="form.answer" cols="95" rows="10" class="rounded p-3" placeholder="Answer Here"></textarea>
                 </div>
                 <div class="flex mt-6 gap-4">
                     <PrimaryButton text="Submit" type="submit"/>

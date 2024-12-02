@@ -28,7 +28,7 @@ const toggleModal = (message?: MessagesInterface) => {
 </script>
 
 <template>
-    <Head title="Admin Edit-Requests"/>
+    <Head title="Admin Messages"/>
     <div class="min-h-full">
         <AdminDashboardNav/>
         <DashboardHeader/>
