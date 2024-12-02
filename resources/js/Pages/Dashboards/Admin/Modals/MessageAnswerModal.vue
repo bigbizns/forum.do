@@ -17,13 +17,14 @@ const cancel = () => {
 };
 
 const form = useForm({
+    id: props.message.id,
     userEmail: props.message.email,
     topic: props.message.topic,
     userMessage: props.message.message,
     answer: '',
 });
 const submit = () => {
-    form.post(route('admin.dashboard.message.send'));
+    form.post(route('admin.dashboard.message.send'), {onSuccess: () => emit('cancel')});
 };
 </script>
 

@@ -106,8 +106,24 @@ class AdminController extends Controller
 
     public function sendMessage(Request $request): RedirectResponse
     {
-        Mail::to($request->userEmail)->queue(new MessageAnswer($request->topic, $request->userMessage, $request->answer));
+        $userMessage = Contact::find($request['id']);
+        $sendEmail = $this->sendEmail($request->userEmail, $request->topic, $request->userMessage, $request->answer);
+
+        if ($sendEmail === true) {
+            $userMessage->delete();
+        }
 
         return to_route('admin.dashboard.messages')->with('message', 'Message sent!');
+    }
+
+    private function sendEmail(string $email, string $topic, string $message, string $answer): RedirectResponse|bool
+    {
+        try {
+            Mail::to($email)->queue(new MessageAnswer($topic, $message, $answer));
+
+            return true;
+        } catch (\Exception $exception) {
+            return to_route('admin.dashboard.messages')->with('message', $exception->getMessage());
+        }
     }
 }
