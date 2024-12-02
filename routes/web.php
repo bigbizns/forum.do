@@ -17,8 +17,8 @@ use App\Http\Middleware\VerifiedEmailMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/home/', [HomeController::class, 'searchBar'])->name('searchBar');
-Route::get('/home/category/{Category:slug?}', HomeController::class)->name('subCategory.get');
+Route::get('home/', [HomeController::class, 'searchBar'])->name('searchBar');
+Route::get('category/{Category:slug?}', HomeController::class)->name('subCategory.get');
 
 Route::get('/forum', PostController::class)->name('forum');
 
