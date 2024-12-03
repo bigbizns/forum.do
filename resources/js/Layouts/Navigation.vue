@@ -6,14 +6,13 @@ import NavigationGuestAuth from "@/Layouts/NavigationComponents/NavigationGuestA
 import NavigationProfileModal from "@/Layouts/NavigationComponents/NavigationProfileModal.vue";
 import NavigationLinks from "@/Layouts/NavigationComponents/NavigationLinks.vue";
 import logo from "@/Images/logo1.png";
+import UserDropdown from "@/Components/UserDropdown.vue";
 
-const {props} = usePage();
+
 
 const modalOpen = ref<boolean>(false);
 
-const userHasAvatar = computed(() => {
-    return props.auth.user.avatar ? `/storage/${props.auth.user.avatar}` : user;
-});
+
 
 const toggleModal = () => {
     modalOpen.value = !modalOpen.value;
@@ -40,15 +39,8 @@ const toggleModal = () => {
                                 </Link>
                                 $
                             </p>
-                        <img :src="userHasAvatar"
-                             @click="toggleModal"
-                             alt="User Avatar"
-                             class="w-7 h-7 object-cover rounded-full shadow-2xl cursor-pointer"
-                             :class="{'bg-white': !$page.props.auth.user.avatar}">
+                            <UserDropdown/>
                         </div>
-                        <template v-if="modalOpen">
-                            <NavigationProfileModal/>
-                        </template>
                     </div>
                 </template>
             </div>
