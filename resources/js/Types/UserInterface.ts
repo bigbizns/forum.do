@@ -23,3 +23,14 @@ export interface UserStatsInterface {
     commentCount: number,
     likes: number,
 }
+
+export interface UserRecentActivityInterface {
+    post_id: string,
+    action: string,
+    subTitle?: string,
+    catTitle?: string,
+    postTitle?: string,
+    postDescription: string,
+    created_at: string,
+    comment?: string,
+}

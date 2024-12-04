@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserCountEnum;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\EditRequest;
 use App\Models\Post;
 use App\Models\SubCategory;
@@ -22,7 +23,7 @@ class UserController extends Controller
         return Inertia::render('Dashboards/User/Index');
     }
 
-    public function showUsersProfile($id): Response|RedirectResponse
+    public function showUsersProfile(int $id): Response|RedirectResponse
     {
         $user = User::where('id', $id)->first();
 
@@ -35,6 +36,7 @@ class UserController extends Controller
         $commentLikes = $this->getCommentLikes($user);
         $postLikes = $this->getPostLikes($user);
         $totalLikes = $this->getTotalLikes($postLikes, $commentLikes);
+        $userActivity = $this->getUsersActivity($id);
 
         $user['created_at']->toDateString();
 
@@ -50,6 +52,7 @@ class UserController extends Controller
             'userData' => $user,
             'userPosts' => $userPosts,
             'userStats' => $userStats,
+            'userActivity' => $userActivity,
         ]);
     }
 
@@ -124,5 +127,48 @@ class UserController extends Controller
         }
 
         return $data;
+    }
+
+    private function getUsersActivity(int $id): array
+    {
+        $user = User::where('id', $id)->first();
+        $postAct = Post::where('user_id', $user->id)->latest()->get()->toArray();
+        $commentAct = Comment::where('user_id', $user->id)->latest()->get()->toArray();
+        $data = array_merge($postAct, $commentAct);
+
+        usort($data, function ($a, $b) {
+            return strtotime($b['created_at']) <=> strtotime($a['created_at']);
+        });
+
+        $activities = array_slice($data, 0, 3);
+        $latestActivity = [];
+
+        foreach ($activities as $activity) {
+            if (!empty($activity['sub_category_id'])) {
+                $subCategory = SubCategory::where('id', $activity['sub_category_id'])->first();
+                $category = Category::where('id', $activity['category_id'])->first();
+                $latestActivity[] = [
+                    'action' => 'Posted',
+                    'subTitle' => $subCategory->title,
+                    'catTitle' => $category->title,
+                    'postTitle' => $activity['title'],
+                    'postDescription' => $activity['description'],
+                    'post_id' => $activity['id'],
+                    'created_at' => $activity['created_at'],
+                ];
+            }
+            if (!empty($activity['comment'])) {
+                $post = Post::where('id', $activity['post_id'])->first();
+                $latestActivity[] = [
+                    'action' => 'Commented',
+                    'post_id' => $post->id,
+                    'postTitle' => $post->title,
+                    'comment' => $activity['comment'],
+                    'created_at' => $activity['created_at'],
+                ];
+            }
+        }
+
+        return $latestActivity;
     }
 }
