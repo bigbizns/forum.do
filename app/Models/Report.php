@@ -16,7 +16,8 @@ class Report extends Model
         'user_id',
         'post_id',
         'reason',
-        'message'
+        'message',
+        'reported_user_id'
     ];
 
     public function User(): belongsTo

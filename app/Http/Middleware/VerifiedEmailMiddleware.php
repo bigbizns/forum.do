@@ -18,7 +18,7 @@ class VerifiedEmailMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && !Auth::user()->email_verified_at) {
+        if ((Auth::check() && !Auth::user()->email_verified_at) || !Auth::user()) {
 
             return to_route('account.settings');
         }
