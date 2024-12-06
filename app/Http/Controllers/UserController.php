@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReportTypesEnum;
 use App\Enums\UserCountEnum;
 use App\Models\Category;
 use App\Models\EditRequest;
@@ -34,8 +35,8 @@ class UserController extends Controller
         $commentCount = count($user->Comment);
         $commentLikes = $this->getCommentLikes($user);
         $postLikes = $this->getPostLikes($user);
+        $reportTypes = ReportTypesEnum::getReportTypes();
         $totalLikes = $this->getTotalLikes($postLikes, $commentLikes);
-
         $user['created_at']->toDateString();
 
         $userPosts = $user->post()->orderBy('created_at', 'desc')->take(3)->get();
@@ -50,6 +51,7 @@ class UserController extends Controller
             'userData' => $user,
             'userPosts' => $userPosts,
             'userStats' => $userStats,
+            'reportTypes' => $reportTypes,
         ]);
     }
 

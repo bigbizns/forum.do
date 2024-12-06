@@ -99,6 +99,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('payment')->name('payment.')->group(function () {
         Route::get('/add-funds', PaymentController::class)->name('add.funds');
     });
+
+    Route::post('/report/user/{id}', [ReportController::class, 'reportUser'])->name('report.user');
 });
 
 Route::group(['middleware' => AdminMiddleware::class], function () {
