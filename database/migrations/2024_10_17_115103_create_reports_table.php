@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->foreignIdFor(Post::class)->nullable();
             $table->foreignIdFor(User::class);
             $table->string('reported_user_id')->nullable();
+            $table->string('reported_comment')->nullable();
             $table->string('reason');
             $table->string('message');
             $table->timestamps();

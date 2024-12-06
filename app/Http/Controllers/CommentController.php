@@ -6,33 +6,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreComment;
 use App\Http\Requests\StorePostVote;
+use App\Http\Requests\StoreReportComment;
 use App\Models\Comment;
 use App\Models\CommentLike;
+use App\Models\Report;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreComment $request, int $id): RedirectResponse
     {
         $comment = $request->validated();
@@ -70,17 +60,11 @@ class CommentController extends Controller
         return back()->with('message', $message);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Comment $comments)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(StoreComment $request, int $commentId): RedirectResponse
     {
         $editedComment = $request->only(['comment','edited']);
@@ -96,17 +80,10 @@ class CommentController extends Controller
         return back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Comment $comments)
     {
-        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(int $commentId): RedirectResponse
     {
         $user =Auth::id();
@@ -117,5 +94,28 @@ class CommentController extends Controller
         }
 
         return back()->with('message', 'Your comment has been deleted successfully!');
+    }
+
+    public function reportComment(StoreReportComment $request, int $commentId): RedirectResponse
+    {
+        $user = Auth::id();
+        $comment = Comment::where('id', $commentId)->first();
+        $reports = Report::all();
+
+        foreach ($reports as $report) {
+            if ($report->user_id === $user) {
+                return back()->with('warning_message', 'You already reported this comment.');
+            }
+        }
+
+        Report::create([
+            'user_id' => $user,
+            'comment_id' => $commentId,
+            'reported_comment' => $comment['comment'],
+            'reason' => $request['reason'],
+            'message' => $request['message'],
+        ]);
+
+        return back()->with('message', 'Comment has been reported successfully!');
     }
 }

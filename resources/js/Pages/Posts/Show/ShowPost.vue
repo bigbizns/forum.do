@@ -191,7 +191,8 @@ const submitVote = () => {
                                 :profile-picture="comment.author_avatar"
                                 :author-id="comment.authorId"
                                 :comment-votes="comment.commentVotes"
-                                :edited="comment.edited" />
+                                :edited="comment.edited"
+                                :report-types="reportTypes"/>
                         </div>
                     </div>
                 </div>
