@@ -94,6 +94,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', UserController::class)->name('index');
         Route::get('/your-posts', [UserController::class, 'yourPosts'])->name('your.posts');
         Route::get('/your-requests', [UserController::class, 'yourRequests'])->name('your.requests');
+
+        Route::post('/cancel-request', [UserController::class, 'cancelRequest'])->name('cancel.request');
     });
 
     Route::prefix('payment')->name('payment.')->group(function () {
