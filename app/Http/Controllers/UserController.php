@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReportTypesEnum;
 use App\Enums\UserCountEnum;
 use App\Models\Category;
 use App\Models\Comment;
@@ -35,6 +36,7 @@ class UserController extends Controller
         $commentCount = count($user->Comment);
         $commentLikes = $this->getCommentLikes($user);
         $postLikes = $this->getPostLikes($user);
+        $reportTypes = ReportTypesEnum::getReportTypes();
         $totalLikes = $this->getTotalLikes($postLikes, $commentLikes);
         $userActivity = $this->getUsersActivity($id);
 
@@ -52,6 +54,7 @@ class UserController extends Controller
             'userData' => $user,
             'userPosts' => $userPosts,
             'userStats' => $userStats,
+            'reportTypes' => $reportTypes,
             'userActivity' => $userActivity,
         ]);
     }

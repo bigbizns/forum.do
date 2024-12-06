@@ -12,11 +12,13 @@ import UserStatus from "@/Pages/UserAccount/Components/UserStatus.vue";
 import ActivityCard from "@/Pages/UserAccount/Components/ActivityCard.vue";
 import RecentPostCard from "@/Pages/UserAccount/Components/RecentPostCard.vue";
 import {Head} from "@inertiajs/vue3";
+import {ReportTypeInterface} from "@/Types/ReportTypeInterface";
 
 const props = defineProps<{
     userData: UserInterface,
     userPosts: UsersPostsInterface[],
     userStats: UserStatsInterface,
+    reportTypes: ReportTypeInterface[]
     userActivity: UserRecentActivityInterface[],
 }>();
 </script>
@@ -25,7 +27,11 @@ const props = defineProps<{
     <Head :title=userData.username />
     <Navigation/>
     <div class="min-h-screen mt-12 py-8">
-        <UserDetails :user-data="userData"/>
+        <div class="flex justify-center">
+        <small class="text-xl text-green-500">{{$page.props.flash.message}}</small>
+        <small class="text-xl text-yellow-500">{{$page.props.flash.warning_message}}</small>
+        </div>
+        <UserDetails :user-data="userData" :report-types="reportTypes"/>
         <UserStatus  :user-data="props.userData" :user-stats="userStats"/>
         <div class="max-w-5xl mx-auto mt-6 bg-black/40 p-6 rounded-lg shadow-md">
             <h3 class="text-gray-500 text-xl font-semibold mb-3">Description</h3>

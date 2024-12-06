@@ -42,9 +42,11 @@ const findSearchingPosts = debounce(() => {
             if (res.data.length === 0 && form.search === '') {
                 searchMessage.value = '';
             }
+            if (res.data.length !== 0 && form.search != '') {
+                searchMessage.value = '';
+            }
 
             searchPosts.value = res.data
-
         })
         .finally(() => isLookingAtModal.value = true);
 }, 300);
