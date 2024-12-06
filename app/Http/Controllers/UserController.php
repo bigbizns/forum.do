@@ -13,6 +13,7 @@ use App\Models\Post;
 use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -71,6 +72,16 @@ class UserController extends Controller
         $requests = EditRequest::where('user_id', Auth::id())->get(['id', 'post_id', 'action', 'title', 'created_at']);
 
         return Inertia::render('Dashboards/User/YourRequests', ['requests' => $requests]);
+    }
+
+    public function cancelRequest(Request $request): RedirectResponse
+    {
+        $id = $request->input('id');
+        $userRequest = EditRequest::where('id', $id)->first();
+
+        $userRequest->delete();
+
+        return to_route('dashboard.your.requests')->with('message', 'Your request has been cancelled.');
     }
 
     private function getCommentLikes(User $user): int
