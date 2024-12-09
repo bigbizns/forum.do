@@ -15,9 +15,11 @@ class Report extends Model
     protected $fillable = [
         'user_id',
         'post_id',
+        'comment_id',
         'reason',
         'message',
-        'reported_user_id'
+        'reported_user_id',
+        'reported_comment',
     ];
 
     public function User(): belongsTo

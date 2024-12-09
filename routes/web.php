@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/comment-vote/{commentId}', [CommentController::class, 'storeVote'])->name('comment.vote');
             Route::post('/comment-edit/{commentId}', [CommentController::class, 'edit'])->name('comment.edit');
             Route::post('/comment-delete/{commentId}', [CommentController::class, 'destroy'])->name('comment.delete');
+            Route::post('/comment-report/{commentId}', [ReportController::class, 'reportComment'])->name('comment.report');
         });
     });
 
