@@ -42,7 +42,9 @@ export interface ReportsInterface {
     userId: string,
     message: string,
     userName: string,
-    avatar: string
+    avatar: string,
+    reportedUserId: string,
+    type: string,
 }
 
 export interface MessagesInterface {
