@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -18,6 +19,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(Post::class)->nullable();
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Comment::class)->nullable();
             $table->string('reported_user_id')->nullable();
             $table->string('reported_comment')->nullable();
             $table->string('reason');

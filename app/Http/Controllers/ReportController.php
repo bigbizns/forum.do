@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReportComment;
+use App\Models\Comment;
 use App\Models\Report;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -44,5 +45,28 @@ class ReportController extends Controller
         ]);
 
         return to_route('user.profile', ['id' => $userId])->with('message', 'Your report has been submitted successfully!');
+    }
+
+    public function reportComment(StoreReportComment $request, int $commentId): RedirectResponse
+    {
+        $user = Auth::id();
+        $comment = Comment::where('id', $commentId)->first();
+        $reports = Report::where('user_id', $user)->get();
+
+        foreach ($reports as $report) {
+            if ($report->comment_id === $commentId) {
+                return back()->with('warning_message', 'You already reported this comment.');
+            }
+        }
+
+        Report::create([
+            'user_id' => $user,
+            'comment_id' => $commentId,
+            'reported_comment' => $comment['comment'],
+            'reason' => $request['reason'],
+            'message' => $request['message'],
+        ]);
+
+        return back()->with('message', 'Comment has been reported successfully!');
     }
 }

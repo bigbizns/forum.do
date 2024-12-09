@@ -95,27 +95,4 @@ class CommentController extends Controller
 
         return back()->with('message', 'Your comment has been deleted successfully!');
     }
-
-    public function reportComment(StoreReportComment $request, int $commentId): RedirectResponse
-    {
-        $user = Auth::id();
-        $comment = Comment::where('id', $commentId)->first();
-        $reports = Report::all();
-
-        foreach ($reports as $report) {
-            if ($report->user_id === $user) {
-                return back()->with('warning_message', 'You already reported this comment.');
-            }
-        }
-
-        Report::create([
-            'user_id' => $user,
-            'comment_id' => $commentId,
-            'reported_comment' => $comment['comment'],
-            'reason' => $request['reason'],
-            'message' => $request['message'],
-        ]);
-
-        return back()->with('message', 'Comment has been reported successfully!');
-    }
 }
