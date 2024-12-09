@@ -33,27 +33,24 @@ const searchPosts = ref<PostInterface[]>([]);
 const searchMessage = ref<string>('');
 const isLookingAtModal = ref<boolean>(false);
 
-const findSearchingPosts = debounce(() => {
-    axios.get(route('searchBar', {search: form.search}))
-        .then((res) => {
-            if (res.data.length === 0 && form.search != '') {
-                searchMessage.value = 'Nothing Found';
-            }
-            if (res.data.length === 0 && form.search === '') {
-                searchMessage.value = '';
-            }
-            if (res.data.length !== 0 && form.search != '') {
-                searchMessage.value = '';
-            }
+watch(() => form.search,
+    debounce(() => {
+        axios.get(route('searchBar', {search: form.search}))
+            .then((res) => {
+                if (res.data.length === 0 && form.search != '') {
+                    searchMessage.value = 'Nothing Found';
+                }
+                if (res.data.length === 0 && form.search === '') {
+                    searchMessage.value = '';
+                }
+                if (res.data.length !== 0 && form.search != '') {
+                    searchMessage.value = '';
+                }
 
-            searchPosts.value = res.data
-        })
-        .finally(() => isLookingAtModal.value = true);
-}, 300);
-
-watch(() => form.search, () => {
-    findSearchingPosts();
-});
+                searchPosts.value = res.data
+            })
+            .finally(() => isLookingAtModal.value = true);
+    }, 300));
 
 const cancelSearch = () => {
     searchMessage.value = '';
@@ -72,7 +69,6 @@ const cancelSearch = () => {
         </template>
 
         <div class="container mx-auto w-[90%] flex-grow mt-20 mb-16 h-auto">
-            <!-- TODO: Finish the header section -->
             <div class="bg-gray-800 rounded-lg p-4 text-white shadow-lg">
                 <div class="mb-4"><h2 class="text-15 font-bold">Search Forum</h2></div>
                 <div>

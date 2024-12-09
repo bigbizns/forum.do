@@ -4,6 +4,7 @@ import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
 import {ReportsInterface} from "@/Types/adminDashUsersInterface";
 import DashboardHeader from "@/Layouts/DashboardHeader.vue";
 import user from "@/Images/user.png";
+import {AdminDashboardEnum} from "@/Enums/AdminDashboardEnum";
 
 defineProps<{
     reports: ReportsInterface[]
@@ -48,16 +49,38 @@ const submit = () => {
                                 <p class="mt-1 truncate text-xl text-white">{{ rep.reason }}</p>
                                 <p class="mt-1 truncate text-m text-white">{{ rep.message }}</p>
                                 <div class="flex gap-2">
-                                    <Link :href="route('post.show',{id: rep.id})"
-                                          class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
-                                        Check Post
-                                    </Link>
-                                    <form @submit.prevent="getPostId(rep.id)">
-                                        <button
-                                            class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
-                                            Delete Post
-                                        </button>
-                                    </form>
+                                    <template v-if="rep.type === AdminDashboardEnum.Post">
+                                        <Link :href="route('post.show',{id: rep.id})"
+                                              class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
+                                            Check Post
+                                        </Link>
+                                        <form @submit.prevent="getPostId(rep.id)">
+                                            <button
+                                                class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
+                                                Delete Post
+                                            </button>
+                                        </form>
+                                    </template>
+                                    <template v-else-if="rep.type === AdminDashboardEnum.Profile">
+                                        <Link :href="route('user.profile',{id: rep.reportedUserId})"
+                                              class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
+                                            Check Profile
+                                        </Link>
+                                        <form @submit.prevent="getPostId(rep.id)">
+                                            <button
+                                                class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
+                                                Delete Profile
+                                            </button>
+                                        </form>
+                                    </template>
+                                    <template v-if="rep.type === AdminDashboardEnum.Comment">
+                                        <form @submit.prevent="getPostId(rep.id)">
+                                            <button
+                                                class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
+                                                Delete Comment
+                                            </button>
+                                        </form>
+                                    </template>
                                 </div>
                             </div>
                         </div>

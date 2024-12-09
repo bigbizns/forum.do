@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Database\Eloquent\Collection;
 
 class AdminController extends Controller
 {
@@ -66,20 +67,7 @@ class AdminController extends Controller
     public function reports(): Response
     {
         $data = Report::all();
-        $reports = [];
-
-        foreach ($data as $report) {
-            $user = User::where('id', $report->user_id)->first();
-
-            $reports[] = [
-                'id' => $report->id,
-                'userId' => $user->id,
-                'reason' => $report->reason,
-                'message' => $report->message,
-                'userName' => $user->username,
-                'avatar' => $user->avatar,
-            ];
-        }
+        $reports = $this->categorizeReports($data);
 
         return Inertia::render('Dashboards/Admin/Reports', ['reports' => $reports]);
     }
@@ -125,5 +113,51 @@ class AdminController extends Controller
         } catch (\Exception $exception) {
             return to_route('admin.dashboard.messages')->with('message', $exception->getMessage());
         }
+    }
+
+    private function categorizeReports(Collection $reports): array
+    {
+        $data = [];
+
+        foreach ($reports as $report) {
+            $user = User::where('id', $report->user_id)->first();
+
+            if ($report['post_id'] !== null) {
+                $data[] = [
+                    'id' => $report->id,
+                    'userId' => $user->id,
+                    'reason' => $report->reason,
+                    'message' => $report->message,
+                    'userName' => $user->username,
+                    'avatar' => $user->avatar,
+                    'type' => 'Post'
+                ];
+            }
+            if ($report['comment_id'] !== null) {
+                $data[] = [
+                    'id' => $report->id,
+                    'userId' => $report->user_id,
+                    'reason' => $report->reason,
+                    'message' => $report->message,
+                    'userName' => $user->username,
+                    'avatar' => $user->avatar,
+                    'type' => 'Comment'
+                ];
+            }
+            if ($report['reported_user_id'] !== null) {
+                $data[] = [
+                    'id' => $report->id,
+                    'userId' => $report->user_id,
+                    'reportedUserId' => $report->reported_user_id,
+                    'reason' => $report->reason,
+                    'message' => $report->message,
+                    'userName' => $user->username,
+                    'avatar' => $user->avatar,
+                    'type' => 'Profile'
+                ];
+            }
+        }
+
+        return $data;
     }
 }
