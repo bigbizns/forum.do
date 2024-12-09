@@ -51,12 +51,10 @@ class ReportController extends Controller
     {
         $user = Auth::id();
         $comment = Comment::where('id', $commentId)->first();
-        $reports = Report::where('user_id', $user)->get();
+        $alreadyReported = Report::where('comment_id', $commentId)->first();
 
-        foreach ($reports as $report) {
-            if ($report->comment_id === $commentId) {
-                return back()->with('warning_message', 'You already reported this comment.');
-            }
+        if ($alreadyReported) {
+            return back()->with('warning_message', 'You already reported this comment.');
         }
 
         Report::create([
