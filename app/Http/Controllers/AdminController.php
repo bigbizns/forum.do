@@ -6,9 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Enums\RequestEnum;
 use App\Mail\MessageAnswer;
+use App\Models\Comment;
+use App\Models\CommentLike;
 use App\Models\Contact;
 use App\Models\EditRequest;
 use App\Models\Post;
+use App\Models\PostLike;
+use App\Models\PostView;
 use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -85,6 +89,34 @@ class AdminController extends Controller
         return redirect()->back()->with('message', "Deleted {$post->title}");
     }
 
+    public function deleteReportedUser(Request $request): RedirectResponse
+    {
+        User::where('id', $request['profileId'])->delete();
+        Post::where('user_id', $request['profileId'])->delete();
+        Comment::where('user_id', $request['profileId'])->delete();
+        PostLike::where('user_id', $request['profileId'])->delete();
+        CommentLike::where('user_id', $request['profileId'])->delete();
+        PostView::where('user_id', $request['profileId'])->get()->each(function ($postView) {
+            $postView->delete();
+        });
+        Report::where('id', $request['reportId'])->delete();
+        Report::where('user_id', $request['profileId'])->delete();
+
+        return redirect()->back()->with('message', 'Deleted');
+    }
+
+    public function deleteReportedComment(Request $request): RedirectResponse
+    {
+
+        $report = Report::where('id', $request['reportId'])->first();
+        $comment = Comment::where('id', $request['commentId'])->first();
+
+        $comment->delete();
+        $report->delete();
+
+        return redirect()->back()->with('message', 'Comment Has been deleted');
+    }
+
     public function messages(): Response
     {
         $messages = Contact::all();
@@ -125,6 +157,7 @@ class AdminController extends Controller
             if ($report['post_id'] !== null) {
                 $data[] = [
                     'id' => $report->id,
+                    'postId' => $report->post->id,
                     'userId' => $user->id,
                     'reason' => $report->reason,
                     'message' => $report->message,
@@ -137,6 +170,7 @@ class AdminController extends Controller
                 $data[] = [
                     'id' => $report->id,
                     'userId' => $report->user_id,
+                    'commentId' => $report->comment_id,
                     'reason' => $report->reason,
                     'message' => $report->message,
                     'userName' => $user->username,

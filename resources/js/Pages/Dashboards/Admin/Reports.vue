@@ -13,16 +13,43 @@ defineProps<{
 const form = useForm({
     postId: ''
 });
+const profileForm = useForm({
+    reportId: '',
+    profileId: ''
+})
+
+const commentForm = useForm({
+    reportId: '',
+    commentId: ''
+});
 
 const getPostId = (postId: string) => {
     form.postId = postId;
 
-    submit();
+    submitPostDelete();
 };
+const getProfileId = (profileId: string, reportId: string) => {
+    profileForm.reportId = reportId;
+    profileForm.profileId = profileId;
 
-const submit = () => {
+    submitProfileDelete();
+}
+const getCommentId = (commentId: string, reportId:string) => {
+    commentForm.commentId = commentId;
+    commentForm.reportId = reportId;
+
+    submitCommentDelete();
+}
+
+const submitPostDelete = () => {
     form.post(route('admin.dashboard.delete.reported.post'));
 };
+const submitProfileDelete = () => {
+    profileForm.post(route('admin.dashboard.delete.reported.user'));
+};
+const submitCommentDelete = () => {
+    commentForm.post(route('admin.dashboard.delete.reported.comment'));
+}
 </script>
 
 <template>
@@ -50,11 +77,11 @@ const submit = () => {
                                 <p class="mt-1 truncate text-m text-white">{{ rep.message }}</p>
                                 <div class="flex gap-2">
                                     <template v-if="rep.type === AdminDashboardEnum.Post">
-                                        <Link :href="route('post.show',{id: rep.id})"
+                                        <Link :href="route('post.show',{id: rep.postId})"
                                               class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
                                             Check Post
                                         </Link>
-                                        <form @submit.prevent="getPostId(rep.id)">
+                                        <form @submit.prevent="getPostId(rep.postId)">
                                             <button
                                                 class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
                                                 Delete Post
@@ -66,7 +93,7 @@ const submit = () => {
                                               class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
                                             Check Profile
                                         </Link>
-                                        <form @submit.prevent="getPostId(rep.id)">
+                                        <form @submit.prevent="getProfileId(rep.reportedUserId, rep.id)">
                                             <button
                                                 class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
                                                 Delete Profile
@@ -74,7 +101,7 @@ const submit = () => {
                                         </form>
                                     </template>
                                     <template v-if="rep.type === AdminDashboardEnum.Comment">
-                                        <form @submit.prevent="getPostId(rep.id)">
+                                        <form @submit.prevent="getCommentId(rep.commentId, rep.id)">
                                             <button
                                                 class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
                                                 Delete Comment

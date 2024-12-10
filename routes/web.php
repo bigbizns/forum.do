@@ -117,6 +117,8 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
         Route::post('/approve-edit-request', [AdminController::class, 'approveEditRequest'])->name('approve.edit.request');
         Route::post('/delete-request', [AdminController::class, 'deleteRequest'])->name('delete.request');
         Route::post('/delete-reported-post', [AdminController::class, 'deleteReportedPost'])->name('delete.reported.post');
+        Route::post('/delete-reported-user', [AdminController::class, 'deleteReportedUser'])->name('delete.reported.user');
+        Route::post('/delete-reported-comment', [AdminController::class, 'deleteReportedComment'])->name('delete.reported.comment');
 
         Route::post('/message-send', [AdminController::class, 'sendMessage'])->name('message.send');
     });

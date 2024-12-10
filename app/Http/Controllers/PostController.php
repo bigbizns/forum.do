@@ -59,7 +59,7 @@ class PostController extends Controller
             ]);
     }
 
-    public function showPost(int $id): Response
+    public function showPost(string $id): Response
     {
         $post = $this->getPostInfo($id);
         $views = $this->getPostViews($id);
@@ -175,7 +175,7 @@ class PostController extends Controller
         return Inertia::render('Posts/SearchedTitlePosts/SearchedTitlePosts', ['posts' => $posts, 'title' => $title]);
     }
 
-    private function getPostInfo(int $id): array
+    private function getPostInfo(string $id): array
     {
         $data = Post::findOrFail($id);
 
@@ -191,7 +191,7 @@ class PostController extends Controller
         ];
     }
 
-    private function getComments(int $id): array
+    private function getComments(string $id): array
     {
         $data = Comment::where('post_id', $id)->orderby('created_at', 'desc')->get();
         $comments = [];
@@ -248,7 +248,7 @@ class PostController extends Controller
         ];
     }
 
-    private function checkIfReported(int $id): bool
+    private function checkIfReported(string $id): bool
     {
         $userId = Auth::id();
         $report = Report::where('post_id', $id)->where('user_id', $userId)->first();
@@ -267,7 +267,7 @@ class PostController extends Controller
         return $alreadyReported;
     }
 
-    private function getPostVotesCount(int $postId): array
+    private function getPostVotesCount(string $postId): array
     {
         $totalVotes = PostLike::where('post_id', $postId)->get();
 
@@ -290,7 +290,7 @@ class PostController extends Controller
         ];
     }
 
-    private function getPostViews(int $postId): int
+    private function getPostViews(string $postId): int
     {
         $user = Auth::id();
         $data = Post::findOrFail($postId);
