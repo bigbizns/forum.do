@@ -38,6 +38,8 @@ export interface DeleteRequestInterface {
 
 export interface ReportsInterface {
     id: string,
+    postId: string,
+    commentId: string,
     reason: string,
     userId: string,
     message: string,

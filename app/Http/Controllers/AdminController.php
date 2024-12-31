@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReportTypeEnum;
 use App\Enums\RequestEnum;
 use App\Mail\MessageAnswer;
+use App\Models\Comment;
 use App\Models\Contact;
 use App\Models\EditRequest;
 use App\Models\Post;
@@ -85,6 +87,17 @@ class AdminController extends Controller
         return redirect()->back()->with('message', "Deleted {$post->title}");
     }
 
+    public function deleteReportedComment(Request $request): RedirectResponse
+    {
+        $report = Report::where('id', $request['reportId'])->first();
+        $comment = Comment::where('id', $request['commentId'])->first();
+
+        $comment->delete();
+        $report->delete();
+
+        return redirect()->back()->with('message', 'Comment Has been deleted');
+    }
+
     public function messages(): Response
     {
         $messages = Contact::all();
@@ -125,25 +138,29 @@ class AdminController extends Controller
             if ($report['post_id'] !== null) {
                 $data[] = [
                     'id' => $report->id,
+                    'postId' => $report->post->id,
                     'userId' => $user->id,
                     'reason' => $report->reason,
                     'message' => $report->message,
                     'userName' => $user->username,
                     'avatar' => $user->avatar,
-                    'type' => 'Post'
+                    'type' => ReportTypeEnum::Post->value
                 ];
             }
+
             if ($report['comment_id'] !== null) {
                 $data[] = [
                     'id' => $report->id,
                     'userId' => $report->user_id,
+                    'commentId' => $report->comment_id,
                     'reason' => $report->reason,
                     'message' => $report->message,
                     'userName' => $user->username,
                     'avatar' => $user->avatar,
-                    'type' => 'Comment'
+                    'type' => ReportTypeEnum::Comment->value
                 ];
             }
+
             if ($report['reported_user_id'] !== null) {
                 $data[] = [
                     'id' => $report->id,
@@ -153,7 +170,7 @@ class AdminController extends Controller
                     'message' => $report->message,
                     'userName' => $user->username,
                     'avatar' => $user->avatar,
-                    'type' => 'Profile'
+                    'type' => ReportTypeEnum::Profile->value
                 ];
             }
         }

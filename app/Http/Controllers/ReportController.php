@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReportComment;
+use App\Http\Requests\StoreReportUser;
 use App\Models\Comment;
 use App\Models\Report;
 use Illuminate\Http\RedirectResponse;
@@ -25,10 +26,10 @@ class ReportController extends Controller
         return to_route('post.show', ['id' => $postId])->with('message', 'Your report has been posted successfully!');
     }
 
-    public function reportUser(StoreReportComment $request, int $id): RedirectResponse
+    public function reportUser(StoreReportUser $request, int $id): RedirectResponse
     {
         $userId = $id;
-        $report = $request->validated();
+        $report = $request->all();
         $reports = Report::all();
 
         foreach ($reports as $report) {
