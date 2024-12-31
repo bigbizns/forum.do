@@ -13,10 +13,6 @@ defineProps<{
 const form = useForm({
     postId: ''
 });
-const profileForm = useForm({
-    reportId: '',
-    profileId: ''
-})
 
 const commentForm = useForm({
     reportId: '',
@@ -28,13 +24,7 @@ const getPostId = (postId: string) => {
 
     submitPostDelete();
 };
-const getProfileId = (profileId: string, reportId: string) => {
-    profileForm.reportId = reportId;
-    profileForm.profileId = profileId;
-
-    submitProfileDelete();
-}
-const getCommentId = (commentId: string, reportId:string) => {
+const getCommentId = (commentId: string, reportId: string) => {
     commentForm.commentId = commentId;
     commentForm.reportId = reportId;
 
@@ -44,9 +34,7 @@ const getCommentId = (commentId: string, reportId:string) => {
 const submitPostDelete = () => {
     form.post(route('admin.dashboard.delete.reported.post'));
 };
-const submitProfileDelete = () => {
-    profileForm.post(route('admin.dashboard.delete.reported.user'));
-};
+
 const submitCommentDelete = () => {
     commentForm.post(route('admin.dashboard.delete.reported.comment'));
 }
@@ -93,12 +81,6 @@ const submitCommentDelete = () => {
                                               class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
                                             Check Profile
                                         </Link>
-                                        <form @submit.prevent="getProfileId(rep.reportedUserId, rep.id)">
-                                            <button
-                                                class="mt-1 truncate text-m text-blue-500 cursor-pointer duration-300 transition hover:text-blue-400">
-                                                Delete Profile
-                                            </button>
-                                        </form>
                                     </template>
                                     <template v-if="rep.type === AdminDashboardEnum.Comment">
                                         <form @submit.prevent="getCommentId(rep.commentId, rep.id)">
