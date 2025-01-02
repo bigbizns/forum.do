@@ -15,12 +15,14 @@ import debounce from 'lodash/debounce';
 import axios from "axios";
 import SearchModal from "@/Pages/Home/HomeComponents/SearchModal.vue";
 import close from '@/Images/close.png';
+import {PageNumbersInterface, PaginationInterface} from "@/Types/PaginationInterface";
 
 const props = defineProps<{
     userData: UserInterface
     recentPosts: {
         data: PostInterface[],
-        pagination: PaginationInterface
+        pagination: PaginationInterface,
+        pageNumbers: PageNumbersInterface[],
     };
     categories: CategoryInterface[],
     subCategories: SubCategoryInterface[],
@@ -123,8 +125,8 @@ const cancelSearch = () => {
                         :description="post.description"
                         :user_id="post.user_id"/>
                 </div>
-            <RecentPostPagination :pagination="recentPosts.pagination"/>
-        </div>
+                <RecentPostPagination :pagination="recentPosts.pagination" :page-numbers="recentPosts.pageNumbers"/>
+            </div>
         </div>
         <Footer/>
     </div>

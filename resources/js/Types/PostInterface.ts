@@ -18,12 +18,3 @@ interface PostVotesInterface {
     upVote: number,
     downVote: number
 }
-
-interface PaginationInterface {
-    current_page: number,
-    last_page: number,
-    next_page_url: string | null,
-    prev_page_url: string | null,
-    per_page: number,
-    total: number
-}
