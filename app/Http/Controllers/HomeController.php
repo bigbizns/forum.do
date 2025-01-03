@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\LengthEnum;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\SubCategory;
@@ -90,7 +91,7 @@ class HomeController extends Controller
 
     private function getPaginatedPosts(): array
     {
-        $recentPosts = Post::orderBy('created_at', 'desc')->take(50)->get();
+        $recentPosts = Post::orderBy('created_at', 'desc')->take(LengthEnum::Fifty->value)->get();
 
         $currentPage = request()->get('page', 1);
         $perPage = 10;

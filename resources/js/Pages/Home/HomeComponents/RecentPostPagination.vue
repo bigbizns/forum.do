@@ -31,7 +31,6 @@ defineProps<{
             </Link>
             <Link
                 preserve-scroll
-
                 :href="pagination.next_page_url"
                 class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-gray-800 rounded transition duration-150 hover:text-gray-700  dark:text-gray-400 dark:hover:text-white"
             >
