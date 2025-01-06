@@ -3,6 +3,7 @@ import {Link} from "@inertiajs/vue3";
 import user from '@/Images/user.png';
 import {TradeActionEnum} from "@/Helpers/TradeActionEnum";
 import {TextLengthEnum} from '@/Enums/TextLengthEnum';
+import {getUsDate} from "@/Helpers/getUsDate";
 
 defineProps<{
     title: string,
@@ -10,7 +11,8 @@ defineProps<{
     tradeAction: string,
     id: number,
     avatar: string,
-    user_id: number
+    user_id: number,
+    created_at: Date,
 }>();
 
 const minimizeString = (text: string): string => {
@@ -44,6 +46,9 @@ const minimizeString = (text: string): string => {
                 </template>
             </div>
             <div class="mx-4 flex-1">
+                <div class="text-white flex-grow flex items-center break-words">
+                    <p class="overflow-hidden overflow-ellipsis break-all">{{ getUsDate(created_at) }}</p>
+                </div>
                 <div class="text-white">
                     <h2 class="font-bold text-lg opacity-90">{{ title }}</h2>
                 </div>

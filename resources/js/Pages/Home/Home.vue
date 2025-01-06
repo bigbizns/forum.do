@@ -123,7 +123,8 @@ const cancelSearch = () => {
                         :title="post.title"
                         :id="post.id"
                         :description="post.description"
-                        :user_id="post.user_id"/>
+                        :user_id="post.user_id"
+                        :created_at="post.created_at" />
                 </div>
                 <RecentPostPagination :pagination="recentPosts.pagination" :page-numbers="recentPosts.pageNumbers"/>
             </div>

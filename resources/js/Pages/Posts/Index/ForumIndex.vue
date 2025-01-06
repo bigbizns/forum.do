@@ -3,6 +3,8 @@ import Navigation from "@/Layouts/Navigation.vue";
 import Footer from "@/Layouts/Footer.vue";
 import {Head, Link} from "@inertiajs/vue3";
 import Post from "@/Components/Post.vue";
+import {PaginationInterface} from "@/Types/PaginationInterface";
+import {computed} from "vue";
 
 const props = defineProps<{
     posts: {
@@ -10,6 +12,22 @@ const props = defineProps<{
         pagination: PaginationInterface
     };
 }>();
+
+const visiblePages = computed(() => {
+    const totalPages = props.posts.pagination.last_page;
+    const currentPage = props.posts.pagination.current_page;
+
+    const startPage = Math.max(1, currentPage - 4);
+    const endPage = Math.min(totalPages, startPage + 9);
+
+    const pages = [];
+
+    for (let page = startPage; page <= endPage; page++) {
+        pages.push(page);
+    }
+
+    return pages;
+});
 </script>
 
 <template>
@@ -26,27 +44,34 @@ const props = defineProps<{
                 :title="post.title"
                 :id="post.id"
                 :description="post.description"
-                :user_id="post.user_id"/>
+                :user_id="post.user_id"
+                :created_at="post.created_at" />
         </div>
-        <div class="flex items-center justify-end gap-5 mt-4">
+        <div class="flex items-center justify-center  mt-4">
             <Link
-                preserve-scroll
-                v-if="props.posts.pagination.prev_page_url"
-                :href="props.posts.pagination.prev_page_url"
-                class="text-white px-4 py-2 bg-gray-800 rounded transition duration-200 hover:bg-gray-500">
+                :href="posts.pagination.prev_page_url"
+                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-gray-800 rounded transition duration-150 hover:text-gray-700  dark:text-gray-400 dark:hover:text-white">
                 Previous
             </Link>
             <Link
-                preserve-scroll
-                v-if="props.posts.pagination.next_page_url"
-                :href="props.posts.pagination.next_page_url"
-                class="text-white px-4 py-2 bg-gray-800 rounded transition duration-200 hover:bg-gray-500">
+                v-for="page in visiblePages"
+                :href="`?page=${page}`"
+                :class="{
+                'flex items-center justify-center px-4 h-10 leading-tight text-blue-500 transition duration-150': page == posts.pagination.current_page,
+                'flex items-center justify-center px-4 h-10 leading-tight text-white hover:text-blue-500 transition duration-150': page != posts.pagination.current_page
+            }"
+            >
+                {{ page }}
+            </Link>
+            <Link
+                :href="posts.pagination.next_page_url"
+                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-gray-800 rounded transition duration-150 hover:text-gray-700  dark:text-gray-400 dark:hover:text-white">
                 Next
             </Link>
-            <p class="text-white text-sm">
-                Page {{ props.posts.pagination.current_page }} of {{ props.posts.pagination.last_page }}
-            </p>
         </div>
+         <p class="text-white text-sm text-center mt-5">
+            Page {{ posts.pagination.current_page }} of {{ posts.pagination.last_page }}
+        </p>
     </div>
     <Footer/>
 </template>
