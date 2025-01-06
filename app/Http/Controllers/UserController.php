@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\ReportTypesEnum;
 use App\Enums\UserCountEnum;
+use App\Models\Badge;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\EditRequest;
@@ -28,6 +29,7 @@ class UserController extends Controller
     public function showUsersProfile(int $id): Response|RedirectResponse
     {
         $user = User::where('id', $id)->first();
+        $badges = Badge::where('user_id', $id)->get(['id', 'type']);
 
         if ($user === null) {
             return to_route('home');
@@ -57,6 +59,7 @@ class UserController extends Controller
             'userStats' => $userStats,
             'reportTypes' => $reportTypes,
             'userActivity' => $userActivity,
+            'badges' => $badges,
         ]);
     }
 

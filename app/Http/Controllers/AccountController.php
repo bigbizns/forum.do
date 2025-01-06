@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\BadgesTypesEnum;
 use App\Enums\LengthEnum;
 use App\Enums\UserCountEnum;
 use App\Http\Requests\StoreAccountPasswordChange;
@@ -11,6 +12,7 @@ use App\Http\Requests\StoreSettingsUpdate;
 use App\Http\Requests\StoreAvatarPicture;
 use App\Http\Requests\StoreVerifyEmailCode;
 use App\Mail\EmailVerification;
+use App\Models\Badge;
 use App\Models\EmailVerification as EmailVerificationModel;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -134,6 +136,11 @@ class AccountController extends Controller
         }
 
         User::where('id', $user->id)->update(['email_verified_at' => now()]);
+
+        Badge::create([
+            'user_id' => $user->id,
+            'type' => BadgesTypesEnum::EmailVerified->value,
+        ]);
 
         $userFormCode->delete();
 

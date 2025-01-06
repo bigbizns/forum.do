@@ -13,13 +13,16 @@ import ActivityCard from "@/Pages/UserAccount/Components/ActivityCard.vue";
 import RecentPostCard from "@/Pages/UserAccount/Components/RecentPostCard.vue";
 import {Head} from "@inertiajs/vue3";
 import {ReportTypeInterface} from "@/Types/ReportTypeInterface";
+import {BadgesInterface} from "@/Types/BadgesInterface";
+import BadgesCard from "@/Pages/UserAccount/Components/BadgesCard.vue";
 
-const props = defineProps<{
+defineProps<{
     userData: UserInterface,
     userPosts: UsersPostsInterface[],
     userStats: UserStatsInterface,
     reportTypes: ReportTypeInterface[]
     userActivity: UserRecentActivityInterface[],
+    badges: BadgesInterface[],
 }>();
 </script>
 
@@ -28,18 +31,18 @@ const props = defineProps<{
     <Navigation/>
     <div class="min-h-screen mt-12 py-8">
         <div class="flex justify-center">
-        <small class="text-xl text-green-500">{{$page.props.flash.message}}</small>
-        <small class="text-xl text-yellow-500">{{$page.props.flash.warning_message}}</small>
+        <small class="text-xl text-green-500">{{ $page.props.flash.message }}</small>
+        <small class="text-xl text-yellow-500">{{ $page.props.flash.warning_message }}</small>
         </div>
         <UserDetails :user-data="userData" :report-types="reportTypes"/>
-        <UserStatus  :user-data="props.userData" :user-stats="userStats"/>
+        <UserStatus  :user-data="userData" :user-stats="userStats"/>
         <div class="max-w-5xl mx-auto mt-6 bg-black/40 p-6 rounded-lg shadow-md">
             <h3 class="text-gray-500 text-xl font-semibold mb-3">Description</h3>
             <p class="text-gray-300 leading-relaxed">
-                {{ props.userData.description ?? 'No information given.' }}
+                {{ userData.description ?? 'No information given.' }}
             </p>
         </div>
-
+        <BadgesCard :badges="badges"/>
         <div class="max-w-5xl mx-auto mt-6 bg-black/40 p-6 rounded-lg shadow-md">
             <h3 class="text-xl text-gray-500 font-semibold mb-3">Latest Activity</h3>
             <div class="space-y-4">
