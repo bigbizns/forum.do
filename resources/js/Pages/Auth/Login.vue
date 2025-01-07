@@ -30,11 +30,11 @@ const submit = () => {
                 <div class="flex justify-between items-center mb-5">
                     <div class="flex items-center gap-2">
                         <input v-model="form.remember" type="checkbox" id="rememberMe" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                        <label for="rememberMe" class="text-gray-600">Remember me</label>
+                        <label for="rememberMe" class="text-white">Remember me</label>
                     </div>
 
                     <div class="flex gap-2">
-                        <p class="text-gray-600">Forgot password?</p>
+                        <p class="text-white">Forgot password?</p>
                         <Link :href="route('recover')" class="text-blue-500 hover:text-blue-700 font-medium transition-colors duration-300 ease-in-out">Reset</Link>
                     </div>
                 </div>
@@ -44,7 +44,7 @@ const submit = () => {
                 </div>
             </form>
             <div class="mt-4 text-center">
-                <p class="text-gray-600">
+                <p class="text-white">
                      Don't have an account?
                     <Link :href="route('register')" class="text-blue-500 hover:text-blue-700 font-medium transition duration-300">Register</Link>
                 </p>
