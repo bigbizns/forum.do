@@ -8,9 +8,12 @@ use App\Enums\ReportTypeEnum;
 use App\Enums\RequestEnum;
 use App\Mail\MessageAnswer;
 use App\Models\Comment;
+use App\Models\CommentLike;
 use App\Models\Contact;
 use App\Models\EditRequest;
 use App\Models\Post;
+use App\Models\PostLike;
+use App\Models\PostView;
 use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +27,9 @@ class AdminController extends Controller
 {
     public function __invoke(): Response
     {
-        $users = User::get(['id', 'username', 'email', 'points', 'avatar', 'created_at'])->toArray();
+        $users = User::where('suspended', 0)
+            ->get(['id', 'username', 'email', 'points', 'avatar', 'created_at'])
+            ->toArray();
 
         return Inertia::render('Dashboards/Admin/Index', ['users' => $users]);
     }
@@ -117,6 +122,21 @@ class AdminController extends Controller
         return to_route('admin.dashboard.messages')->with('message', 'Message sent!');
     }
 
+    public function banUser(Request $request): RedirectResponse
+    {
+        $userId = $request['id'];
+
+        $user = User::where('id', $userId)->first();
+
+        $this->deleteBannedUserActivity($user->id);
+
+        $user->suspended = true;
+
+        $user->save();
+
+        return redirect()->back()->with('message', "$user->username has been suspended!");
+    }
+
     private function sendEmail(string $email, string $topic, string $message, string $answer): RedirectResponse|bool
     {
         try {
@@ -176,5 +196,15 @@ class AdminController extends Controller
         }
 
         return $data;
+    }
+
+    private function deleteBannedUserActivity(int $id): void
+    {
+        PostView::where('user_id', $id)->delete();
+        PostLike::where('user_id', $id)->delete();
+        CommentLike::where('user_id', $id)->delete();
+        Post::where('user_id', $id)->delete();
+        Comment::where('user_id', $id)->delete();
+        EditRequest::where('user_id', $id)->delete();
     }
 }

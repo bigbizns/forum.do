@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Head, Link} from "@inertiajs/vue3";
+import {Head, Link, useForm} from "@inertiajs/vue3";
 import {AdminDashUsersInterface} from "@/Types/adminDashUsersInterface";
 import {getUsDate} from "@/Helpers/getUsDate";
 import user from '@/Images/user.png';
@@ -11,6 +11,16 @@ defineProps<{
 }>();
 
 const UserDefault = user;
+
+const banForm = useForm({
+    id: 0,
+});
+
+const submitBan = (userId: number) => {
+    banForm.id = userId;
+
+    banForm.post(route('admin.dashboard.ban.user'));
+};
 </script>
 
 <template>
@@ -39,6 +49,9 @@ const UserDefault = user;
                         <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                             <p class="text-sm/6 text-white">Points: {{ user.points }}</p>
                             <p class="mt-1 text-xs/5 text-white">Created at: {{getUsDate(user.created_at)}}</p>
+                            <form @submit.prevent="submitBan(user.id)">
+                            <button class="text-blue-500 hover:text-red-500 transition duration-300">Ban user</button>
+                            </form>
                         </div>
                     </li>
                 </ul>

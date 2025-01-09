@@ -120,5 +120,7 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
         Route::post('/delete-reported-comment', [AdminController::class, 'deleteReportedComment'])->name('delete.reported.comment');
 
         Route::post('/message-send', [AdminController::class, 'sendMessage'])->name('message.send');
+
+        Route::post('/ban-user', [AdminController::class, 'banUser'])->name('ban.user');
     });
 });
