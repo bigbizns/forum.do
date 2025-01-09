@@ -10,10 +10,10 @@ defineProps<{
 }>();
 
 const form = useForm({
-    postId: '',
+    postId: 0,
 });
 
-const getPostId = (id: string) => {
+const getPostId = (id: number) => {
     form.postId = id;
 
     submit();
