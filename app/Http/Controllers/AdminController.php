@@ -121,6 +121,12 @@ class AdminController extends Controller
 
         return to_route('admin.dashboard.messages')->with('message', 'Message sent!');
     }
+    public function showBannedUsers():Response
+    {
+        $users = User::where('suspended', 1)->get();
+
+        return Inertia::render('Dashboards/Admin/BannedUsers', ['users' => $users]);
+    }
 
     public function banUser(Request $request): RedirectResponse
     {

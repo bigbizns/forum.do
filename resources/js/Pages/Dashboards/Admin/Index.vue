@@ -7,7 +7,7 @@ import AdminDashboardNav from "@/Components/AdminDashboardNav.vue";
 import DashboardHeader from "@/Layouts/DashboardHeader.vue";
 
 defineProps<{
-    users:AdminDashUsersInterface[]
+    users: AdminDashUsersInterface[]
 }>();
 
 const UserDefault = user;

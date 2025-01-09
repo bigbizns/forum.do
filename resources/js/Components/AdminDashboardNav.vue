@@ -20,6 +20,7 @@ import DashBoardLink from "@/Components/DashBoardLink.vue";
                             <DashBoardLink href='admin.dashboard.delete.requests'>Delete Requests</DashBoardLink>
                             <DashBoardLink href='admin.dashboard.reports'>Reports</DashBoardLink>
                             <DashBoardLink href='admin.dashboard.messages'>Messages</DashBoardLink>
+                            <DashBoardLink href='admin.dashboard.banned.users'>Suspended Users</DashBoardLink>
                             <Link :href="route('home')" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 transition duration-300 hover:text-white">Home Page</Link>
                         </div>
                     </div>

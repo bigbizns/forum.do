@@ -121,6 +121,7 @@ Route::group(['middleware' => AdminMiddleware::class], function () {
 
         Route::post('/message-send', [AdminController::class, 'sendMessage'])->name('message.send');
 
+        Route::get('/banned-users', [AdminController::class, 'showBannedUsers'])->name('banned.users');
         Route::post('/ban-user', [AdminController::class, 'banUser'])->name('ban.user');
     });
 });
