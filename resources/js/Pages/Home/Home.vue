@@ -16,6 +16,8 @@ import axios from "axios";
 import SearchModal from "@/Pages/Home/HomeComponents/SearchModal.vue";
 import close from '@/Images/close.png';
 import {PageNumbersInterface, PaginationInterface} from "@/Types/PaginationInterface";
+import WarningSuspendedMessage from "@/Components/WarningSuspendedMessage.vue";
+import {UserAccountEnum} from "@/Enums/UserAccountEnum";
 
 const props = defineProps<{
     userData: UserInterface
@@ -68,6 +70,9 @@ const cancelSearch = () => {
         <Navigation/>
         <template v-if="$page.props.auth.user && !props.userData.email_verified_at">
             <WarningEmailMessage/>
+        </template>
+        <template v-if="userData.suspended === UserAccountEnum.Suspended">
+            <WarningSuspendedMessage/>
         </template>
 
         <div class="container mx-auto w-[90%] flex-grow mt-20 mb-16 h-auto">

@@ -81,7 +81,7 @@ class HomeController extends Controller
             return '';
         }
 
-        $userInfo = $user->only('username', 'email', 'description', 'email_verified_at');
+        $userInfo = $user->only('username', 'email', 'description', 'email_verified_at', 'suspended');
 
         $userInfo['created_at'] = $user->created_at->format('d-m-Y');
 
