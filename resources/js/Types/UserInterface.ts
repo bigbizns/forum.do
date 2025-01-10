@@ -7,6 +7,7 @@ export interface UserInterface {
     points: number,
     avatar: string,
     email_verified_at: string,
+    suspended: number,
 }
 
 export interface UsersPostsInterface {

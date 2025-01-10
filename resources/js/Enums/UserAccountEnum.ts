@@ -1,3 +1,4 @@
 export enum UserAccountEnum {
-    Posted = 'Posted'
+    Posted = 'Posted',
+    Suspended = 1,
 }
