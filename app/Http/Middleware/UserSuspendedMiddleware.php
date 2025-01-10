@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserAccountEnum;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class UserSuspendedMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->suspended === 1) {
+        if (Auth::check() && Auth::user()->suspended === UserAccountEnum::Suspended->value) {
             return to_route('home');
         }
 
