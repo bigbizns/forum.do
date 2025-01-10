@@ -13,6 +13,7 @@ use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\UserSuspendedMiddleware;
 use App\Http\Middleware\VerifiedEmailMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,7 @@ Route::get('category/{Category:slug?}', HomeController::class)->name('subCategor
 
 Route::get('/forum', PostController::class)->name('forum');
 
-Route::get('/posts/{subCategory}', [PostController::class, 'subCategoryIndex'])->name('subCategory.index');
+Route::get('/posts/{subCategory}', [PostController::class, 'subCategoryIndex'])->name('subCategory.index')->middleware(UserSuspendedMiddleware::class);
 
 Route::get('/user/{id}', [UserController::class, 'showUsersProfile'])->name('user.profile')->middleware(VerifiedEmailMiddleware::class);
 
@@ -49,7 +50,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/recover-password/{recoverUrl}', [AuthController::class, 'updatePasswordStore'])->name('update.password.store');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', UserSuspendedMiddleware::class]], function () {
     Route::prefix('account')->name('account.')->group(function () {
         Route::get('/profile', AccountController::class)->name('profile');
 
@@ -78,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{id}', [PostController::class, 'showPost'])->name('show')->withoutMiddleware('auth');
         Route::get('/search/{title}', [PostController::class, 'showSearchedPosts'])->name('searched.posts');
 
-        Route::group(['middleware' => VerifiedEmailMiddleware::class], function () {
+        Route::group(['middleware' => [VerifiedEmailMiddleware::class, UserSuspendedMiddleware::class]], function () {
             Route::post('/vote/{id}', [PostLikeController::class, 'store'])->name('vote');
 
             Route::post('/report/{id}', [ReportController::class, 'store'])->name('report');
