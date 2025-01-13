@@ -37,7 +37,7 @@ class PostController extends Controller
     public function subCategoryIndex(string $slug): Response
     {
         $subCategory = SubCategory::where('slug', $slug)->firstOrFail();
-        $data = Post::where('sub_category_id', $subCategory->id)->get(['id', 'user_id', 'title', 'tradeAction', 'description', 'pinned']);
+        $data = Post::where('sub_category_id', $subCategory->id)->get(['id', 'user_id', 'title', 'tradeAction', 'description', 'pinned','created_at']);
         $posts = [];
 
         foreach ($data as $post) {
@@ -49,6 +49,7 @@ class PostController extends Controller
                 'description' => $post->description,
                 'pinned' => $post->pinned,
                 'avatar' => $post->user->avatar,
+                'created_at' => $post->created_at,
             ];
         }
 

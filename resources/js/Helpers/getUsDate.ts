@@ -1,4 +1,4 @@
-export const getUsDate = (time: string): string => {
+export const getUsDate = (time: Date): string => {
     const date: Date = new Date(time);
 
     const year: number = date.getFullYear();

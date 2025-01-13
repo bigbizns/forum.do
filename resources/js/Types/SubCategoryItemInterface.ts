@@ -5,4 +5,5 @@ export interface SubCategoryItemInterface {
     tradeAction: string,
     description: string,
     avatar: string,
+    created_at: Date,
 }
