@@ -5,7 +5,7 @@ interface PostInterface {
     id: number,
     user_id: number,
     avatar: string,
-    created_at: Date,
+    createdAt: Date,
     author: {
         avatar: string,
         email: string

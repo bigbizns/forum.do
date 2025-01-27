@@ -20,7 +20,7 @@ const cancel = () => {
 };
 
 const submit = () => {
-    form.post(route('post.comment.edit', {id: props.commentId}), {onSuccess: () => emit('cancel')})
+    form.post(route('post.comment.update', {id: props.commentId}), {onSuccess: () => emit('cancel')})
 };
 </script>
 
