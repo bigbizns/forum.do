@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth', UserSuspendedMiddleware::class]], functio
 
             Route::post('/comment-post/{id}', [CommentController::class, 'store'])->name('comment');
             Route::post('/comment-vote/{commentId}', [CommentController::class, 'storeVote'])->name('comment.vote');
-            Route::post('/comment-edit/{commentId}', [CommentController::class, 'edit'])->name('comment.edit');
+            Route::post('/comment-edit/{commentId}', [CommentController::class, 'update'])->name('comment.update');
             Route::post('/comment-delete/{commentId}', [CommentController::class, 'destroy'])->name('comment.delete');
             Route::post('/comment-report/{commentId}', [ReportController::class, 'reportComment'])->name('comment.report');
         });

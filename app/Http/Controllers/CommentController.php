@@ -16,13 +16,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function index()
-    {
-    }
-    public function create()
-    {
-        //
-    }
     public function store(StoreComment $request, int $id): RedirectResponse
     {
         $comment = $request->validated();
@@ -60,12 +53,7 @@ class CommentController extends Controller
         return back()->with('message', $message);
     }
 
-    public function show(Comment $comments)
-    {
-
-    }
-
-    public function edit(StoreComment $request, int $commentId): RedirectResponse
+    public function update(StoreComment $request, int $commentId): RedirectResponse
     {
         $editedComment = $request->only(['comment','edited']);
         $user = Auth::id();
@@ -78,10 +66,6 @@ class CommentController extends Controller
         }
 
         return back();
-    }
-
-    public function update(Request $request, Comment $comments)
-    {
     }
 
     public function destroy(int $commentId): RedirectResponse

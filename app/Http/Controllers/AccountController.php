@@ -152,9 +152,9 @@ class AccountController extends Controller
         return Hash::check($password, Auth::user()->getAuthPassword());
     }
 
-    private function updateUsersPassword($password): bool
+    private function updateUsersPassword($password): void
     {
-        return Auth::user()->update(['password' => Hash::make($password)]);
+        Auth::user()->update(['password' => Hash::make($password)]);
     }
 
     /**

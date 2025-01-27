@@ -20,7 +20,6 @@ class ContactUsController extends Controller
     {
         $topics = SupportTopicEnum::getSupportTopic();
 
-
         return Inertia::render('ContactUs/ContactUs', ['topics' => $topics]);
     }
 
