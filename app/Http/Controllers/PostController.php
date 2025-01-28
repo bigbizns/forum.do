@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\BadgesTypesEnum;
 use App\Enums\LengthEnum;
 use App\Enums\ReportTypesEnum;
 use App\Enums\RequestEnum;
@@ -11,6 +12,7 @@ use App\Enums\TradeActionEnum;
 use App\Enums\UserCountEnum;
 use App\Http\Requests\StoreEditedPost;
 use App\Http\Requests\StorePost;
+use App\Models\Badge;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\EditRequest;
@@ -97,9 +99,12 @@ class PostController extends Controller
     public function store(StorePost $request): RedirectResponse
     {
         $data = $request->all();
+        $userId = Auth::id();
+
+        $this->checkIfUserHasAFirstPostBadge($userId);
 
         $post = Post::create([
-            'user_id' => Auth::user()->id,
+            'user_id' => $userId,
             'title' => $data['title'],
             'category_id' => $data['category']['id'],
             'sub_category_id' => $data['subCategory'],
@@ -309,5 +314,17 @@ class PostController extends Controller
         }
 
         return $data->View->where('post_id', $postId)->count();
+    }
+
+    private function checkIfUserHasAFirstPostBadge(int $userId): void
+    {
+        $hasFirstPostBadge = Badge::where('user_id', $userId)->where('type', BadgesTypesEnum::FirstPost->value)->first();
+
+        if (!$hasFirstPostBadge) {
+            Badge::create([
+                'user_id' => $userId,
+                'type' => BadgesTypesEnum::FirstPost->value,
+            ]);
+        }
     }
 }
