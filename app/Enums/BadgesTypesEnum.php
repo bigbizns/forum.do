@@ -7,4 +7,5 @@ namespace App\Enums;
 enum BadgesTypesEnum: string
 {
     case EmailVerified = 'email_verified';
+    case FirstPost = 'first_post';
 }
