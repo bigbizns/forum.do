@@ -3,4 +3,5 @@ export interface SubCategoryInterface {
     category_id: string,
     title: string,
     slug: string,
+    keyword: string,
 }

@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->foreignIdFor(Category::class);
             $table->string('title');
             $table->string('slug');
+            $table->string('keyword');
             $table->timestamps();
         });
     }
