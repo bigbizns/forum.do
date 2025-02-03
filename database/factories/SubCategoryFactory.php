@@ -28,16 +28,20 @@ class SubCategoryFactory extends Factory
             'CS2 Boost',
             'LoL Accounts',
             'LoL Boost',
+            'PUBG Accounts',
+            'STEAM Accounts',
             'Warzone Accounts',
             'Other',
             'Social Accounts',
         ];
 
         $title = $this->faker->randomElement($categories);
+
         return [
             'category_id' => Category::all()->random()->id,
             'title' => $title,
             'slug' => Str::slug($title),
+            'keyword' => explode(' ', $title)[0],
         ];
     }
 }

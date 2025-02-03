@@ -109,12 +109,7 @@ const cancelSearch = () => {
             <div class="bg-gray-700 pt-2 mt-5">
                 <div class="bg-black/40 flex flex-col gap-4 rounded-lg p-4 mt-2">
                     <h1 class="text-white text-xl">Sub-Categories</h1>
-                    <SubCategory
-                        v-for="sub in subCategories"
-                        :id="sub.id"
-                        :title="sub.title"
-                        :slug="sub.slug"
-                    />
+                    <SubCategory :sub-categories="subCategories"/>
                 </div>
             </div>
             <div class="mt-10">
